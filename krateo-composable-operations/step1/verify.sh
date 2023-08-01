@@ -1,3 +1,3 @@
 #!/bin/bash
 
-stat /root/my-new-file
+kubectl wait deployment core-provider --for condition=Available=True --timeout=30s

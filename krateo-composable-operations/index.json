@@ -8,7 +8,8 @@
     "steps": [
       {
         "title": "Install Krateo Composable Operations core-provider Helm chart",
-        "text": "step1/text.md"
+        "text": "step1/text.md",
+        "verify": "step1/verify.sh"
       }
     ],
     "finish": {

@@ -21,3 +21,9 @@ Now we install the chart
 ```plain
 helm install krateo-core-provider krateo/core-provider
 ```{{exec}}
+
+Let's wait for the deployment to be Available
+
+```plain
+kubectl wait deployment core-provider --for condition=Available=True --timeout=30s
+```{{exec}}
