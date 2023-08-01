@@ -19,11 +19,11 @@ helm repo update
 Now we install the chart
 
 ```plain
-helm install krateo-core-provider krateo/core-provider
+helm install krateo-core-provider krateo/core-provider --create-namespace --namespace krateo-system
 ```{{exec}}
 
 Let's wait for the deployment to be Available
 
 ```plain
-kubectl wait deployment core-provider --for condition=Available=True --timeout=30s
+kubectl wait deployment core-provider --for condition=Available=True --timeout=30s --namespace krateo-system
 ```{{exec}}

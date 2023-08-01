@@ -18,5 +18,5 @@ EOF
 And to verify we can run
 
 ```plain
-kubectl get definition sample
+kubectl get definition sample --namespace krateo-system
 ```{{exec}}
