@@ -13,11 +13,11 @@ helm repo add krateo https://charts.krateo.io
 We can update the repo
 
 ```plain
-helm repo update krateo
+helm repo update
 ```{{exec}}
 
 Now we install the chart
 
 ```plain
-helm install krateo-core-provider krateo/core-provider 
+helm install krateo-core-provider krateo/core-provider
 ```{{exec}}
