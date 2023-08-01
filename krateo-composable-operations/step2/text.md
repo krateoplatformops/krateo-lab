@@ -1,17 +1,22 @@
 
-Create a new file `/etc/my-second-file` with content `amazing`
+Let's install a `Definition`
 
 <br>
 
-### Solution
-We can use the command `echo`:
-
 ```plain
-echo amazing > /etc/my-second-file
+cat <<EOF | kubectl apply -f -
+apiVersion: core.krateo.io/v1alpha1
+kind: Definition
+metadata:
+  name: sample
+  namespace: krateo-system
+spec:
+  chartUrl: https://github.com/lucasepe/busybox-chart/releases/download/v0.2.0/dummy-chart-0.2.0.tgz
+EOF
 ```{{exec}}
 
 And to verify we can run
 
 ```plain
-cat /etc/my-second-file
+kubectl get definition sample
 ```{{exec}}
