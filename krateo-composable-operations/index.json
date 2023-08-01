@@ -1,0 +1,21 @@
+{
+  "title": "Krateo Composable Operators lab",
+  "description": "Let's learn how to work with Krateo Composable Operations",
+  "details": {
+    "intro": {
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "title": "Install Krateo Composable Operations core-provider Helm chart",
+        "text": "step1/text.md"
+      }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-1node"
+  }
+}
