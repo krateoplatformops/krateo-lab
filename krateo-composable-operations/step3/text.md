@@ -1,17 +1,25 @@
 
-Now we're getting serious! Delete the file `/var/dont-need-this.png`
+Now we're getting serious! Let's install a `Composition`
 
 <br>
 
-### Solution
-Check if the file is there using
-
 ```plain
-ls /var/dont-need-this.png
+cat <<EOF | kubectl apply -f -
+apiVersion: composition.krateo.io/v0-2-0
+kind: DummyChart
+metadata:
+  name: sample
+  namespace: krateo-system
+spec:
+  data:
+    greeting: "Hello World"
+    counter: 10
+    like: false
+EOF
 ```{{exec}}
 
-Now to delete we run
+Let's wait for the Composition `sample` to be Ready
 
 ```plain
-rm /var/dont-need-this.png
+kubectl wait dummychart sample --for condition=Ready=True --timeout=60s --namespace krateo-system
 ```{{exec}}

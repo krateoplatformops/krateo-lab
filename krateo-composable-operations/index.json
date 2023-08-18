@@ -13,6 +13,10 @@
       {
         "title": "Deploy a Definition",
         "text": "step2/text.md"
+      },
+      {
+        "title": "Deploy a Composition",
+        "text": "step3/text.md"
       }
     ],
     "finish": {

@@ -15,8 +15,8 @@ spec:
 EOF
 ```{{exec}}
 
-And to verify we can run
+Let's wait for the Definition `sample` to be Ready
 
 ```plain
-kubectl get definition sample --namespace krateo-system
+kubectl wait definition sample --for condition=Ready=True --timeout=60s --namespace krateo-system
 ```{{exec}}
