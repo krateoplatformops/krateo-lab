@@ -18,7 +18,7 @@ EOF
 Let's wait for the Definition `sample` to be Ready
 
 ```plain
-kubectl wait definition sample --for condition=Ready=True --timeout=60s --namespace krateo-system
+kubectl wait definition sample --for condition=Ready=True --timeout=300s --namespace krateo-system
 ```{{exec}}
 
 Check the Definition `sample` outputs

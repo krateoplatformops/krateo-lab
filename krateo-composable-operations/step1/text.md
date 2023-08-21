@@ -25,5 +25,5 @@ helm install krateo-core-provider krateo/core-provider --create-namespace --name
 Let's wait for the deployment to be Available
 
 ```plain
-kubectl wait deployment core-provider --for condition=Available=True --timeout=60s --namespace krateo-system
+kubectl wait deployment core-provider --for condition=Available=True --timeout=300s --namespace krateo-system
 ```{{exec}}
