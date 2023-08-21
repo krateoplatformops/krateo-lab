@@ -19,7 +19,7 @@ helm repo update
 Now we install the chart
 
 ```plain
-helm install krateo-core-provider krateo/core-provider --create-namespace --namespace krateo-system --version 0.3.9
+helm install krateo-core-provider krateo/core-provider --create-namespace --namespace krateo-system --version 0.3.10
 ```{{exec}}
 
 Let's wait for the deployment to be Available

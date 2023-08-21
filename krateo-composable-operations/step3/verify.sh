@@ -1,3 +1,3 @@
 #!/bin/bash
 
-if stat /var/dont-need-this.png; then exit 1; fi
+kubectl wait dummychart sample --for condition=Ready=True --timeout=300s --namespace krateo-system

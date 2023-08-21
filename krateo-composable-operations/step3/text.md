@@ -21,5 +21,11 @@ EOF
 Let's wait for the Composition `sample` to be Ready
 
 ```plain
-kubectl wait dummychart sample --for condition=Ready=True --timeout=60s --namespace krateo-system
+kubectl wait dummychart sample --for condition=Ready=True --timeout=300s --namespace krateo-system
+```{{exec}}
+
+Check the Composition `sample` outputs
+
+```plain
+kubectl get dummychart sample --namespace krateo-system
 ```{{exec}}
