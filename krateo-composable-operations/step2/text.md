@@ -11,7 +11,7 @@ metadata:
   name: sample
   namespace: krateo-system
 spec:
-  chartUrl: https://github.com/lucasepe/busybox-chart/releases/download/v0.2.0/dummy-chart-0.2.0.tgz
+  chartUrl: https://github.com/krateoplatformops/postgresql-demo-chart/releases/download/12.8.3/postgresql-12.8.3.tgz
 EOF
 ```{{exec}}
 

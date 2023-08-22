@@ -5,27 +5,24 @@ Now we're getting serious! Let's install a `Composition`
 
 ```plain
 cat <<EOF | kubectl apply -f -
-apiVersion: composition.krateo.io/v0-2-0
-kind: DummyChart
+apiVersion: composition.krateo.io/v12-8-3
+kind: Postgresql
 metadata:
   name: sample
   namespace: krateo-system
 spec:
-  data:
-    greeting: "Hello World"
-    counter: 10
-    like: false
+  architecture: standalone
 EOF
 ```{{exec}}
 
 Let's wait for the Composition `sample` to be Ready
 
 ```plain
-kubectl wait dummychart sample --for condition=Ready=True --timeout=300s --namespace krateo-system
+kubectl wait postgresql sample --for condition=Ready=True --timeout=300s --namespace krateo-system
 ```{{exec}}
 
 Check the Composition `sample` outputs
 
 ```plain
-kubectl get dummychart sample --namespace krateo-system
+kubectl get postgresql sample --namespace krateo-system
 ```{{exec}}
