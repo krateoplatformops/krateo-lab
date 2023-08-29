@@ -12,9 +12,9 @@ metadata:
   namespace: krateo-system
 spec:
   chart:
-    url: https://charts.bitnami.com/bitnami
-    version: 12.8.3
-    repo: postgresql
+    url: https://prometheus-community.github.io/helm-charts
+    version: 24.0.0
+    repo: prometheus
 EOF
 ```{{exec}}
 
