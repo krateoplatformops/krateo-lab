@@ -12,9 +12,19 @@
         "verify": "step1/verify.sh"
       },
       {
-        "title": "Deploy a Definition",
-        "text": "step2/text.md",
-        "verify": "step2/verify.sh"
+        "title": "Deploy a Definition via tgz archive",
+        "text": "step2-1/text.md",
+        "verify": "step2-1/verify.sh"
+      },
+      {
+        "title": "Deploy a Definition via OCI artifact",
+        "text": "step2-2/text.md",
+        "verify": "step2-2/verify.sh"
+      },
+      {
+        "title": "Deploy a Definition via Helm repository",
+        "text": "step2-3/text.md",
+        "verify": "step2-3/verify.sh"
       },
       {
         "title": "Deploy a Composition",
