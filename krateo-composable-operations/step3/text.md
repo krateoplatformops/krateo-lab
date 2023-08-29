@@ -1,5 +1,5 @@
 
-Now we're getting serious! Let's install a `Composition`
+Now we're getting serious! Let's install a `Composition` leveraging the `sample-archive` Definition.
 
 <br>
 
