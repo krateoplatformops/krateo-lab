@@ -28,3 +28,16 @@ Check the Definition `sample-oci` outputs
 ```plain
 kubectl get definition sample-oci --namespace krateo-system
 ```{{exec}}
+
+The `core-provider` has just generated:
+* a Custom Resource Definition leveraging the values.json.schema file from the Helm chart:
+
+```plain
+kubectl get crd | grep redis
+```{{exec}}
+
+* started a specific Pod from the `composition-dynamic-controller` image which will watch for new Custom Resources related to the generated CRD.
+
+```plain
+kubectl get pods --namespace krateo-system | grep redis
+```{{exec}}

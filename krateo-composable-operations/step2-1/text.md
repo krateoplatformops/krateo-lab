@@ -22,10 +22,21 @@ Let's wait for the Definition `sample-archive` to be Ready
 kubectl wait definition sample-archive --for condition=Ready=True --timeout=300s --namespace krateo-system
 ```{{exec}}
 
-Check the Definition `sample-archive` outputs, expecially for the `RESOURCE` field.
+Check the Definition `sample-archive` outputs, especially for the `RESOURCE` field.
 
 ```plain
 kubectl get definition sample-archive --namespace krateo-system
 ```{{exec}}
 
-The `core-provider` has just generated a Custom Resource Definition leveraging the values.json.schema file from the Helm chart and started a specific Pod from the `composition-dynamic-controller` image which will watch for new Custom Resources related to the generated CRD.
+The `core-provider` has just generated:
+* a Custom Resource Definition leveraging the values.json.schema file from the Helm chart:
+
+```plain
+kubectl get crd | grep postgresqls
+```{{exec}}
+
+* started a specific Pod from the `composition-dynamic-controller` image which will watch for new Custom Resources related to the generated CRD.
+
+```plain
+kubectl get pods --namespace krateo-system | grep postgresqls
+```{{exec}}

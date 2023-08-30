@@ -12,9 +12,9 @@ metadata:
   namespace: krateo-system
 spec:
   chart:
-    url: https://prometheus-community.github.io/helm-charts
-    version: 24.0.0
-    repo: prometheus
+    url: https://charts.krateo.io
+    version: 10.2.4
+    repo: jenkins
 EOF
 ```{{exec}}
 
