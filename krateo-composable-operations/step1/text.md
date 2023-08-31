@@ -8,12 +8,12 @@ A Composition is an Helm Chart archive (.tgz) with a [JSON Schema](https://json-
 
 This [JSON Schema](https://json-schema.org/) file must be named: `values.schema.json`.
 
-There are many online tools to generate automatically [JSON Schema](https://json-schema.org/) from YAML, here a few:
+There are many online tools to generate automatically [JSON Schema](https://json-schema.org/) from YAML, here are a few:
 
 - https://jsonformatter.org/yaml-to-jsonschema
 - https://codebeautify.org/yaml-to-json-schema-generator
 
-Here some online tools useful to verify the [JSON Schema](https://json-schema.org/) before building the Composition:
+Here are some online tools useful to verify the [JSON Schema](https://json-schema.org/) before building the Composition:
 
 - https://www.jsonschemavalidator.net/
 - https://json-schema.hyperjump.io/
@@ -25,7 +25,7 @@ A Definition is the Krateo Custom Resource that takes the Helm Chart specified w
 - instantiates a Deployment that watches any new Custom Resource that represents the values.yaml from the Helm Chart
 
 ## Install core-provider
-First we make sure we add Krateo Helm charts repo to our Helm client
+First, we make sure we add the Krateo Helm charts repo to our Helm client
 
 ```plain
 helm repo add krateo https://charts.krateo.io
