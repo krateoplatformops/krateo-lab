@@ -17,6 +17,21 @@
         "verify": "step2-1/verify.sh"
       },
       {
+        "title": "Deploy a Definition via OCI artifact",
+        "text": "step2-2/text.md",
+        "verify": "step2-2/verify.sh"
+      },
+      {
+        "title": "Deploy a Definition via Helm repository",
+        "text": "step2-3/text.md",
+        "verify": "step2-3/verify.sh"
+      },
+      {
+        "title": "Let's wrap up our Definition",
+        "text": "step2-4/text.md",
+        "verify": "step2-4/verify.sh"
+      },
+      {
         "title": "Deploy a Composition",
         "text": "step3/text.md",
         "verify": "step3/verify.sh"
