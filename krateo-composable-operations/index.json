@@ -43,8 +43,7 @@
       },
       {
         "title": "Delete a Definition",
-        "text": "step5/text.md",
-        "verify": "step5/verify.sh"
+        "text": "step5/text.md"
       }
     ],
     "finish": {
