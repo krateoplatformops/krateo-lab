@@ -34,11 +34,11 @@ The `core-provider` has just generated:
 * a Custom Resource Definition leveraging the values.json.schema file from the Helm chart:
 
 ```plain
-kubectl get crd | grep jenkins
+kubectl get crd jenkins.composition.krateo.io
 ```{{exec}}
 
-* started a specific Pod from the `composition-dynamic-controller` image which will watch for new Custom Resources related to the generated CRD.
+* started a specific Pod from the `composition-dynamic-controller` image which will watch for new Custom Resources related to the generated CRD and the specific version.
 
 ```plain
-kubectl get pods --namespace krateo-system | grep jenkins
+kubectl get deployment jenkins-v10-2-4-controller --namespace krateo-system
 ```{{exec}}

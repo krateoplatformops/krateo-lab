@@ -1,4 +1,3 @@
-
 We just installed three `Definition`, pulling three Helm chart in three different ways.
 
 <br>

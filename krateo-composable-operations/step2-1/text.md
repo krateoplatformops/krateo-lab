@@ -8,6 +8,8 @@ cat <<EOF | kubectl apply -f -
 apiVersion: core.krateo.io/v1alpha1
 kind: Definition
 metadata:
+  annotations:
+    "krateo.io/connector-verbose": "true"
   name: sample-archive
   namespace: krateo-system
 spec:
@@ -32,11 +34,11 @@ The `core-provider` has just generated:
 * a Custom Resource Definition leveraging the values.json.schema file from the Helm chart:
 
 ```plain
-kubectl get crd | grep postgresqls
+kubectl get crd postgresqls.composition.krateo.io
 ```{{exec}}
 
-* started a specific Pod from the `composition-dynamic-controller` image which will watch for new Custom Resources related to the generated CRD.
+* started a specific Deployment (which leverages the `composition-dynamic-controller` image) which will watch for new Custom Resources related to the generated CRD and the specific version.
 
 ```plain
-kubectl get pods --namespace krateo-system | grep postgresqls
+kubectl get deployment postgresqls-v12-8-3-controller --namespace krateo-system
 ```{{exec}}
