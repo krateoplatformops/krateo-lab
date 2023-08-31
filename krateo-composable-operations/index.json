@@ -35,6 +35,16 @@
         "title": "Deploy a Composition",
         "text": "step3/text.md",
         "verify": "step3/verify.sh"
+      },
+      {
+        "title": "Update a Composition",
+        "text": "step4/text.md",
+        "verify": "step4/verify.sh"
+      },
+      {
+        "title": "Delete a Definition",
+        "text": "step5/text.md",
+        "verify": "step5/verify.sh"
       }
     ],
     "finish": {

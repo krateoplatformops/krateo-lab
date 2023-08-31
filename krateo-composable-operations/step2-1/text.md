@@ -1,5 +1,5 @@
 
-Let's install the Bitnami Postgresql Helm Chart using our `Definition`. There are three possible ways to install it: via tgz archive, via oci artifact or via Helm repo. In this first example, we will pull directly the archive of the Helm chart
+Let's generate and deploy the Custom Resource Definition representing the Bitnami Postgresql Helm Chart using our `Definition`. There are three possible ways to install it: via tgz archive, via oci artifact or via Helm repo. In this first example, we will pull directly the archive of the Helm chart
 
 <br>
 
