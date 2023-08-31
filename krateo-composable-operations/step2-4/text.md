@@ -1,4 +1,4 @@
-We just installed three `Definition`, pulling three Helm chart in three different ways.
+We just installed three `Definition`, pulling three `Composition` in three different ways.
 
 <br>
 

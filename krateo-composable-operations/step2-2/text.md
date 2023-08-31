@@ -1,7 +1,4 @@
-
-Let's install another `Definition` pulling the Helm chart as an OCI artifact.
-
-<br>
+Let's install another `Definition` pulling the `Composition` as an OCI artifact.
 
 ```plain
 cat <<EOF | kubectl apply -f -

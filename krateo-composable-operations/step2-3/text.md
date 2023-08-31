@@ -1,7 +1,4 @@
-
-Let's install another `Definition` pulling the Helm chart from a Helm repository.
-
-<br>
+Let's install another `Definition` pulling the `Composition` from a Helm repository.
 
 ```plain
 cat <<EOF | kubectl apply -f -
