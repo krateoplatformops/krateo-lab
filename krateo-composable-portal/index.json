@@ -16,6 +16,12 @@
         "text": "step2/text.md",
         "verify": "step2/verify.sh",
         "foreground": "step2/foreground.sh"
+      },
+      {
+        "title": "Install Krateo Composable Portal authn-service Helm chart",
+        "text": "step3/text.md",
+        "verify": "step3/verify.sh",
+        "foreground": "step3/foreground.sh"
       }
     ],
     "finish": {
