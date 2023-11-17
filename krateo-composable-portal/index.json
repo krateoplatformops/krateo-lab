@@ -1,0 +1,28 @@
+{
+  "title": "Krateo Composable Portal lab",
+  "description": "Let's learn how to work with Krateo Composable Portal",
+  "details": {
+    "intro": {
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "title": "Install Krateo Composable Portal krateo-bff Helm chart",
+        "text": "step1/text.md",
+        "verify": "step1/verify.sh"
+      },
+      {
+        "title": "Install Krateo Composable Portal krateo-gateway Helm chart",
+        "text": "step2/text.md",
+        "verify": "step2/verify.sh",
+        "foreground": "step2/foreground.sh"
+      }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-1node"
+  }
+}
