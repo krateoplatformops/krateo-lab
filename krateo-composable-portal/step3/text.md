@@ -2,7 +2,7 @@
 Now we install the chart
 
 ```plain
-helm install authn-service krateo/authn-service --create-namespace --namespace krateo-system --version 0.5.0 --set podEnv[5].value=$AUTHN_KUBECONFIG_CA_CERT
+helm install authn-service krateo/authn-service --create-namespace --namespace krateo-system --version 0.5.1 -f values.yaml
 ```{{exec}}
 
 Let's wait for the deployment to be Available
