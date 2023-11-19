@@ -15,6 +15,7 @@ kubectl wait deployment authn-service  --for condition=Available=True --timeout=
 Let's install GitHub as Identity Provider
 
 ```plain
+cat <<EOF | kubectl apply -f -
 apiVersion: oauth.authn.krateo.io/v1alpha1
 kind: GithubConfig
 metadata:
@@ -33,4 +34,5 @@ spec:
   - read:user
   - read:org
   tokenURL: https://github.com/login/oauth/access_token
+EOF
 ```{{exec}}
