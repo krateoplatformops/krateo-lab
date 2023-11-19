@@ -52,6 +52,8 @@ Let's check the authentication strategies available:
 curl http://localhost:30007/strategies
 ```{{exec}}
 
+[You can also access it externally]({{TRAFFIC_HOST1_30007}}/strategies)
+
 Let's configure a basic authentication:
 
 ```plain
