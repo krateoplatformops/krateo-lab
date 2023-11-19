@@ -1,4 +1,4 @@
-## Install Krateo Composable Portal krateo-gateway Helm chart
+## Install Krateo Composable Portal authn-service Helm chart
 Now we install the chart
 
 ```plain
