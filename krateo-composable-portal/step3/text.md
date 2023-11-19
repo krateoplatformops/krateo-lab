@@ -36,3 +36,39 @@ spec:
   tokenURL: https://github.com/login/oauth/access_token
 EOF
 ```{{exec}}
+
+Let's patch the authn-service to expose it on a fixed port:
+
+```plain
+- op: replace
+  path: "/spec/ports/0/nodePort"
+  value: 30007
+EOF
+```{{exec}}
+
+Let's check the authentication strategies available:
+
+```plain
+curl http://localhost:30007/strategies
+```{{exec}}
+
+Let's configure a basic authentication:
+
+```plain
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+data:
+  password: MTIzNDU2
+kind: Secret
+metadata:
+  name: pixelprincess-password
+  namespace: krateo-system
+type: kubernetes.io/basic-auth
+EOF
+```{{exec}}
+
+And let's check again the authentication strategies available:
+
+```plain
+curl http://localhost:30007/strategies
+```{{exec}}
