@@ -40,11 +40,20 @@ EOF
 Let's patch the authn-service to expose it on a fixed port:
 
 ```plain
+cat > servicetype.json << EOF
+- op: replace
+  path: "/spec/type"
+  value: NodePort
+EOF
+kubectl patch svc authn-service -n krateo-system --type JSON --patch-file servicetype.json
+cat > nodeport.json << EOF
 - op: replace
   path: "/spec/ports/0/nodePort"
   value: 30007
 EOF
+kubectl patch svc authn-service -n krateo-system --type JSON --patch-file nodeport.json
 ```{{exec}}
+
 
 Let's check the authentication strategies available:
 
