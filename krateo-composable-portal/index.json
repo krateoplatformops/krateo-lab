@@ -22,6 +22,11 @@
         "text": "step3/text.md",
         "verify": "step3/verify.sh",
         "foreground": "step3/foreground.sh"
+      },
+      {
+        "title": "Install Krateo Composable Portal portal locally",
+        "text": "step4/text.md",
+        "foreground": "step4/foreground.sh"
       }
     ],
     "finish": {
