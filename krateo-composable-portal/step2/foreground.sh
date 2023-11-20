@@ -1,10 +1,12 @@
 echo "Preparing krateo-gateway-chart Helm values..."
 
-git clone --branch 0.0.3 https://github.com/krateoplatformops/krateo-gateway-chart
+git clone --branch 0.0.3 --depth 1 https://github.com/krateoplatformops/krateo-gateway-chart
 
 cd krateo-gateway-chart/chart
 
-sed -i 's/tmp\/ca.crt/etc\/kubernetes\/pki\/ca.crt/g' values.yaml
+export AUTHN_KUBECONFIG_CA_CRT=$(cat /etc/kubernetes/pki/ca.crt | base64 | tr -d '[:space:]')
+
+sed -i "s|\/tmp\/ca.crt|${AUTHN_KUBECONFIG_CA_CRT}|" values.yaml
 
 export AUTHN_KUBECONFIG_CA_KEY=$(cat /etc/kubernetes/pki/ca.crt | base64 | tr -d '[:space:]')
 
