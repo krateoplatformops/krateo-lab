@@ -14,9 +14,9 @@ sed -i "s|\/tmp\/ca.crt|${AUTHN_KUBECONFIG_CACRT}|" values.yaml
 file_path="/root/.kube/config"
 
 # Extract the value of the variable from the file
-variable_value=$(yq eval '.clusters[0].cluster.server' "$file_path")
+server_value=$(yq eval '.clusters[0].cluster.server' "$file_path")
 
 # Export the value to an environment variable
-export SERVER_VARIABLE="$variable_value"
+export AUTHN_KUBERNETES_URL="$server_value"
 
 sed -i "s|https:\/\/kube-apiserver:6443|${AUTHN_KUBERNETES_URL}|" values.yaml
