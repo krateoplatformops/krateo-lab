@@ -4,9 +4,11 @@ Let's ovverride the KRATEO_GATEWAY_DNS_NAMES default value
 ```plain
 TRAFFIC_HOST1_30005={{TRAFFIC_HOST1_30005}}
 prefix="https://"
-foo=${{{TRAFFIC_HOST1_30005}}#"$prefix"}
+foo=${TRAFFIC_HOST1_30005#"$prefix"}
 echo "${foo}"
-sed -i "s|localhost|${foo}|" values.yaml
+```{{exec}}
+
+sed -i "s|localhost|{{TRAFFIC_HOST1_30005}}|" values.yaml
 ```{{exec}}
 
 Now we install the chart
