@@ -2,7 +2,7 @@
 Let's ovverride the AUTHN_KUBECONFIG_PROXY_URL default value
 
 ```plain
-sed -i "s|https:\/\/krateo-gateway.krateo-system.svc|{{TRAFFIC_HOST1_30007}}|" values.yaml
+sed -i "s|https:\/\/krateo-gateway.krateo-system.svc|{{TRAFFIC_HOST1_30005}}|" values.yaml
 ```{{exec}}
 
 Now we install the chart
