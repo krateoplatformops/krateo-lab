@@ -5,7 +5,6 @@ Let's override the KRATEO_GATEWAY_DNS_NAMES default value
 TRAFFIC_HOST1_30005={{TRAFFIC_HOST1_30005}}
 prefix="https://"
 foo=${TRAFFIC_HOST1_30005#"$prefix"}
-echo "${foo}"
 sed -i "s|localhost|${foo}|" values.yaml
 ```{{exec}}
 
