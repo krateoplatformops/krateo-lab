@@ -8,7 +8,7 @@ export AUTHN_KUBECONFIG_CA_CRT=$(cat /etc/kubernetes/pki/ca.crt | base64 | tr -d
 
 sed -i "s|\/tmp\/ca.crt|${AUTHN_KUBECONFIG_CA_CRT}|" values.yaml
 
-export AUTHN_KUBECONFIG_CA_KEY=$(cat /etc/kubernetes/pki/ca.crt | base64 | tr -d '[:space:]')
+export AUTHN_KUBECONFIG_CA_KEY=$(cat /etc/kubernetes/pki/ca.key | base64 | tr -d '[:space:]')
 
 cat <<EOF | kubectl apply -f -
 apiVersion: v1
@@ -17,6 +17,6 @@ metadata:
   name: krateo-gateway
   namespace: krateo-system
 type: Opaque
-data:
+stringData:
   KRATEO_GATEWAY_CAKEY: $AUTHN_KUBECONFIG_CA_KEY
 EOF

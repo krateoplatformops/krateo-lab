@@ -2,7 +2,7 @@
 Now we install the chart
 
 ```plain
-helm install authn-service krateo/authn-service --create-namespace --namespace krateo-system --version 0.5.1 -f values.yaml
+helm install authn-service krateo/authn-service --create-namespace --namespace krateo-system --version 0.7.1 -f values.yaml
 ```{{exec}}
 
 Let's wait for the deployment to be Available
@@ -83,6 +83,15 @@ Let's install GitHub as Identity Provider
 
 ```plain
 cat <<EOF | kubectl apply -f -
+apiVersion: v1
+data:
+  clientSecret: YzRkZGRjNjk0NjYwNTc3NjBkNTU2Nzc1NzliMmM1Mzc1ZWJkOGViMw==
+kind: Secret
+metadata:
+  name: github
+  namespace: krateo-system
+type: Opaque
+---
 apiVersion: oauth.authn.krateo.io/v1alpha1
 kind: GithubConfig
 metadata:
