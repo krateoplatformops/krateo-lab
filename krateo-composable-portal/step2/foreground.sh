@@ -4,11 +4,11 @@ git clone --branch 0.1.0 --depth 1 https://github.com/krateoplatformops/krateo-g
 
 cd krateo-gateway-chart/chart
 
-export AUTHN_KUBECONFIG_CA_CRT=$(cat /etc/kubernetes/pki/ca.crt | base64 | tr -d '[:space:]')
+export AUTHN_KUBECONFIG_CA_CRT=$(cat /etc/kubernetes/pki/apiserver.crt | base64 | tr -d '[:space:]')
 
 sed -i "s|\/tmp\/ca.crt|${AUTHN_KUBECONFIG_CA_CRT}|" values.yaml
 
-export AUTHN_KUBECONFIG_CA_KEY=$(cat /etc/kubernetes/pki/ca.key | base64 | tr -d '[:space:]')
+export AUTHN_KUBECONFIG_CA_KEY=$(cat /etc/kubernetes/pki/apiserver.key | base64 | tr -d '[:space:]')
 
 cat <<EOF | kubectl apply -f -
 apiVersion: v1
