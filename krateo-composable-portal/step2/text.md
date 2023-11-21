@@ -1,8 +1,14 @@
 ## Install Krateo Composable Portal krateo-gateway Helm chart
+Let's ovverride the KRATEO_GATEWAY_DNS_NAMES default value
+
+```plain
+sed -i "s|localhost|{{TRAFFIC_HOST1_30005}}|" values.yaml
+```{{exec}}
+
 Now we install the chart
 
 ```plain
-helm install krateo-gateway krateo/krateo-gateway  --create-namespace --namespace krateo-system --version 0.1.0 -f values.yaml
+helm install krateo-gateway krateo/krateo-gateway  --create-namespace --namespace krateo-system --version 0.1.1 -f values.yaml
 ```{{exec}}
 
 Let's wait for the deployment to be Available
