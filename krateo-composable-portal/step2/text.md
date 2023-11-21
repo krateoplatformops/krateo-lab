@@ -2,9 +2,7 @@
 Let's ovverride the KRATEO_GATEWAY_DNS_NAMES default value
 
 ```plain
-TRAFFIC_HOST1_30005={{TRAFFIC_HOST1_30005}}
-prefix="https://"
-foo=${TRAFFIC_HOST1_30005#"$prefix"}
+foo=${{{TRAFFIC_HOST1_30005}}#"https://"}
 echo "${foo}"
 ```{{exec}}
 
