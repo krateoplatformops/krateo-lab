@@ -2,7 +2,7 @@
 Now we install the chart
 
 ```plain
-helm install krateo-gateway krateo/krateo-gateway  --create-namespace --namespace krateo-system --version 0.0.3 -f values.yaml
+helm install krateo-gateway krateo/krateo-gateway  --create-namespace --namespace krateo-system --version 0.1.0 -f values.yaml
 ```{{exec}}
 
 Let's wait for the deployment to be Available

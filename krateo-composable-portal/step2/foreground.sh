@@ -1,6 +1,6 @@
 echo "Preparing krateo-gateway-chart Helm values..."
 
-git clone --branch 0.0.3 --depth 1 https://github.com/krateoplatformops/krateo-gateway-chart
+git clone --branch 0.1.0 --depth 1 https://github.com/krateoplatformops/krateo-gateway-chart
 
 cd krateo-gateway-chart/chart
 
