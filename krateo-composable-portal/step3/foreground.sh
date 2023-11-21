@@ -10,14 +10,13 @@ export AUTHN_KUBECONFIG_CACRT=$(cat /etc/kubernetes/pki/ca.crt | base64 | tr -d 
 
 sed -i "s|\/tmp\/ca.crt|${AUTHN_KUBECONFIG_CACRT}|" values.yaml
 
-file_path="/.kube/config"
-variable_name="clusters[0].cluster.server"
+# Set the file path and variable name
+file_path="/root/.kube/config"
 
 # Extract the value of the variable from the file
-variable_value=$(grep "$variable_name" "$file_path" | awk '{print $2}')
+variable_value=$(yq eval '.clusters[0].cluster.server' "$file_path")
 
 # Export the value to an environment variable
-export MY_SERVER_VARIABLE="$variable_value"
+export SERVER_VARIABLE="$variable_value"
 
-# Print the exported value (optional)
-echo "Exported variable: MY_SERVER_VARIABLE=$variable_value"
+sed -i "s|https:\/\/kube-apiserver:6443|${AUTHN_KUBERNETES_URL}|" values.yaml
