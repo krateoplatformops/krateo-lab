@@ -3,12 +3,13 @@ Let's ovverride the AUTHN_KUBECONFIG_PROXY_URL default value
 
 ```plain
 sed -i "s|https:\/\/krateo-gateway.krateo-system.svc|{{TRAFFIC_HOST1_30005}}|" values.yaml
+
 ```{{exec}}
 
 Now we install the chart
 
 ```plain
-helm install authn-service krateo/authn-service --create-namespace --namespace krateo-system --version 0.7.1 -f values.yaml
+helm install authn-service krateo/authn-service --create-namespace --namespace krateo-system --version 0.7.2 -f values.yaml
 ```{{exec}}
 
 Let's wait for the deployment to be Available

@@ -29,6 +29,11 @@
         "foreground": "step4/foreground.sh"
       }
     ],
+    "assets": {
+      "host01": [
+        {"file": "step4/assets/cardtemplate-dev.yaml", "target": "~/"}
+      ]
+    },
     "finish": {
       "text": "finish.md"
     }
