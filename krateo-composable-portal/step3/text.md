@@ -76,51 +76,39 @@ curl http://localhost:30007/strategies
 Now that there's a new basic user, let's try to login and check the response!
 
 ```plain
-cd && curl http://localhost:30007/basic/login -H "Authorization: Basic Y3liZXJqb2tlcjoxMjM0NTY=" | jq -r .data >> cyberjoker.kubeconfig
+cd && curl http://localhost:30007/basic/login -H "Authorization: Basic Y3liZXJqb2tlcjoxMjM0NTY=" | jq -r .data > cyberjoker.kubeconfig
 ```{{exec}}
 
+The authn-service response contains the kubeconfig for the user logged in.
+
+```plain
+cat cyberjoker.kubeconfig
+```{{exec}}
+
+This user has no Role enabled yet. Let's make an example: using the kubernetes-admin kubeconfig, let's get the list of all pods in the cluster:
+
+```plain
 export KUBECONFIG=/root/.kube/config
-export KUBECONFIG=/root/cyberjoker.kubeconfig
-kubectl get cardtemplate card-dev -n krateo-system -o yaml
-
-
-
-Let's install GitHub as Identity Provider
-
-```plain
-cat <<EOF | kubectl apply -f -
-apiVersion: v1
-data:
-  clientSecret: YzRkZGRjNjk0NjYwNTc3NjBkNTU2Nzc1NzliMmM1Mzc1ZWJkOGViMw==
-kind: Secret
-metadata:
-  name: github
-  namespace: krateo-system
-type: Opaque
----
-apiVersion: oauth.authn.krateo.io/v1alpha1
-kind: GithubConfig
-metadata:
-  name: github
-spec:
-  authStyle: 0
-  authURL: https://github.com/login/oauth/authorize
-  clientID: 77fcb37e2373f49fa771
-  clientSecretRef:
-    key: clientSecret
-    name: github
-    namespace: krateo-system
-  organization: krateoplatformops
-  redirectURL: https://localhost:5173/auth/github
-  scopes:
-  - read:user
-  - read:org
-  tokenURL: https://github.com/login/oauth/access_token
-EOF
+kubectl get pods -A
 ```{{exec}}
 
-And let's check again the authentication strategies available:
+We expect that the user 'cyberjoker' cannot access to pods:
 
 ```plain
-curl http://localhost:30007/strategies
+export KUBECONFIG=/root/cyberjoker.kubeconfig
+kubectl get pods -A
+```{{exec}}
+
+Let's apply a Role to the 'cyberjoker' user, acting again as a kubernetes-admin user:
+
+```plain
+export KUBECONFIG=/root/.kube/config
+kubectl apply -f role.yaml
+```{{exec}}
+
+Let's check again if the user 'cyberjoker' can access to pods now:
+
+```plain
+export KUBECONFIG=/root/cyberjoker.kubeconfig
+kubectl get pods -A
 ```{{exec}}
