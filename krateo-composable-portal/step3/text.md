@@ -103,7 +103,7 @@ Let's apply a Role to the 'cyberjoker' user, acting again as a kubernetes-admin 
 
 ```plain
 export KUBECONFIG=/root/.kube/config
-kubectl apply -f /root/filesystem/role.yaml
+kubectl apply -f /root/filesystem/role-1.yaml
 ```{{exec}}
 
 Let's regenerate the kubeconfig for 'cyberjoker':
