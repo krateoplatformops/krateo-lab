@@ -1,6 +1,4 @@
-## Install Krateo Composable Portal frontend
-
-Let's install GitHub as Identity Provider
+## Let's install GitHub as Identity Provider
 
 ```plain
 cat <<EOF | kubectl apply -f -

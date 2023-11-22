@@ -1,4 +1,4 @@
-## Install Krateo Composable Portal authn-service Helm chart
+## Install Krateo Composable Portal widgets
 Now we start to interact with Composable Portal widgets. Let's start with a CardTemplate:
 
 ```plain

@@ -1,10 +1,9 @@
-## Install Krateo Composable Portal authn-service Helm chart
-Let's find out how to play with the Kubernetes RBAC.
+## Let's find out how to play with the Kubernetes RBAC.
 
 ```plain
 export KUBECONFIG=/root/.kube/config
 kubectl apply -f /root/filesystem/cardtemplate-sample2.yaml
-kubectl apply -f /root/filesystem/role2.yaml
+kubectl apply -f /root/filesystem/role-2.yaml
 ```{{exec}}
 
 Now we have two CardTemplates, card-dev-1 and card-dev-2 in the dev-system namespace.
@@ -26,13 +25,13 @@ What we did previously was to restrict the permissions for the 'cyberjoker' user
   - 'get'
 ```
 
-Let's check if it's right - let's regenerate the kubeconfig for 'cyberjoker':
-```plain
-cd && curl http://localhost:30007/basic/login -H "Authorization: Basic Y3liZXJqb2tlcjoxMjM0NTY=" | jq -r .data > cyberjoker.kubeconfig
-```{{exec}}
-
 Let's check which CardTemplates the 'cyberjoker' is able to 'list':
 ```plain
 export KUBECONFIG=/root/cyberjoker.kubeconfig
 kubectl get cardtemplates -n dev-system
+```{{exec}}
+
+But 'cyberjoker' is able to 'get' the CardTemplate card-dev-1:
+```plain
+kubectl get cardtemplates card-dev-1 -n dev-system -o json | jq
 ```{{exec}}
