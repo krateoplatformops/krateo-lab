@@ -12,14 +12,14 @@ Let's switch back to the 'cyberjoker' user:
 export KUBECONFIG=/root/cyberjoker.kubeconfig
 ```{{exec}}
 
-With the current Role and RoleBinding, the 'cyberjoker' user can do anything on any CardTemplate:
+With the current Role and RoleBinding, the 'cyberjoker' user can do anything on any CardTemplate in the dev-system namespace:
 ```plain
-kubectl get cardtemplates -A
+kubectl get cardtemplates -n dev-system
 ```{{exec}}
 
 Let's check in details what info contains the CardTemplate card-dev-1:
 ```plain
-kubectl get cardtemplates card-dev-1 -n dev-system -o yaml
+kubectl get cardtemplates card-dev-1 -n dev-system -o yaml | jq
 ```{{exec}}
 
 What if we want the krateo-bff to substitute the placeholder values?
