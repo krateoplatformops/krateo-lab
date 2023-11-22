@@ -19,7 +19,7 @@ kubectl get cardtemplates -n dev-system
 
 Let's check in details what info contains the CardTemplate card-dev-1:
 ```plain
-kubectl get cardtemplates card-dev-1 -n dev-system -o yaml | jq
+kubectl get cardtemplates card-dev-1 -n dev-system -o json | jq
 ```{{exec}}
 
 What if we want the krateo-bff to substitute the placeholder values?
