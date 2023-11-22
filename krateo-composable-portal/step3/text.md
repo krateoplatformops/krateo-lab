@@ -103,7 +103,7 @@ Let's apply a Role to the 'cyberjoker' user, acting again as a kubernetes-admin 
 
 ```plain
 export KUBECONFIG=/root/.kube/config
-kubectl apply -f role.yaml
+kubectl apply -f /root/filesystem/role.yaml
 ```{{exec}}
 
 Let's check again if the user 'cyberjoker' can access to pods now:
