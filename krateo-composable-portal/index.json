@@ -34,10 +34,6 @@
       {
         "title": "Install the GitHub authentication strategy",
         "text": "step5/text.md"
-      },
-      {
-        "title": "Install the frontend locally",
-        "text": "step6/text.md"
       }
     ],
     "assets": {
