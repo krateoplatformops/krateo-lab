@@ -106,6 +106,11 @@ export KUBECONFIG=/root/.kube/config
 kubectl apply -f /root/filesystem/role.yaml
 ```{{exec}}
 
+Let's regenerate the kubeconfig for 'cyberjoker':
+```plain
+cd && curl http://localhost:30007/basic/login -H "Authorization: Basic Y3liZXJqb2tlcjoxMjM0NTY=" | jq -r .data > cyberjoker.kubeconfig
+```{{exec}}
+
 Let's check again if the user 'cyberjoker' can access to pods now:
 
 ```plain
