@@ -20,3 +20,5 @@ server_value=$(yq eval '.clusters[0].cluster.server' "$file_path")
 export AUTHN_KUBERNETES_URL="$server_value"
 
 sed -i "s|https:\/\/kube-apiserver:6443|${AUTHN_KUBERNETES_URL}|" values.yaml
+
+sed -i "s|https:\/\/krateo-gateway.krateo-system.svc:8443|https:\/\/localhost:30005|" values.yaml
