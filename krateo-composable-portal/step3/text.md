@@ -92,7 +92,7 @@ export KUBECONFIG=/root/.kube/config
 kubectl get secrets -n dev-system
 ```{{exec}}
 
-We expect that the user 'cyberjoker' cannot access to pods:
+We expect that the user 'cyberjoker' cannot access to secrets in the dev-system namespace:
 
 ```plain
 export KUBECONFIG=/root/cyberjoker.kubeconfig
@@ -111,7 +111,7 @@ Let's regenerate the kubeconfig for 'cyberjoker':
 cd && curl http://localhost:30007/basic/login -H "Authorization: Basic Y3liZXJqb2tlcjoxMjM0NTY=" | jq -r .data > cyberjoker.kubeconfig
 ```{{exec}}
 
-Let's check again if the user 'cyberjoker' can access to pods now:
+Let's check again if the user 'cyberjoker' can access to secrets in the dev-system namespace:
 
 ```plain
 export KUBECONFIG=/root/cyberjoker.kubeconfig

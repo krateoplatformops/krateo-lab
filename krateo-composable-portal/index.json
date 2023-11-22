@@ -31,7 +31,9 @@
     "assets": {
       "host01": [
         {"file": "cardtemplate-sample1.yaml", "target": "/"},
-        {"file": "role.yaml", "target": "/"}
+        {"file": "cardtemplate-sample2.yaml", "target": "/"},
+        {"file": "role-1.yaml", "target": "/"},
+        {"file": "role-2.yaml", "target": "/"}
       ]
     },
     "finish": {
