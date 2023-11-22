@@ -89,14 +89,14 @@ This user has no Role enabled yet. Let's make an example: using the kubernetes-a
 
 ```plain
 export KUBECONFIG=/root/.kube/config
-kubectl get cm -A
+kubectl get secrets -n dev-system
 ```{{exec}}
 
 We expect that the user 'cyberjoker' cannot access to pods:
 
 ```plain
 export KUBECONFIG=/root/cyberjoker.kubeconfig
-kubectl get cm -A
+kubectl get secrets -n dev-system
 ```{{exec}}
 
 Let's apply a Role to the 'cyberjoker' user, acting again as a kubernetes-admin user:
@@ -115,5 +115,5 @@ Let's check again if the user 'cyberjoker' can access to pods now:
 
 ```plain
 export KUBECONFIG=/root/cyberjoker.kubeconfig
-kubectl get cm -A
+kubectl get secrets -n dev-system
 ```{{exec}}
