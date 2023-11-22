@@ -1,41 +1,29 @@
-## Install Krateo Composable Portal frontend
-
-Let's install GitHub as Identity Provider
+## Install Krateo Composable Portal authn-service Helm chart
+Now we start to interact with Composable Portal widgets. Let's start with a CardTemplate:
 
 ```plain
-cat <<EOF | kubectl apply -f -
-apiVersion: v1
-data:
-  clientSecret: YzRkZGRjNjk0NjYwNTc3NjBkNTU2Nzc1NzliMmM1Mzc1ZWJkOGViMw==
-kind: Secret
-metadata:
-  name: github
-  namespace: krateo-system
-type: Opaque
----
-apiVersion: oauth.authn.krateo.io/v1alpha1
-kind: GithubConfig
-metadata:
-  name: github
-spec:
-  authStyle: 0
-  authURL: https://github.com/login/oauth/authorize
-  clientID: 77fcb37e2373f49fa771
-  clientSecretRef:
-    key: clientSecret
-    name: github
-    namespace: krateo-system
-  organization: krateoplatformops
-  redirectURL: https://localhost:5173/auth/github
-  scopes:
-  - read:user
-  - read:org
-  tokenURL: https://github.com/login/oauth/access_token
-EOF
+export KUBECONFIG=/root/.kube/config
+kubectl apply -f /root/filesystem/cardtemplate-sample1.yaml
 ```{{exec}}
 
-And let's check again the authentication strategies available:
+Let's switch back to the 'cyberjoker' user:
 
 ```plain
-curl http://localhost:30007/strategies
+export KUBECONFIG=/root/cyberjoker.kubeconfig
+```{{exec}}
+
+With the current Role and RoleBinding, the 'cyberjoker' user can do anything on any CardTemplate:
+```plain
+kubectl get cardtemplates -A
+```{{exec}}
+
+Let's check in details what info contains the CardTemplate card-dev-1:
+```plain
+kubectl get cardtemplates card-dev-1 -n dev-system -o yaml
+```{{exec}}
+
+What if we want the krateo-bff to substitute the placeholder values?
+
+```plain
+kubectl get --raw "/apis/widgets.ui.krateo.io/v1alpha1/namespaces/dev-system/cardtemplates/card-dev-1?eval=true" | jq
 ```{{exec}}

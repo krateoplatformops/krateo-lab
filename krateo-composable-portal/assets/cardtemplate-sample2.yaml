@@ -1,19 +1,8 @@
 ---
-apiVersion: v1
-kind: Secret
-type: Opaque
-metadata:
-  name: httpbin-endpoint
-  namespace: dev-system
-stringData:
-  server: http://httpbin.org
-  username: tik
-  password: tok
----
 apiVersion: widgets.ui.krateo.io/v1alpha1
 kind: CardTemplate
 metadata:
-  name: card-dev-1
+  name: card-dev-2
   namespace: dev-system
 spec:
   app:
