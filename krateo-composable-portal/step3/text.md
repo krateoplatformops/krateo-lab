@@ -82,7 +82,7 @@ cd && curl http://localhost:30007/basic/login -H "Authorization: Basic Y3liZXJqb
 The authn-service response contains the kubeconfig for the user logged in.
 
 ```plain
-cat cyberjoker.kubeconfig
+cat cyberjoker.kubeconfig | jq
 ```{{exec}}
 
 This user has no Role enabled yet. Let's make an example: using the kubernetes-admin kubeconfig, let's get the list of all pods in the cluster:
