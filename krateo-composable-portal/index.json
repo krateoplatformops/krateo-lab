@@ -31,7 +31,7 @@
     ],
     "assets": {
       "host01": [
-        {"file": "cardtemplate-sample1.yaml", "target": "/root"}
+        {"file": "cardtemplate-sample1.yaml", "target": "/"}
       ]
     },
     "finish": {

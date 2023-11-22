@@ -3,7 +3,6 @@ Let's ovverride the AUTHN_KUBECONFIG_PROXY_URL default value
 
 ```plain
 sed -i "s|https:\/\/krateo-gateway.krateo-system.svc|{{TRAFFIC_HOST1_30005}}|" values.yaml
-
 ```{{exec}}
 
 Now we install the chart
@@ -83,7 +82,7 @@ curl http://localhost:30007/strategies
 Now that there's a new basic user, let's try to login and check the response!
 
 ```plain
-curl http://localhost:30007/basic/login -H "Authorization: Basic Y3liZXJqb2tlcjoxMjM0NTY=" | jq -r .data >> cyberjoker.kubeconfig
+cd && curl http://localhost:30007/basic/login -H "Authorization: Basic Y3liZXJqb2tlcjoxMjM0NTY=" | jq -r .data >> cyberjoker.kubeconfig
 ```{{exec}}
 
 export KUBECONFIG=/root/.kube/config

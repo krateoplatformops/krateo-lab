@@ -11,7 +11,7 @@ sed -i "s|localhost|${foo}|" values.yaml
 Now we install the chart
 
 ```plain
-helm install krateo-gateway krateo/krateo-gateway  --create-namespace --namespace krateo-system --version 0.1.1 -f values.yaml
+helm install krateo-gateway krateo/krateo-gateway  --create-namespace --namespace krateo-system --version 0.1.3 -f values.yaml
 ```{{exec}}
 
 Let's wait for the deployment to be Available
