@@ -24,8 +24,16 @@
         "foreground": "step3/foreground.sh"
       },
       {
-        "title": "Install Krateo Composable Portal authn-service Helm chart",
+        "title": "Let's play with Kubernetes RBAC",
         "text": "step4/text.md"
+      },
+      {
+        "title": "Let's play with Kubernetes RBAC",
+        "text": "step4-1/text.md"
+      },
+      {
+        "title": "Install the GitHub authentication strategy",
+        "text": "step5/text.md"
       }
     ],
     "assets": {
