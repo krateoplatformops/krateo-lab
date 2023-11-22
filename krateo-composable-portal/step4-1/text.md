@@ -35,3 +35,5 @@ But 'cyberjoker' is able to 'get' the CardTemplate card-dev-1:
 ```plain
 kubectl get cardtemplates card-dev-1 -n dev-system -o json | jq
 ```{{exec}}
+
+Give a look at the annotation 'krateo.io/allowed-verbs'.

@@ -1,6 +1,7 @@
 ## Let's install GitHub as Identity Provider
 
 ```plain
+export KUBECONFIG=/root/.kube/config
 cat <<EOF | kubectl apply -f -
 apiVersion: v1
 data:
