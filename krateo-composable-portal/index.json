@@ -24,9 +24,8 @@
         "foreground": "step3/foreground.sh"
       },
       {
-        "title": "Install Krateo Composable Portal portal locally",
-        "text": "step4/text.md",
-        "foreground": "step4/foreground.sh"
+        "title": "Install Krateo Composable Portal authn-service Helm chart",
+        "text": "step4/text.md"
       }
     ],
     "assets": {
