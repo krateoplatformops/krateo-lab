@@ -9,6 +9,7 @@
       {
         "title": "Install Krateo Composable FinOps - operator-exporter",
         "text": "step1/text.md",
+        "foreground": "step1/webserver-mock.sh",
         "verify": "step1/verify.sh"
       },
       {

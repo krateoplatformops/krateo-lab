@@ -1,4 +1,4 @@
-## Install Krateo Composable FinOps - operator-scraper
+## Install Krateo Composable FinOps - operator-focus
 Let's repeat the installation for one last operator, the FinOps operator-focus. This module is responsible for starting the exporting and scraping pipeline for static FOCUS costs. There will be an example later.
 
 Download the repository:
@@ -11,7 +11,7 @@ cd finops-operator-focus
 Deploy the operator:
 IMG is the image of the operator. REPO indicates where to get the exporter/scraper images.
 ```plain
-make deploy IMG=ghcr.io/krateoplatformops/finops-operator-focus:0.1.0 REPO=ghcr.io/krateoplatformops/
+make deploy IMG=ghcr.io/krateoplatformops/finops-operator-focus:latest REPO=ghcr.io/krateoplatformops
 ```{{exec}}
 
 Let's wait for the deployment to be available
