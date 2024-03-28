@@ -1,0 +1,46 @@
+{
+  "title": "Krateo Composable FinOps lab",
+  "description": "Let's learn how to work with Krateo Composable FinOps",
+  "details": {
+    "intro": {
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "title": "Install Krateo Composable FinOps - operator-exporter",
+        "text": "step1/text.md",
+        "verify": "step1/verify.sh"
+      },
+      {
+        "title": "Install Krateo Composable FinOps - operator-scraper",
+        "text": "step2/text.md",
+        "verify": "step2/verify.sh",
+        "foreground": "step2/foreground.sh"
+      },
+      {
+        "title": "Install Krateo Composable FinOps - operator-focus",
+        "text": "step3/text.md",
+        "verify": "step3/verify.sh",
+      },
+      {
+        "title": "Let's deploy an exporter from an API endpoint",
+        "text": "step4/text.md",
+      },
+      {
+        "title": "Let's deploy an exporter from a static FOCUS cost",
+        "text": "step5/text.md",
+      },
+    ],
+    "assets": {
+      "host01": [
+      {"file": "mock-webserver.yaml", "target": "/"},
+     ]
+    },
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-1node"
+  }
+}
