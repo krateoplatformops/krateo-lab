@@ -20,20 +20,20 @@
       {
         "title": "Install Krateo Composable FinOps - operator-focus",
         "text": "step3/text.md",
-        "verify": "step3/verify.sh",
+        "verify": "step3/verify.sh"
       },
       {
         "title": "Let's deploy an exporter from an API endpoint",
-        "text": "step4/text.md",
+        "text": "step4/text.md"
       },
       {
         "title": "Let's deploy an exporter from a static FOCUS cost",
-        "text": "step5/text.md",
-      },
+        "text": "step5/text.md"
+      }
     ],
     "assets": {
       "host01": [
-      {"file": "mock-webserver.yaml", "target": "/"},
+      {"file": "mock-webserver.yaml", "target": "/"}
      ]
     },
     "finish": {
