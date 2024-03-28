@@ -14,8 +14,7 @@
       {
         "title": "Install Krateo Composable FinOps - operator-scraper",
         "text": "step2/text.md",
-        "verify": "step2/verify.sh",
-        "foreground": "step2/foreground.sh"
+        "verify": "step2/verify.sh"
       },
       {
         "title": "Install Krateo Composable FinOps - operator-focus",
