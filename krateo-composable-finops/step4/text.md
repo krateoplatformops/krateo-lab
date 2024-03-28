@@ -56,10 +56,9 @@ spec:
       # Variables that contain only uppercase letters are taken from environment variables
       subscription_id: d3sad326-42a4-5434-9623-a3sd22fefb84
       authenticationToken: 123456abc
-      host: FINOPS_WEBSERVICE_API_MOCK_SERVICE_HOST
-      port: FINOPS_WEBSERVICE_API_MOCK_SERVICE_PORT" > sample.yaml
-  scraperConfig:
-```
+      host: WEBSERVICE_API_MOCK_SERVICE_HOST
+      port: WEBSERVICE_API_MOCK_SERVICE_PORT" > sample.yaml
+```{{exec}}
 
 Deploy the sample configuration:
 ```plain

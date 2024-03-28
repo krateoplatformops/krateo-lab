@@ -82,45 +82,46 @@ metadata:
   name: focusconfig-sample
 spec:
   focusSpec:
-    region: "EU"
-    availabilityZone: "EU2"
+    region: \"EU\"
+    availabilityZone: \"EU2\"
     billedCost: 30020.0
-    billingAccountId: "0000"
-    billingAccountName: "testAccount"
-    billingCurrency: "EUR"
-    billingPeriodStart: "2024-01-01T00:00:00+02:00"
-    billingPeriodEnd: "2024-12-31T23:59:59+02:00"
-    chargeCategory: "purchase"
-    chargeDescription: "1 Dell XYZ"
-    chargeFrequency: "one-time"
-    chargeSubCategory: "On-Demand"
-    chargePeriodStart: "2024-01-01T00:00:00+02:00"
-    chargePeriodEnd: "2024-12-31T23:59:59+02:00"
+    billingAccountId: \"0000\"
+    billingAccountName: \"testAccount\"
+    billingCurrency: \"EUR\"
+    billingPeriodStart: \"2024-01-01T00:00:00+02:00\"
+    billingPeriodEnd: \"2024-12-31T23:59:59+02:00\"
+    chargeCategory: \"purchase\"
+    chargeDescription: \"1 Dell XYZ\"
+    chargeFrequency: \"one-time\"
+    chargeSubCategory: \"On-Demand\"
+    chargePeriodStart: \"2024-01-01T00:00:00+02:00\"
+    chargePeriodEnd: \"2024-12-31T23:59:59+02:00\"
     effectiveCost: 30000.0
     listCost: 30000.0
     listUnitPrice: 10000.0
-    pricingCategory: "other"
+    pricingCategory: \"other\"
     pricingQuantity: 3
-    pricingUnit: "machines"
-    invoiceIssuer: "Dell"
-    provider: "Dell"
-    publisher: "Dell"
-    resourceId: "0000"
-    resourceName: "Dell HW"
-    resourceType: "Prod Cluster"
-    serviceName: "1 machine purchase"
-    serviceCategory: "Compute"
-    subAccountId: "1234"
-    subAccountName: "test"
-    skuId: "0000"
-    skuPriceId: "0000"
+    pricingUnit: \"machines\"
+    invoiceIssuer: \"Dell\"
+    provider: \"Dell\"
+    publisher: \"Dell\"
+    resourceId: \"0000\"
+    resourceName: \"Dell HW\"
+    resourceType: \"Prod Cluster\"
+    serviceName: \"1 machine purchase\"
+    serviceCategory: \"Compute\"
+    subAccountId: \"1234\"
+    subAccountName: \"test\"
+    skuId: \"0000\"
+    skuPriceId: \"0000\"
     tags:
-      - key: "testkey1"
-        value: "testvalue"
-      - key: "testkey2"
-        value: "testvalue"
-    usageQuantity: 1" > sample.yaml
-```
+      - key: \"testkey1\"
+        value: \"testvalue\"
+      - key: \"testkey2\"
+        value: \"testvalue\"
+    usageQuantity: 1
+    usageUnit: \"none\" " > sample.yaml
+```{{exec}}
 
 Deploy the sample configuration:
 ```plain

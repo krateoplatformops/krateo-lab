@@ -26,7 +26,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: webservice-api-mock-service
+  name: webservice-api-mock
 spec:
   selector:
     app: webservice-api-mock
