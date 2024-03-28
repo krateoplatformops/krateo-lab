@@ -58,6 +58,7 @@ spec:
       authenticationToken: 123456abc
       host: FINOPS_WEBSERVICE_API_MOCK_SERVICE_HOST
       port: FINOPS_WEBSERVICE_API_MOCK_SERVICE_PORT" > sample.yaml
+  scraperConfig:
 ```
 
 Deploy the sample configuration:
