@@ -61,11 +61,12 @@ spec:
       host: WEBSERVICE_API_MOCK_SERVICE_HOST
       port: WEBSERVICE_API_MOCK_SERVICE_PORT
   scraperConfig: # same fields as krateoplatformops/finops-prometheus-scraper-generic
-    tableName: krateo-finops-tutorial
+    tableName: krateo_finops_tutorial
     pollingIntervalHours: 1
     scraperDatabaseConfigRef:
       name:  finops-tutorial-config
       namespace: default" > sample.yaml
+kubectl delete -f sample.yaml
 kubectl apply -f sample.yaml
 ```{{exec}}
 

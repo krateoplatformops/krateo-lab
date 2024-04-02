@@ -141,3 +141,9 @@ spec:
   notebookPath: # path to the notebook" > database.yaml
 nano database.yaml
 ```{{exec}}
+
+Now, apply the configuration of the database to the cluster.
+
+```plain
+kubectl apply -f database.yaml
+```{{exec}}
