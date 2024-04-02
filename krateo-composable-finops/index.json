@@ -39,6 +39,12 @@
         "text": "step7/text.md"
       },
       {
+        "title": "Database Custom resource data input",
+        "foreground": "step71/foreground.sh",
+        "text": "step71/text.md",
+        "verify": "step71/verify.sh"
+      },
+      {
         "title": "Deploy the scrapers and automatically upload the data",
         "text": "step8/text.md"
       },
