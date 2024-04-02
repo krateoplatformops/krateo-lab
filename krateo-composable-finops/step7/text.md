@@ -126,24 +126,4 @@ spec:
   notebookPath: # path to the notebook 
 ```
 
-Input your data in the following configuration file and save it. ("CTRL+X", then "Y", then "enter")
-
-```plain
-echo "apiVersion: finops.krateo.io/v1
-kind: DatabaseConfig
-metadata:
-  name: finops-tutorial-config
-  namespace: default
-spec:
-  host: # host name for the database
-  token: # access token
-  clusterName: # generic compute cluster name
-  notebookPath: # path to the notebook" > database.yaml
-nano database.yaml
-```{{exec}}
-
-Now, apply the configuration of the database to the cluster.
-
-```plain
-kubectl apply -f database.yaml
-```{{exec}}
+In the next page a script will ask for all the required data to compile it. 

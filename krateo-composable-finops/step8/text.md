@@ -71,7 +71,7 @@ kubectl apply -f sample.yaml
 ```{{exec}}
 
 The upload may take some time. 
-You can verify the data in the SQL warehouse with a simple select. Make sure to select the unity catalog (or enter the full path for the table name).
+You can verify the data in the SQL warehouse with a simple select. Make sure to select the correct catalog or enter the full path in the table name.
 
 ```
 SELECT * FROM krateo-finops-tutorial
