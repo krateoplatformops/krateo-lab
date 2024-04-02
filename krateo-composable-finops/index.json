@@ -29,6 +29,18 @@
       {
         "title": "Let's deploy an exporter from a static FOCUS cost",
         "text": "step5/text.md"
+      },
+      {
+        "title": "Let's configure Azure Databricks for data storage",
+        "text": "step6/text.md"
+      },
+      {
+        "title": "Let's configure the Azure Databricks notebook",
+        "text": "step7/text.md"
+      },
+      {
+        "title": "Deploy the scrapers and automatically upload the data",
+        "text": "step8/text.md"
       }
     ],
     "assets": {
