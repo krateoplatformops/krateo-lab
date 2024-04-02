@@ -41,6 +41,10 @@
       {
         "title": "Deploy the scrapers and automatically upload the data",
         "text": "step8/text.md"
+      },
+      {
+        "title": "IMPORTANT",
+        "text": "step9/text.md"
       }
     ],
     "assets": {
