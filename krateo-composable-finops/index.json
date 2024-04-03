@@ -55,7 +55,7 @@
     "assets": {
       "host01": [
       {"file": "mock-webserver.yaml", "target": "/"},
-      {"file": "database-input.sh", "target": "/"},
+      {"file": "database-input.sh", "target": "/"}
      ]
     },
     "finish": {
