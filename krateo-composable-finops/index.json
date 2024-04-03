@@ -41,6 +41,7 @@
       {
         "title": "Database Custom resource data input",
         "text": "step71/text.md",
+        "foreground": "step71/foreground.sh",
         "verify": "step71/verify.sh"
       },
       {

@@ -2,7 +2,6 @@
 
 Input your data in the following configuration script:
 ```plain
-cd /
 ./database-input.sh
 ```{{exec}}
 
