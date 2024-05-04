@@ -12,22 +12,22 @@
         "verify": "step1/verify.sh"
       },
       {
-        "title": "Deploy a Definition via tgz archive",
+        "title": "Deploy a CompositionDefinition via tgz archive",
         "text": "step2-1/text.md",
         "verify": "step2-1/verify.sh"
       },
       {
-        "title": "Deploy a Definition via OCI artifact",
+        "title": "Deploy a CompositionDefinition via OCI artifact",
         "text": "step2-2/text.md",
         "verify": "step2-2/verify.sh"
       },
       {
-        "title": "Deploy a Definition via Helm repository",
+        "title": "Deploy a CompositionDefinition via Helm repository",
         "text": "step2-3/text.md",
         "verify": "step2-3/verify.sh"
       },
       {
-        "title": "Let's wrap up our Definition",
+        "title": "Let's wrap up our CompositionDefinition",
         "text": "step2-4/text.md",
         "verify": "step2-4/verify.sh"
       },
@@ -42,7 +42,7 @@
         "verify": "step4/verify.sh"
       },
       {
-        "title": "Delete a Definition",
+        "title": "Delete a CompositionDefinition",
         "text": "step5/text.md"
       }
     ],

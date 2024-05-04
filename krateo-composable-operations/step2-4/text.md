@@ -1,9 +1,9 @@
-We just installed three `Definition`, pulling three `Composition` in three different ways.
+We just installed three `CompositionDefinition`, pulling three `Composition` in three different ways.
 
 <br>
 
-Let's wrap up our Definitions.
+Let's wrap up our CompositionDefinitions.
 
 ```plain
-kubectl get definition --namespace krateo-system -o wide
+kubectl get compositiondefinition --namespace krateo-system -o wide
 ```{{exec}}

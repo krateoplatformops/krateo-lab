@@ -1,9 +1,9 @@
-Let's install another `Definition` pulling the `Composition` as an OCI artifact.
+Let's install another `CompositionDefinition` pulling the `Composition` as an OCI artifact.
 
 ```plain
 cat <<EOF | kubectl apply -f -
 apiVersion: core.krateo.io/v1alpha1
-kind: Definition
+kind: CompositionDefinition
 metadata:
   name: sample-oci
   namespace: krateo-system
@@ -17,13 +17,13 @@ EOF
 Let's wait for the Definition `sample-oci` to be Ready
 
 ```plain
-kubectl wait definition sample-oci --for condition=Ready=True --timeout=300s --namespace krateo-system
+kubectl wait compositiondefinition sample-oci --for condition=Ready=True --timeout=300s --namespace krateo-system
 ```{{exec}}
 
-Check the Definition `sample-oci` outputs
+Check the CompositionDefinition `sample-oci` outputs
 
 ```plain
-kubectl get definition sample-oci --namespace krateo-system
+kubectl get compositiondefinition sample-oci --namespace krateo-system
 ```{{exec}}
 
 The `core-provider` has just generated:

@@ -1,9 +1,9 @@
-Let's generate and deploy the Custom Resource Definition representing the `Composition` inspired by the Bitnami Postgresql Helm Chart using our `Definition`. There are three possible ways to install it: via tgz archive, via oci artifact or via Helm repo. In this first example, we will pull directly the archive of the Helm chart
+Let's generate and deploy the Custom Resource Definition representing the `Composition` inspired by the Bitnami Postgresql Helm Chart using our `CompositionDefinition`. There are three possible ways to install it: via tgz archive, via oci artifact or via Helm repo. In this first example, we will pull directly the archive of the Helm chart
 
 ```plain
 cat <<EOF | kubectl apply -f -
 apiVersion: core.krateo.io/v1alpha1
-kind: Definition
+kind: CompositionDefinition
 metadata:
   annotations:
     "krateo.io/connector-verbose": "true"
@@ -15,16 +15,16 @@ spec:
 EOF
 ```{{exec}}
 
-Let's wait for the Definition `sample-archive` to be Ready
+Let's wait for the CompositionDefinition `sample-archive` to be Ready
 
 ```plain
-kubectl wait definition sample-archive --for condition=Ready=True --timeout=300s --namespace krateo-system
+kubectl wait compositiondefinition sample-archive --for condition=Ready=True --timeout=300s --namespace krateo-system
 ```{{exec}}
 
-Check the Definition `sample-archive` outputs, especially for the `RESOURCE` field.
+Check the CompositionDefinition `sample-archive` outputs, especially for the `RESOURCE` field.
 
 ```plain
-kubectl get definition sample-archive --namespace krateo-system
+kubectl get compositiondefinition sample-archive --namespace krateo-system
 ```{{exec}}
 
 The `core-provider` has just generated:

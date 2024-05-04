@@ -1,8 +1,8 @@
 
-What happens when we delete the `Definition` `sample-archive`? We have a Kubernetes Deployment related to the generated CRD and we have a Custom Resource `sample`.
+What happens when we delete the `CompositionDefinition` `sample-archive`? We have a Kubernetes Deployment related to the generated CRD and we have a Custom Resource `sample`.
 
 ```plain
-kubectl delete definition sample-archive --namespace krateo-system
+kubectl delete compositiondefinition sample-archive --namespace krateo-system
 ```{{exec}}
 
 The `core-provider` has just deleted:

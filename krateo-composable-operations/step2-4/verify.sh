@@ -1,3 +1,3 @@
 #!/bin/bash
 
-kubectl get definition --namespace krateo-system -o wide
+kubectl get compositiondefinition --namespace krateo-system -o wide
