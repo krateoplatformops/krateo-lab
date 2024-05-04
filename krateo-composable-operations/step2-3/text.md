@@ -1,9 +1,9 @@
-Let's install another `Definition` pulling the `Composition` from a Helm repository.
+Let's install another `CompositionDefinition` pulling the `Composition` from a Helm repository.
 
 ```plain
 cat <<EOF | kubectl apply -f -
 apiVersion: core.krateo.io/v1alpha1
-kind: Definition
+kind: CompositionDefinition
 metadata:
   name: sample-repo
   namespace: krateo-system
@@ -15,13 +15,13 @@ spec:
 EOF
 ```{{exec}}
 
-Let's wait for the Definition `sample-repo` to be Ready
+Let's wait for the CompositionDefinition `sample-repo` to be Ready
 
 ```plain
-kubectl wait definition sample-repo --for condition=Ready=True --timeout=300s --namespace krateo-system
+kubectl wait compositiondefinition sample-repo --for condition=Ready=True --timeout=300s --namespace krateo-system
 ```{{exec}}
 
-Check the Definition `sample-repo` outputs
+Check the CompositionDefinition `sample-repo` outputs
 
 ```plain
 kubectl get definition sample-repo --namespace krateo-system

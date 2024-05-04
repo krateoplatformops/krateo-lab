@@ -18,9 +18,9 @@ Here are some online tools useful to verify the [JSON Schema](https://json-schem
 - https://www.jsonschemavalidator.net/
 - https://json-schema.hyperjump.io/
 
-## What is a Definition?
+## What is a CompositionDefinition?
 
-A Definition is the Krateo Custom Resource that takes the Helm Chart specified within the Kubernetes manifest and automatically:
+A CompositionDefinition is the Krateo Custom Resource that takes the Helm Chart specified within the Kubernetes manifest and automatically:
 - generates a Custom Resource Definition that represents the values.schema.json file from the Helm chart
 - instantiates a Deployment that watches any new Custom Resource that represents the values.yaml from the Helm Chart
 
@@ -40,7 +40,7 @@ helm repo update
 Now we install the chart
 
 ```plain
-helm install krateo-core-provider krateo/core-provider --create-namespace --namespace krateo-system --version 0.7.5
+helm install krateo-core-provider krateo/core-provider --create-namespace --namespace krateo-system --version 0.10.6
 ```{{exec}}
 
 Let's wait for the deployment to be Available
@@ -53,7 +53,7 @@ kubectl wait deployment core-provider --for condition=Available=True --timeout=3
 
 ## core.krateo.io/v1alpha1, Definition
 
-A `Definition` defines a Krateo Composition Archive URL.
+A `CompositionDefinition` defines a Krateo Composition Archive URL.
 
 | Spec               | Description                                     | Required |
 |:-------------------|:------------------------------------------------|:---------|
