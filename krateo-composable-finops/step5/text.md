@@ -132,10 +132,10 @@ kubectl apply -f sample.yaml
 
 Let's wait for the deployment to be available
 ```plain
-kubectl wait deployment focusconfig-sample-deployment --for condition=Available=True --timeout=300s
+kubectl wait deployment -n finops focusconfig-sample-deployment --for condition=Available=True --timeout=300s
 ```{{exec}}
 
 You can now verify the exporter output with:
 ```plain
-curl localhost:$(kubectl get service focusconfig-sample-service -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/metrics 
+curl localhost:$(kubectl get service -n finops focusconfig-sample-service -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/metrics 
 ```{{exec}}
