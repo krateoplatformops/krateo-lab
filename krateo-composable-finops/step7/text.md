@@ -118,7 +118,7 @@ apiVersion: finops.krateo.io/v1
 kind: DatabaseConfig
 metadata:
   name: # config name
-  namespace: default
+  namespace: finops
 spec:
   host: # host name for the database
   token: # access token

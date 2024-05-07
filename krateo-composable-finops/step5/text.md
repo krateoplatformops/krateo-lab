@@ -19,6 +19,7 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/created-by: operator-focus
   name: focusconfig-sample2
+  namespace: finops
 spec:
   scraperConfig: # same fields as krateoplatformops/finops-prometheus-scraper-generic
     tableName: # tableName in the database to upload the data to
@@ -80,6 +81,7 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/created-by: operator-focus
   name: focusconfig-sample
+  namespace: finops
 spec:
   focusSpec:
     region: \"EU\"
