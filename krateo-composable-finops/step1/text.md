@@ -16,5 +16,5 @@ IMG=ghcr.io/krateoplatformops/finops-operator-exporter:latest REPO=ghcr.io/krate
 Let's wait for the deployment to be available
 
 ```plain
-kubectl wait deployment operator-exporter-controller-manager --for condition=Available=True --timeout=300s --namespace operator-exporter-system
+kubectl wait deployment operator-exporter-controller-manager --for condition=Available=True --timeout=300s --namespace finops
 ```{{exec}}
