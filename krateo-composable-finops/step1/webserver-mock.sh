@@ -1,6 +1,11 @@
 #!/bin/bash
 
-echo "apiVersion: apps/v1
+echo "apiVersion: v1
+kind: Namespace
+metadata:
+  name: finops
+---
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: webservice-api-mock-deployment
