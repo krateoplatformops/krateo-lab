@@ -19,6 +19,7 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/created-by: operator-exporter
   name: # ExporterScraperConfig name
+  namespace: finops
 spec:
   exporterConfig: # same as krateoplatformops/finops-prometheus-exporter-generic
     name: #name of the exporter
@@ -45,6 +46,7 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/created-by: operator-exporter
   name: exporterscraperconfig-sample
+  namespace: finops
 spec:
   exporterConfig:
     name: azure

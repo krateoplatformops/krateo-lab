@@ -1,3 +1,3 @@
 #!/bin/bash
 
-kubectl get databaseConfig finops-tutorial-config
+kubectl get databaseConfig finops-tutorial-config --namespace finops

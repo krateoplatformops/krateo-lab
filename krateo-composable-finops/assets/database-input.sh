@@ -16,7 +16,7 @@ printf "apiVersion: finops.krateo.io/v1
 kind: DatabaseConfig
 metadata:
   name: finops-tutorial-config
-  namespace: default
+  namespace: finops
 spec:
   host: %s
   token: %s

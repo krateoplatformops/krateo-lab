@@ -10,7 +10,7 @@ cd finops-operator-exporter
 Deploy the operator:
 IMG is the image of the operator. REPO indicates where to get the exporter/scraper images.
 ```plain
-make deploy IMG=ghcr.io/krateoplatformops/finops-operator-exporter:latest REPO=ghcr.io/krateoplatformops
+IMG=ghcr.io/krateoplatformops/finops-operator-exporter:latest REPO=ghcr.io/krateoplatformops ./scripts/deploy.sh
 ```{{exec}}
 
 Let's wait for the deployment to be available
