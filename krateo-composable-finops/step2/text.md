@@ -17,5 +17,5 @@ IMG=ghcr.io/krateoplatformops/finops-operator-scraper:latest REPO=ghcr.io/krateo
 Let's wait for the deployment to be available
 
 ```plain
-kubectl wait deployment operator-scraper-controller-manager --for condition=Available=True --timeout=300s --namespace operator-scraper-system
+kubectl wait deployment operator-scraper-controller-manager --for condition=Available=True --timeout=300s --namespace finops
 ```{{exec}}
