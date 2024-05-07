@@ -4,6 +4,7 @@ echo "apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: webservice-api-mock-deployment
+  namespace: finops
   labels:
     app: webservice-api-mock
 spec:
@@ -27,6 +28,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: webservice-api-mock
+  namespace: finops
 spec:
   selector:
     app: webservice-api-mock
