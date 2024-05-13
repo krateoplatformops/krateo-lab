@@ -14,7 +14,7 @@ spec:
 EOF
 ```{{exec}}
 
-Let's wait for the Definition `sample-oci` to be Ready
+Let's wait for the CompositionDefinition `sample-oci` to be Ready
 
 ```plain
 kubectl wait compositiondefinition sample-oci --for condition=Ready=True --timeout=300s --namespace krateo-system
