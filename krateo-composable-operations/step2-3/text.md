@@ -24,7 +24,7 @@ kubectl wait compositiondefinition sample-repo --for condition=Ready=True --time
 Check the CompositionDefinition `sample-repo` outputs
 
 ```plain
-kubectl get definition sample-repo --namespace krateo-system
+kubectl get compositiondefinition sample-repo --namespace krateo-system
 ```{{exec}}
 
 The `core-provider` has just generated:
