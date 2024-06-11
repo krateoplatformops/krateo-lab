@@ -14,6 +14,18 @@
       {
         "title": "Setup authentication strategies",
         "text": "step2/text.md"
+      },
+      {
+        "title": "Add a Composition to the Kubernetes Cluster",
+        "text": "step3/text.md"
+      },
+      {
+        "title": "Add Krateo FormTemplate to retrieve the Composition",
+        "text": "step4/text.md"
+      },
+      {
+        "title": "Add Krateo CardTemplate to retrieve the FormTemplate",
+        "text": "step5/text.md"
       }
     ],
     "assets": {
