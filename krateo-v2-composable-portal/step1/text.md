@@ -33,7 +33,7 @@ helm upgrade installer installer \
   --create-namespace \
   --install \
   --wait \
-  --version 0.3.0 \
+  --version 0.3.1 \
   --set krateoplatformops.init.enabled=false \
   --set krateoplatformops.authn.KUBECONFIG_SERVER_URL=$KUBECONFIG_SERVER_URL \
   --set krateoplatformops.frontend.overrideconf=true \
