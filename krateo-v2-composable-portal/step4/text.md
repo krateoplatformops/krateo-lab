@@ -1,29 +1,23 @@
-## Install Krateo Composable Portal widgets
-Now we start to interact with Composable Portal widgets. Let's start with a CardTemplate:
+## Add Krateo FormTemplate to retrieve the Composition
 
 ```plain
-export KUBECONFIG=/root/.kube/config
-kubectl apply -f /root/filesystem/cardtemplate-sample1.yaml
+cat <<EOF | kubectl apply -f -
+apiVersion: widgets.krateo.io/v1alpha1
+kind: FormTemplate
+metadata:
+  name: fireworksapp-tgz
+  namespace: demo-system
+spec:
+  compositionDefinitionRef:
+    name: fireworksapp-tgz
+    namespace: demo-system
+EOF
 ```{{exec}}
 
-Let's switch back to the 'cyberjoker' user:
+Let's check the status of the `FormTemplate` `fireworksapp-tgz` resource:
 
 ```plain
-export KUBECONFIG=/root/cyberjoker.kubeconfig
+kubectl get formtemplate fireworksapp-tgz --namespace demo-system -o yaml
 ```{{exec}}
 
-With the current Role and RoleBinding, the 'cyberjoker' user can do anything on any CardTemplate in the dev-system namespace:
-```plain
-kubectl get cardtemplates -n dev-system
-```{{exec}}
-
-Let's check in details what info contains the CardTemplate card-dev-1:
-```plain
-kubectl get cardtemplates card-dev-1 -n dev-system -o json | jq
-```{{exec}}
-
-What if we want the krateo-bff to substitute the placeholder values?
-
-```plain
-kubectl get --raw "/apis/widgets.ui.krateo.io/v1alpha1/namespaces/dev-system/cardtemplates/card-dev-1?eval=true" | jq
-```{{exec}}
+The status returns the Custom Resource Definition (CRD) of the Composition. In Krateo, a CRD is the template we're going to expose as a Form in the Portal.
