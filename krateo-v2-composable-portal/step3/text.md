@@ -6,6 +6,11 @@ Let's apply a `CompositionDefinition` in order to add a Composition to the Kuber
 
 ```plain
 cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo-system
+---
 apiVersion: core.krateo.io/v1alpha1
 kind: CompositionDefinition
 metadata:
