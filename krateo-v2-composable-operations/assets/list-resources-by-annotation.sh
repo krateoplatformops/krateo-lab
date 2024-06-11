@@ -13,5 +13,5 @@ for resource in "${resources[@]}"; do
    # echo "Processing $resource:"
 
     # Execute the command for each resource and display its output
-    kubectl get "$resource" -n krateo-system -o jsonpath='{range .items[?(@.metadata.annotations.meta\.helm\.sh/release-name=="fireworksapp")]}{.kind}{" "}{.metadata.name}{"\n"}{end}'
+    kubectl get "$resource" -n krateo-system -o jsonpath='{range .items[?(@.metadata.annotations.meta\.helm\.sh/release-name=="fireworksapp-tgz")]}{.kind}{" "}{.metadata.name}{"\n"}{end}'
 done
