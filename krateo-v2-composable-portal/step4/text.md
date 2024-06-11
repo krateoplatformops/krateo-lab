@@ -21,3 +21,13 @@ kubectl get formtemplate fireworksapp-tgz --namespace demo-system -o yaml
 ```{{exec}}
 
 The status returns the Custom Resource Definition (CRD) of the Composition. In Krateo, a CRD is the template we're going to expose as a Form in the Portal.
+
+Focus on the `actions` array.
+
+What happens when we try to retrieve the `FormTemplate` as `cyberjoker` user?
+
+```plain
+kubectl get formtemplate fireworksapp-tgz --namespace demo-system -o yaml --kubeconfig cyberjoker.kubeconfig
+```{{exec}}
+
+Focus again on the `actions` array.

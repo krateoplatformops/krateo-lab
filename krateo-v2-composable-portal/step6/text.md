@@ -1,9 +1,43 @@
-## Install Krateo Composable Portal frontend
+## Let's find out how to play with the Kubernetes RBAC.
 
-Let's start the frontend locally:
+Let's add the Role to the `devs` group to `get` and `list` any widget within the `demo-system` namespace:
 
 ```plain
-docker run --env=VITE_GATEWAY_API_BASE_URL={{TRAFFIC_HOST1_30005}} --env=VITE_AUTHN_API_BASE_URL={{TRAFFIC_HOST1_30007}} -p 5173:5173 -d ghcr.io/krateoplatformops/krateo-frontend:latest
+cat <<EOF | kubectl apply -f -
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: devs-get-list-any-widget-in-demosystem-namespace
+  namespace: demo-system
+rules:
+- apiGroups:
+  - widgets.krateo.io
+  resources:
+  - '*'
+  verbs:
+  - get
+  - list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: devs-get-list-any-widget-in-demosystem-namespace
+  namespace: demo-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: devs-get-list-any-widget-in-demosystem-namespace
+subjects:
+- kind: Group
+  name: devs
+  apiGroup: rbac.authorization.k8s.io
+EOF
 ```{{exec}}
 
-[Have fun!]({{TRAFFIC_HOST1_5173}})
+Let's try again to read the `FormTemplate` `fireworksapp-tgz` as `cyberjoker` user.
+
+```plain
+kubectl get formtemplate fireworksapp-tgz --namespace demo-system -o yaml --kubeconfig cyberjoker.kubeconfig
+```{{exec}}
+
+Now `cyberjoker` is able to get the `FormTemplate` `fireworksapp-tgz` but has no permission to create the related composition.
