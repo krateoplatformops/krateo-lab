@@ -46,3 +46,5 @@ Let's wait for Krateo PlatformOps to be Available
 ```plain
 kubectl wait krateoplatformops krateo --for condition=Ready=True --timeout=600s --namespace krateo-system
 ```{{exec}}
+
+Let's open [Krateo Portal]({{TRAFFIC_HOST1_30080}}).
