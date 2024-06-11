@@ -24,7 +24,8 @@
     ],
     "assets": {
       "host01": [
-        {"file": "github-repo-creds.yaml", "target": "/"}
+        {"file": "github-repo-creds.yaml", "target": "/"},
+        {"file": "fireworksapp-composition-values", "target": "/"}
       ]
     },
     "finish": {
@@ -32,6 +33,6 @@
     }
   },
   "backend": {
-    "imageid": "kubernetes-kubeadm-1node"
+    "imageid": "kubernetes-kubeadm-1node-4GB"
   }
 }
