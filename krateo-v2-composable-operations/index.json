@@ -41,7 +41,7 @@
       "host01": [
         {"file": "github-repo-creds.yaml", "target": "/"},
         {"file": "fireworksapp-composition-values.yaml", "target": "/"},
-        {"file": "list-resources-by-annotation.sh", "target": "/"},
+        {"file": "list-resources-by-annotation.sh", "target": "/"}
       ]
     },
     "finish": {
