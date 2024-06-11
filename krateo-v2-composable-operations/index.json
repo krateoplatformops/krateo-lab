@@ -22,11 +22,6 @@
         "verify": "step3/verify.sh"
       },
       {
-        "title": "Update a Composition",
-        "text": "step4/text.md",
-        "verify": "step4/verify.sh"
-      },
-      {
         "title": "List Resources Managed By a Composition",
         "text": "step5/text.md",
         "verify": "step5/verify.sh"
