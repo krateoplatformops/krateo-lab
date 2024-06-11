@@ -33,8 +33,7 @@
       },
       {
         "title": "Delete a CompositionDefiniiton",
-        "text": "step6/text.md",
-        "verify": "step6/verify.sh"
+        "text": "step6/text.md"
       }
     ],
     "assets": {
