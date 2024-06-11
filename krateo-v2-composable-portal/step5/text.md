@@ -27,8 +27,12 @@ kubectl get cardtemplate fireworksapp-tgz --namespace demo-system -o yaml
 
 The status returns the possible actions available for the user requesting the cardtemplate. In Krateo, the Kubernetes RBAC is evaluated to populate the actions array.
 
-Let's check what permission has the `cyberjoker` user.
+Focus on the `actions` array.
+
+What happens when we try to retrieve the `FormTemplate` as `cyberjoker` user?
 
 ```plain
 kubectl get cardtemplate fireworksapp-tgz --namespace demo-system -o yaml --kubeconfig cyberjoker.kubeconfig
 ```{{exec}}
+
+Focus again on the `actions` array.
