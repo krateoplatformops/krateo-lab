@@ -22,6 +22,11 @@
         "verify": "step3/verify.sh"
       }
     ],
+    "assets": {
+      "host01": [
+        {"file": "github-repo-creds.yaml", "target": "/"}
+      ]
+    },
     "finish": {
       "text": "finish.md"
     }
