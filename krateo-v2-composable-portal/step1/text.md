@@ -37,10 +37,8 @@ helm upgrade installer installer \
   --set krateoplatformops.init.enabled=false \
   --set krateoplatformops.authn.KUBECONFIG_SERVER_URL=$KUBECONFIG_SERVER_URL \
   --set krateoplatformops.frontend.overrideconf=true \
-  --set krateoplatformops.frontend.env.AUTHN_API_BASE_URL={{TRAFFIC_HOST1_30082}} \
-  --set krateoplatformops.frontend.env.BFF_API_BASE_URL={{TRAFFIC_HOST1_30081}} \
-  --set {{TRAFFIC_HOST1_30005}}
-
+  --set krateoplatformops.frontend.env.AUTHN_API_BASE_URL="{{TRAFFIC_HOST1_30082}}" \
+  --set krateoplatformops.frontend.env.BFF_API_BASE_URL="{{TRAFFIC_HOST1_30081}}"
 ```{{exec}}
 
 Let's wait for Krateo PlatformOps to be Available
