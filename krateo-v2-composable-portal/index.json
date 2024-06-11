@@ -24,15 +24,18 @@
         "text": "step4/text.md"
       },
       {
-        "title": "Add Krateo CardTemplate to retrieve the FormTemplate",
+        "title": "Add RBAC to retrieve the FormTemplate",
         "text": "step5/text.md"
+      },
+      {
+        "title": "Add Krateo CardTemplate to retrieve the FormTemplate",
+        "text": "step6/text.md"
+      },
+      {
+        "title": "Add Krateo Column and Row to retrieve the CardTemplate",
+        "text": "step7/text.md"
       }
     ],
-    "assets": {
-      "host01": [
-        {"file": "role-1", "target": "/"}
-      ]
-    },
     "finish": {
       "text": "finish.md"
     }

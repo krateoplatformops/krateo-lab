@@ -1,43 +1,38 @@
-## Let's find out how to play with the Kubernetes RBAC.
-
-Let's add the Role to the `devs` group to `get` and `list` any widget within the `demo-system` namespace:
+## Add Krateo CardTemplate to retrieve the FormTemplate
 
 ```plain
 cat <<EOF | kubectl apply -f -
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+apiVersion: widgets.krateo.io/v1alpha1
+kind: CardTemplate
 metadata:
-  name: devs-get-list-any-widget-in-demosystem-namespace
+  name: fireworksapp-tgz
   namespace: demo-system
-rules:
-- apiGroups:
-  - widgets.krateo.io
-  resources:
-  - '*'
-  verbs:
-  - get
-  - list
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: devs-get-list-any-widget-in-demosystem-namespace
-  namespace: demo-system
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: devs-get-list-any-widget-in-demosystem-namespace
-subjects:
-- kind: Group
-  name: devs
-  apiGroup: rbac.authorization.k8s.io
+spec:
+  app:
+    icon: fa-solid fa-truck-fast
+    color: green
+    title: Fireworksapp Template
+    content: This template creates an instance of Fireworksapp composition
+  formTemplateRef:
+    name: fireworksapp-tgz
+    namespace: demo-system
 EOF
 ```{{exec}}
 
-Let's try again to read the `FormTemplate` `fireworksapp-tgz` as `cyberjoker` user.
+Let's check the status of the `CardTemplate` `fireworksapp-tgz` resource:
 
 ```plain
-kubectl get formtemplate fireworksapp-tgz --namespace demo-system -o yaml --kubeconfig cyberjoker.kubeconfig
+kubectl get cardtemplate fireworksapp-tgz --namespace demo-system -o yaml
 ```{{exec}}
 
-Now `cyberjoker` is able to get the `FormTemplate` `fireworksapp-tgz` but has no permission to create the related composition.
+The status returns the possible actions available for the user requesting the cardtemplate. In Krateo, the Kubernetes RBAC is evaluated to populate the actions array.
+
+Focus on the `actions` array.
+
+What happens when we try to retrieve the `FormTemplate` as `cyberjoker` user?
+
+```plain
+kubectl get cardtemplate fireworksapp-tgz --namespace demo-system -o yaml --kubeconfig cyberjoker.kubeconfig
+```{{exec}}
+
+Focus again on the `actions` array.
