@@ -3,13 +3,11 @@ Let's repeat the installation for one last operator, the FinOps operator-focus. 
 
 Deploy the operator:
 ```plain
-helm repo add krateo https://charts.krateo.io
-helm repo update krateo
 helm install finops-operator-focus krateo/finops-operator-focus -n finops
 ```{{exec}}
 
 Let's wait for the deployment to be available
 
 ```plain
-kubectl wait deployment focus-finops-operator-focus-controller-manager --for condition=Available=True --timeout=300s --namespace finops
+kubectl wait deployment finops-operator-focus-controller-manager --for condition=Available=True --timeout=300s --namespace finops
 ```{{exec}}
