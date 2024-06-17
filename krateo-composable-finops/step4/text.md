@@ -22,7 +22,9 @@ metadata:
   namespace: finops
 spec:
   exporterConfig: # same as krateoplatformops/finops-prometheus-exporter-generic
-    name: #name of the exporter
+    provider: 
+      name: # name of the provider config
+      namespace: # namespace of the provider config
     url: #url including http/https of the CSV-based API to export, parts with <varName> are taken from additionalVariables: http://<varName> -> http://sample 
     requireAuthentication: #true/false
     authenticationMethod: #one of: bearer-token
@@ -49,7 +51,9 @@ metadata:
   namespace: finops
 spec:
   exporterConfig:
-    name: azure
+    provider: 
+      name: not_used
+      namespace: finops
     url: http://<host>:<port>/subscriptions/<subscription_id>/providers/Microsoft.Consumption/usageDetails
     requireAuthentication: true
     authenticationMethod: bearer-token
