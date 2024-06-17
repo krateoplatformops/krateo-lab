@@ -2,9 +2,6 @@
 We will create a new Custom Resource for the operator-exporter, this will result in the creation of an exporter, a configmap containing the data for the exporter, a service to expose the exporter and a custom resource for the operator-scraper.
 
 Let's start from the bare config-sample.yaml in the repository finops-operator-exporter.
-```plain
-cd ../finops-operator-exporter
-```{{exec}}
 
 We will only consider the exporterConfig for this tutorial.
 sample-config.yaml:
