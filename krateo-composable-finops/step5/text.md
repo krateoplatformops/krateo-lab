@@ -2,9 +2,6 @@
 We will create a new Custom Resource for the operator-focus, this will result in the creation of an exporter, a configmap containing the data for the exporter, a service to expose the exporter and a custom resource for the operator-scraper.
 
 Let's start from the bare config-sample.yaml in the repository finops-operator-focus.
-```plain
-cd ../finops-operator-focus
-```{{exec}}
 
 We will only consider the exporterConfig for this tutorial.
 sample-config.yaml:
@@ -132,10 +129,10 @@ kubectl apply -f sample.yaml
 
 Let's wait for the deployment to be available
 ```plain
-kubectl wait deployment -n finops focusconfig-sample-deployment --for condition=Available=True --timeout=300s
+kubectl wait deployment -n finops all-cr-exporter-deployment --for condition=Available=True --timeout=300s
 ```{{exec}}
 
 You can now verify the exporter output with:
 ```plain
-curl localhost:$(kubectl get service -n finops focusconfig-sample-service -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/metrics 
+curl localhost:$(kubectl get service -n finops all-cr-exporter-service -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/metrics 
 ```{{exec}}
