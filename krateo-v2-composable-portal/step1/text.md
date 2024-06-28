@@ -47,4 +47,4 @@ Let's wait for Krateo PlatformOps to be Available
 kubectl wait krateoplatformops krateo --for condition=Ready=True --timeout=600s --namespace krateo-system
 ```{{exec}}
 
-Let's open [Krateo Portal]({{TRAFFIC_HOST1_30080}}).
+Let's open [Krateo Portal]({{TRAFFIC_HOST1_30080}}). Next, we will fix the message "There are no authentication methods".
