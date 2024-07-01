@@ -54,4 +54,4 @@ The authn response contains the kubeconfig for the user logged in.
 cat cyberjoker.kubeconfig | jq
 ```{{exec}}
 
-Let's open again [Krateo Portal]({{TRAFFIC_HOST1_30080}}) and check if there's a new authentication form available.
+Let's open again [Krateo Portal]({{TRAFFIC_HOST1_30080}}) and check if there's a new authentication form available. Login with username cyberjoker and password 123456.
