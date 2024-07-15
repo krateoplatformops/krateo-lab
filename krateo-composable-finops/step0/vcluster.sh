@@ -8,4 +8,3 @@ echo "vcluster:
 helm upgrade --install vcluster vcluster   --values vcluster.yaml   --repo https://charts.loft.sh   --namespace vcluster   --repository-config='' --create-namespace
 echo "Installing VCluster. Please wait..."
 kubectl rollout status --watch --timeout=600s statefulset/vcluster -n vcluster
-sleep 5s
