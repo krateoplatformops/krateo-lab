@@ -9,12 +9,13 @@
       {
         "title": "Install Krateo Composable FinOps - VCLUSTER",
         "text": "step0/text.md",
-        "foreground": "step0/vcluster-and-webserver-mock.sh",
+        "foreground": "step0/vcluster.sh",
         "verify": "step0/verify.sh"
       },
       {
         "title": "Install Krateo Composable FinOps - operator-exporter",
         "text": "step1/text.md",
+        "foreground": "step1/vcluster-and-webserver-mock.sh",
         "verify": "step1/verify.sh"
       },
       {
