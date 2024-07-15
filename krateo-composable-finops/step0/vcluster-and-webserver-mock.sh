@@ -7,9 +7,9 @@ echo "vcluster:
     - feature-gates=CustomResourceFieldSelectors=true" > vcluster.yaml
 helm upgrade --install vcluster vcluster   --values vcluster.yaml   --repo https://charts.loft.sh   --namespace vcluster   --repository-config='' --create-namespace
 echo "Installing VCluster. Please wait..."
-
-sleep 10s
-vcluster connect vcluster -n my-vcluster > /dev/null 2>&1  &
+kubectl rollout status --watch --timeout=600s statefulset/vcluster -n vcluster
+sleep 5s
+vcluster connect vcluster -n vcluster > /dev/null 2>&1  &
 echo "apiVersion: v1
 kind: Namespace
 metadata:
@@ -54,3 +54,4 @@ spec:
     targetPort: 8080" > webserver-mock.yaml
     
 kubectl apply -f webserver-mock.yaml
+echo "Installation complete!"
