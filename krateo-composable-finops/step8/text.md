@@ -15,10 +15,12 @@ metadata:
   namespace: finops
 spec:
   exporterConfig:
-    name: azure
+    provider: 
+      name: # name of the provider configuration object created in the previous step azure
+      namespace: # namespace
     url: http://<host>:<port>/subscriptions/<subscription_id>/providers/Microsoft.Consumption/usageDetails
     requireAuthentication: true
-    authenticationMethod: bearer-token
+    authenticationMethod: # bearer-token; cert-file
     pollingIntervalHours: 1
     additionalVariables:
       # Variables that contain only uppercase letters are taken from environment variables
@@ -51,7 +53,9 @@ metadata:
   namespace: finops
 spec:
   exporterConfig:
-    name: azure
+    provider: 
+      name: azure
+      namespace: finops
     url: http://<host>:<port>/subscriptions/<subscription_id>/providers/Microsoft.Consumption/usageDetails
     requireAuthentication: true
     authenticationMethod: bearer-token
