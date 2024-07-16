@@ -11,7 +11,7 @@ kubectl apply -f database.yaml
 ```{{exec}}
 
 We also need to add the resource metrics configuration: when we obtain a FOCUS report, we can analyze it to identify the resources that are generating costs and obtain the relevant metrics. These metrics are specified by provider and resource, through dedicated custom resources with the following structure:
-```plain
+```
 apiVersion: finops.krateo.io/v1
 kind: ProviderConfig
 metadata:

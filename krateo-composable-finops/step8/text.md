@@ -71,7 +71,7 @@ spec:
     pollingIntervalHours: 1
     scraperDatabaseConfigRef:
       name:  finops-tutorial-config
-      namespace: default" > sample.yaml
+      namespace: finops" > sample.yaml
 kubectl delete -f sample.yaml
 kubectl apply -f sample.yaml
 ```{{exec}}
