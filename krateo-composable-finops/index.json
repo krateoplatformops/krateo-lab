@@ -46,17 +46,21 @@
       },
       {
         "title": "Database Custom resource data input",
-        "text": "step71/text.md",
-        "foreground": "step71/foreground.sh",
-        "verify": "step71/verify.sh"
+        "text": "step7_1/text.md",
+        "foreground": "step7_1/foreground.sh",
+        "verify": "step7_1/verify.sh"
       },
       {
         "title": "Deploy the scrapers and automatically upload the data",
         "text": "step8/text.md"
       },
       {
-        "title": "IMPORTANT",
+        "title": "Deploy the data analysis and optimizations pipeline",
         "text": "step9/text.md"
+      },
+      {
+        "title": "IMPORTANT",
+        "text": "step99/text.md"
       }
     ],
     "assets": {

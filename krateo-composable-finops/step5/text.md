@@ -5,7 +5,7 @@ Let's start from the bare config-sample.yaml in the repository finops-operator-f
 
 We will only consider the exporterConfig for this tutorial.
 sample-config.yaml:
-```plain
+```
 apiVersion: finops.krateo.io/v1
 kind: FocusConfig
 metadata:
