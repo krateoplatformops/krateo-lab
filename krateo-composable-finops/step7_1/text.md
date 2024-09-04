@@ -7,6 +7,7 @@ Input your data in the following configuration script:
 
 Then apply the configuration of the database to the cluster:
 ```plain
+kubectl apply -f token.yaml
 kubectl apply -f database.yaml
 ```{{exec}}
 
