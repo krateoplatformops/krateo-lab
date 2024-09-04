@@ -12,6 +12,14 @@ read clusterName
 echo "Input your full notebook path"
 read notebookPath
 
+printf "apiVersion: v1
+kind: Secret
+metadata:
+  name: databricks-token
+  namespace: finops
+data:
+  bearer-token: %s" $token > token.yaml
+
 printf "apiVersion: finops.krateo.io/v1
 kind: DatabaseConfig
 metadata:
@@ -19,8 +27,10 @@ metadata:
   namespace: finops
 spec:
   host: %s
-  token: %s
+  token:
+    name: databricks-token
+    namespace: finops
   clusterName: %s
-  notebookPath: %s" $hostname $token $clusterName $notebookPath > database.yaml
+  notebookPath: %s" $hostname $clusterName $notebookPath > database.yaml
 
 

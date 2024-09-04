@@ -5,27 +5,25 @@ Let's start from the bare config-sample.yaml in the repository finops-operator-e
 
 We will only consider the exporterConfig for this tutorial.
 sample-config.yaml:
-```plain
+```
 apiVersion: finops.krateo.io/v1
 kind: ExporterScraperConfig
 metadata:
-  labels:
-    app.kubernetes.io/name: exporterscraperconfig
-    app.kubernetes.io/instance: exporterscraperconfig-sample
-    app.kubernetes.io/part-of: operator-exporter
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/created-by: operator-exporter
   name: # ExporterScraperConfig name
-  namespace: finops
+  namespace: # ExporterScraperConfig namespace
 spec:
   exporterConfig: # same as krateoplatformops/finops-prometheus-exporter-generic
     provider: 
       name: # name of the provider config
       namespace: # namespace of the provider config
-    url: #url including http/https of the CSV-based API to export, parts with <varName> are taken from additionalVariables: http://<varName> -> http://sample 
-    requireAuthentication: #true/false
-    authenticationMethod: #one of: bearer-token
-    pollingIntervalHours: #int
+    url: # url including http/https of the CSV-based API to export, parts with <varName> are taken from additionalVariables: http://<varName> -> http://sample 
+    requireAuthentication: # true/false
+    authenticationMethod: # one of: bearer-token, cert-file
+    # bearerToken: # optional, if "authenticationMethod: bearer-token", objectRef to a standard Kubernetes secret with key: bearer-token
+    #  name: # secret name
+    #  namespace: # secret namespace
+    # metricType: # optional, one of: cost, resource; default value: resource
+    pollingIntervalHours: # int
     additionalVariables:
       varName: sample
       # Variables whose value only contains uppercase letters are taken from environment variables
@@ -35,15 +33,17 @@ spec:
 
 Compile the CR as follows to connect to a mock API server in the cluster:
 ```plain
-echo "apiVersion: finops.krateo.io/v1
+echo "apiVersion: v1
+kind: Secret
+metadata:
+  name: mock-token
+  namespace: finops
+data:
+  bearer-token: bW9ja3Rva2Vu
+---
+apiVersion: finops.krateo.io/v1
 kind: ExporterScraperConfig
 metadata:
-  labels:
-    app.kubernetes.io/name: exporterscraperconfig
-    app.kubernetes.io/instance: exporterscraperconfig-sample
-    app.kubernetes.io/part-of: operator-exporter
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/created-by: operator-exporter
   name: exporterscraperconfig-sample
   namespace: finops
 spec:
@@ -54,11 +54,14 @@ spec:
     url: http://<host>:<port>/subscriptions/<subscription_id>/providers/Microsoft.Consumption/usageDetails
     requireAuthentication: true
     authenticationMethod: bearer-token
+    bearerToken:
+      name: mock-token
+      namespace: finops
+    metricType: cost
     pollingIntervalHours: 1
     additionalVariables:
       # Variables that contain only uppercase letters are taken from environment variables
       subscription_id: d3sad326-42a4-5434-9623-a3sd22fefb84
-      authenticationToken: 123456abc
       host: WEBSERVICE_API_MOCK_SERVICE_HOST
       port: WEBSERVICE_API_MOCK_SERVICE_PORT" > sample.yaml
 ```{{exec}}

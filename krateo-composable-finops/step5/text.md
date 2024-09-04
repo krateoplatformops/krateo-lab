@@ -9,14 +9,8 @@ sample-config.yaml:
 apiVersion: finops.krateo.io/v1
 kind: FocusConfig
 metadata:
-  labels:
-    app.kubernetes.io/name: focusconfig
-    app.kubernetes.io/instance: focusconfig-sample
-    app.kubernetes.io/part-of: operator-focus
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/created-by: operator-focus
-  name: focusconfig-sample2
-  namespace: finops
+  name: # FocusConfig name
+  namespace: # FocusConfig namespace
 spec:
   scraperConfig: # same fields as krateoplatformops/finops-prometheus-scraper-generic
     tableName: # tableName in the database to upload the data to
@@ -26,43 +20,51 @@ spec:
       name: # name of the databaseConfigRef CR 
       namespace: # namespace of the databaseConfigRef CR
   focusSpec: # See FOCUS for field details
-    region:
     availabilityZone:
     billedCost:
     billingAccountId:
     billingAccountName:
     billingCurrency:
-    billingPeriodStart:
     billingPeriodEnd:
+    billingPeriodStart:
     chargeCategory:
+    chargeClass:
     chargeDescription:
     chargeFrequency:
-    chargeSubCategory:
-    chargePeriodStart:
     chargePeriodEnd:
+    chargePeriodStart:
+    commitmentDiscountCategory:
+    commitmentDiscountName:
+    commitmentDiscountStatus:
+    commitmentDiscountType:
+    commitmentDiscoutId:
+    consumedQuantity:
+    consumedUnit:
+    contractedCost:
+    contractedUnitCost:
     effectiveCost:
+    invoiceIssuerName:
     listCost:
     listUnitPrice:
     pricingCategory:
     pricingQuantity:
     pricingUnit:
-    invoiceIssuer:
-    provider:
-    publisher:
+    providerName:
+    publisherName:
+    regionId:
+    regionName:
     resourceId:
     resourceName:
     resourceType:
-    serviceName:
     serviceCategory:
-    subAccountId:
-    subAccountName:
+    serviceName:
     skuId:
     skuPriceId:
+    subAccountId:
+    subAccountName:
     tags:
       - key:
         value:
-    usageQuantity:
-    usageUnit: 
 ```
 
 Compile the CR as follows to create a sample resource: 
@@ -71,19 +73,12 @@ As usual, we omit the scraper configuration for this tutorial.
 echo "apiVersion: finops.krateo.io/v1
 kind: FocusConfig
 metadata:
-  labels:
-    app.kubernetes.io/name: focusconfig
-    app.kubernetes.io/instance: focusconfig-sample
-    app.kubernetes.io/part-of: operator-focus
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/created-by: operator-focus
   name: focusconfig-sample
   namespace: finops
 spec:
   focusSpec:
-    region: \"EU\"
-    availabilityZone: \"EU2\"
-    billedCost: 30020.0
+    availabilityZone: \"EU\"
+    billedCost: 30000.0
     billingAccountId: \"0000\"
     billingAccountName: \"testAccount\"
     billingCurrency: \"EUR\"
@@ -92,34 +87,35 @@ spec:
     chargeCategory: \"purchase\"
     chargeDescription: \"1 Dell XYZ\"
     chargeFrequency: \"one-time\"
-    chargeSubCategory: \"On-Demand\"
-    chargePeriodStart: \"2024-01-01T00:00:00+02:00\"
     chargePeriodEnd: \"2024-12-31T23:59:59+02:00\"
+    chargePeriodStart: \"2024-01-01T00:00:00+02:00\"
+    consumedUnit: \"Computer\"
+    consumedQuantity: \"3\"
+    contractedCost: 30000
+    contractedUnitCost: 10000
     effectiveCost: 30000.0
+    invoiceIssuerName: \"Dell\"
     listCost: 30000.0
     listUnitPrice: 10000.0
     pricingCategory: \"other\"
     pricingQuantity: 3
     pricingUnit: \"machines\"
-    invoiceIssuer: \"Dell\"
-    provider: \"Dell\"
-    publisher: \"Dell\"
+    providerName: \"Dell\"
+    publisherName: \"Dell\"
     resourceId: \"0000\"
     resourceName: \"Dell HW\"
     resourceType: \"Prod Cluster\"
-    serviceName: \"1 machine purchase\"
     serviceCategory: \"Compute\"
-    subAccountId: \"1234\"
-    subAccountName: \"test\"
+    serviceName: \"1 machine purchase\"
     skuId: \"0000\"
     skuPriceId: \"0000\"
+    subAccountId: \"1234\"
+    subAccountName: \"test\"
     tags:
       - key: \"testkey1\"
         value: \"testvalue\"
       - key: \"testkey2\"
-        value: \"testvalue\"
-    usageQuantity: 1
-    usageUnit: \"none\" " > sample.yaml
+        value: \"testvalue\" " > sample.yaml
 ```{{exec}}
 
 Deploy the sample configuration:
