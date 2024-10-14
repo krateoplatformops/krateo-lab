@@ -1,6 +1,5 @@
 #!/bin/bash
-vcluster connect vcluster -n vcluster > /dev/null 2>&1  &
-sleep 10s
+vcluster connect vcluster -n vcluster
 
 echo "apiVersion: v1
 kind: Namespace
