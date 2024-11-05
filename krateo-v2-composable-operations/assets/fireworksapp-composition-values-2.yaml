@@ -1,7 +1,7 @@
 apiVersion: composition.krateo.io/v1-1-5
 kind: FireworksApp
 metadata:
-  name: fireworksapp-composition-1
+  name: fireworksapp-composition-2
   namespace: krateo-system
 spec:
   app:
