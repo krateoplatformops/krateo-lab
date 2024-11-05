@@ -29,7 +29,13 @@ helm install argocd argo/argo-cd --namespace krateo-system --create-namespace --
 
 ## Step 2: Apply the CompositionDefinition Manifest
 
-Apply the `CompositionDefinition` manifest that installs version 1.1.5 of the chart in the `krateo-system` namespace:
+Create the `fireworksapp-system` namespace:
+
+```bash
+kubectl create namespace fireworksapp-system
+```{{exec}}
+
+Apply the `CompositionDefinition` manifest that installs version 1.1.5 of the chart in the `fireworksapp-system` namespace:
 
 ```bash
 cat <<EOF | kubectl apply -f -
@@ -53,12 +59,12 @@ EOF
 
 1. Wait for the CompositionDefinition to be ready:
 ```bash
-kubectl wait compositiondefinition fireworksapp-1-1-5 --for condition=Ready=True --timeout=300s --namespace krateo-system
+kubectl wait compositiondefinition fireworksapp-1-1-5 --for condition=Ready=True --timeout=300s --namespace fireworksapp-system
 ```{{exec}}
 
 2. Check the CompositionDefinition outputs:
 ```bash
-kubectl get compositiondefinition fireworksapp-1-1-5 --namespace krateo-system -o yaml
+kubectl get compositiondefinition fireworksapp-1-1-5 --namespace fireworksapp-system -o yaml
 ```{{exec}}
 
 ## What Was Created?
@@ -72,5 +78,5 @@ kubectl get crd fireworksapps.composition.krateo.io -o yaml
 
 2. A specific Deployment that uses the `composition-dynamic-controller` image. This deployment watches for new Custom Resources related to the generated CRD and the specific version:
 ```bash
-kubectl get deployment fireworksapps-v1-1-5-controller --namespace krateo-system
+kubectl get deployment fireworksapps-v1-1-5-controller --namespace fireworksapp-system
 ```{{exec}}

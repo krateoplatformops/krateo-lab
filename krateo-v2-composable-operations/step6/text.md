@@ -5,10 +5,10 @@
 kubectl patch compositiondefinition fireworksapp-1-1-5 -n fireworksapp-system --type=merge -p '{"spec":{"chart":{"version":"1.1.6"}}}'
 ```{{exec}}
 
-2. Wait for the `fireworksapp-1-1-5` CompositionDefinition to be in the `Ready=True` condition in the `krateo-system` namespace:
+2. Wait for the `fireworksapp-1-1-5` CompositionDefinition to be in the `Ready=True` condition in the `fireworksapp-system` namespace:
 
 ```bash
-kubectl wait compositiondefinition fireworksapp-1-1-5 --for condition=Ready=True --namespace krateo-system
+kubectl wait compositiondefinition fireworksapp-1-1-5 --for condition=Ready=True --namespace fireworksapp-system
 ```{{exec}}
 
 3. Inspect the CustomResourceDefinition `fireworksapps.composition.krateo.io` to see the added version:
@@ -17,10 +17,10 @@ kubectl wait compositiondefinition fireworksapp-1-1-5 --for condition=Ready=True
 kubectl get crd fireworksapps.composition.krateo.io -o yaml
 ```{{exec}}
 
-4. Check if the `fireworksapps-v1-1-6-controller` deployment to be ready in the `krateo-system` namespace:
+4. Check if the `fireworksapps-v1-1-6-controller` deployment to be ready in the `fireworksapp-system` namespace:
 
 ```bash
-kubectl get deployment fireworksapps-v1-1-6-controller --namespace krateo-system --wait
+kubectl get deployment fireworksapps-v1-1-6-controller --namespace fireworksapp-system --wait
 ```{{exec}}
 
 5. Check that the previously installed chart have the expected version: 
