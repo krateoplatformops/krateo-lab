@@ -1,39 +1,29 @@
-## Add a Composition to the Kubernetes Cluster
+## Add a Template to the portal
 
-Now we want to add a Composition to the Portal.
+Now we want to add a Template to the Portal.
 
-Let's apply a `CompositionDefinition` in order to add a Composition to the Kubernetes cluster.
+Let's apply a `template-chart` in order to add a Template to the portal.
 
 ```plain
-cat <<EOF | kubectl apply -f -
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: demo-system
----
-apiVersion: core.krateo.io/v1alpha1
-kind: CompositionDefinition
-metadata:
-  annotations:
-     "krateo.io/connector-verbose": "true"
-  name: fireworksapp-tgz
-  namespace: demo-system
-spec:
-  chart:
-    url: https://github.com/krateoplatformops/krateo-v2-template-fireworksapp/releases/download/0.1.0/fireworks-app-0.1.0.tgz
-EOF
+helm upgrade fireworksapp template \
+  --repo https://charts.krateo.io \
+  --namespace fireworksapp-system \
+  --create-namespace \
+  --install \
+  --wait \
+  --version 0.1.0
 ```{{exec}}
 
-Let's wait for the CompositionDefinition `fireworksapp-tgz` to be Ready
+Let's wait for the CompositionDefinition `fireworksapp` to be Ready
 
 ```plain
-kubectl wait compositiondefinition fireworksapp-tgz --for condition=Ready=True --timeout=300s --namespace demo-system
+kubectl wait compositiondefinition fireworksapp --for condition=Ready=True --timeout=300s --namespace fireworksapp-system
 ```{{exec}}
 
-Check the CompositionDefinition `fireworksapp-tgz` outputs, especially for the `RESOURCE` field.
+Check the CompositionDefinition `fireworksapp` outputs, especially for the `RESOURCE` field.
 
 ```plain
-kubectl get compositiondefinition fireworksapp-tgz --namespace demo-system
+kubectl get compositiondefinition fireworksapp --namespace fireworksapp-system
 ```{{exec}}
 
 The `core-provider` has just generated:
@@ -46,5 +36,5 @@ kubectl get crd fireworksapps.composition.krateo.io -o yaml
 * started a specific Deployment (which leverages the `composition-dynamic-controller` image) which will watch for new Custom Resources related to the generated CRD and the specific version.
 
 ```plain
-kubectl get deployment fireworksapps-v0-1-0-controller --namespace demo-system
+kubectl get deployment fireworksapps-v1-1-8-controller --namespace fireworksapp-system
 ```{{exec}}

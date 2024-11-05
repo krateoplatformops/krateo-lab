@@ -1,4 +1,4 @@
-## Install Krateo Composable Portal krateo-bff Helm chart
+## Install Krateo PlatformOps via installer Helm chart
 First, we make sure we add the Krateo Helm charts repo to our Helm client
 
 ```plain
@@ -33,18 +33,17 @@ helm upgrade installer installer \
   --create-namespace \
   --install \
   --wait \
-  --version 0.3.1 \
-  --set krateoplatformops.init.enabled=false \
+  --version 2.2.0 \
   --set krateoplatformops.authn.KUBECONFIG_SERVER_URL=$KUBECONFIG_SERVER_URL \
   --set krateoplatformops.frontend.overrideconf=true \
   --set krateoplatformops.frontend.env.AUTHN_API_BASE_URL="{{TRAFFIC_HOST1_30082}}" \
-  --set krateoplatformops.frontend.env.BFF_API_BASE_URL="{{TRAFFIC_HOST1_30081}}"
+  --set krateoplatformops.frontend.env.BFF_API_BASE_URL="{{TRAFFIC_HOST1_30081}}" \
+  --set krateoplatformops.frontend.env.EVENTS_PUSH_API_BASE_URL="{{TRAFFIC_HOST1_30083}}" \
+  --set krateoplatformops.frontend.env.EVENTS_API_BASE_URL="{{TRAFFIC_HOST1_30083}}"
 ```{{exec}}
 
-Let's wait for Krateo PlatformOps to be Available
+Let's wait for Krateo PlatformOps to be Available:
 
 ```plain
-kubectl wait krateoplatformops krateo --for condition=Ready=True --timeout=600s --namespace krateo-system
+kubectl wait krateoplatformops krateo --for condition=Ready=True --timeout=300s --namespace krateo-system
 ```{{exec}}
-
-Let's open [Krateo Portal]({{TRAFFIC_HOST1_30080}}). Next, we will fix the message "There are no authentication methods".

@@ -6,52 +6,26 @@ curl http://localhost:30082/strategies
 
 [You can also access it externally]({{TRAFFIC_HOST1_30082}}/strategies)
 
-Let's configure a basic authentication:
+By default, the Krateo installer deploys an initial configuration of the portal based on [composable-portal-basic](https://github.com/krateoplatformops/composable-portal-basic/).
+In this chart, an `admin` user is configured.
+
+Let's retrieve the password:
 
 ```plain
-cat <<EOF | kubectl apply -f -
-apiVersion: v1
-kind: Secret
-type: kubernetes.io/basic-auth
-metadata:
-  name: cyberjoker-password
-  namespace: krateo-system
-stringData:
-  password: "123456"
----
-apiVersion: basic.authn.krateo.io/v1alpha1
-kind: User
-metadata:
-  name: cyberjoker
-  namespace: krateo-system
-spec:
-  displayName: Cyber Joker
-  avatarURL: https://i.pravatar.cc/256?img=70
-  groups:
-    - devs
-  passwordRef:
-    namespace: krateo-system
-    name: cyberjoker-password
-    key: password
-EOF
+kubectl get secret admin-password  -n krateo-system -o jsonpath="{.data.password}" | base64 -d
 ```{{exec}}
 
-And let's check again the authentication strategies available:
+Let's open [Krateo Composable Portal]({{TRAFFIC_HOST1_30080}}) with the credentials retrieved.
+
+Let's try now to login via terminal!
 
 ```plain
-curl http://localhost:30082/strategies
-```{{exec}}
-
-Now that there's a new basic user, let's try to login and check the response!
-
-```plain
-cd && curl http://localhost:30082/basic/login -H "Authorization: Basic Y3liZXJqb2tlcjoxMjM0NTY=" | jq -r .data > cyberjoker.kubeconfig
+token = echo -n "admin:" | base64; kubectl get secret admin-password -n krateo-system -o jsonpath="{.data.password}" | base64 -d
+cd && curl http://localhost:30082/basic/login -H "Authorization: Basic $token" | jq -r .data > admin.kubeconfig
 ```{{exec}}
 
 The authn response contains the kubeconfig for the user logged in.
 
 ```plain
-cat cyberjoker.kubeconfig | jq
+cat admin.kubeconfig | jq
 ```{{exec}}
-
-Let's open again [Krateo Portal]({{TRAFFIC_HOST1_30080}}) and check if there's a new authentication form available. Login with username cyberjoker and password 123456.
