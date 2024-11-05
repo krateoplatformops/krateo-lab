@@ -20,7 +20,7 @@ kubectl get crd fireworksapps.composition.krateo.io -o yaml
 4. Check if the `fireworksapps-v1-1-6-controller` deployment to be ready in the `fireworksapp-system` namespace:
 
 ```bash
-kubectl get deployment fireworksapps-v1-1-6-controller --namespace fireworksapp-system --wait
+kubectl wait deployment fireworksapps-v1-1-6-controller --namespace fireworksapp-system --for condition=Available=True
 ```{{exec}}
 
 5. Check that the previously installed chart have the expected version: 
