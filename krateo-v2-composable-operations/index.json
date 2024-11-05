@@ -3,7 +3,8 @@
   "description": "Let's learn how to work with Krateo v2 Composable Operations",
   "details": {
     "intro": {
-      "text": "intro.md"
+      "text": "intro.md",
+      "background": "krateo-install.sh"
     },
     "steps": [
       {
@@ -35,6 +36,7 @@
       "host01": [
         {"file": "github-repo-creds.yaml", "target": "/"},
         {"file": "fireworksapp-composition-values.yaml", "target": "/"},
+        {"file": "fireworksapp-composition-values-2.yaml", "target": "/"},
         {"file": "list-resources-by-annotation.sh", "target": "/"}
       ]
     },

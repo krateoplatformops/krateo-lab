@@ -45,7 +45,7 @@ metadata:
 spec:
   exporterConfig:
     provider: 
-      name: not_used
+      name: azure
       namespace: finops
     url: http://<host>:<port>/subscriptions/<subscription_id>/providers/Microsoft.Consumption/usageDetails
     requireAuthentication: true

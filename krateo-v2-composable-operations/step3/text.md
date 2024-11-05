@@ -1,43 +1,57 @@
+# Installing a Krateo Fireworks App Composition
 
-Now we're getting serious! Let's install a `Composition` leveraging the `fireworksapp-tgz` CompositionDefinition.
+## Prerequisites
+Before creating the Composition, we need to configure GitHub authentication. This requires setting up proper credentials in the cluster.
 
-Following the [README.me](https://github.com/krateoplatformops/krateo-v2-template-fireworksapp/blob/5a625b21d23f32eda3b03f1706b2eabb67810caa/README.md) let's prepare the Kubernetes cluster:
+## Step 1: Configure GitHub Token
+1. Open the Killercoda IDE and navigate to the file:
+   ```
+   /root/filesystem/github-repo-creds.yaml
+   ```
+2. Modify the file to include your GitHub token.
 
-```plain
-helm repo add krateo https://charts.krateo.io
-helm repo update krateo
-helm install github-provider krateo/github-provider --namespace krateo-system --create-namespace
-helm install git-provider krateo/git-provider --namespace krateo-system --create-namespace
-helm repo add argo https://argoproj.github.io/argo-helm
-helm repo update argo
-helm install argocd argo/argo-cd --namespace krateo-system --create-namespace --wait
-```{{exec}}
+3. Apply the credentials manifest:
+   ```bash
+   kubectl apply -f /root/filesystem/github-repo-creds.yaml
+   ```{{exec}}
 
-In order to interact with GitHub, we need a token. Let's change the token in the file /root/filesystem/github-repo-creds.yaml
-using Killercoda IDE.
+## Step 2: Create the Composition
+Now that GitHub authentication is configured, we can create an instance of the composition:
 
-Once the manifest is modified, let's apply the manifest:
-
-```plain
-kubectl apply -f /root/filesystem/github-repo-creds.yaml
-```{{exec}}
-
-We are now able to create an instance of the composition.
-
-<br>
-
-```plain
+```bash
 kubectl apply -f /root/filesystem/fireworksapp-composition-values.yaml
 ```{{exec}}
 
-Let's wait for the Composition `fireworksapp` to be Ready
+## Step 3: Verify the Installation
 
-```plain
-kubectl wait fireworksapp fireworksapp-tgz --for condition=Ready=True --timeout=300s --namespace krateo-system
+1. Wait for the Composition to be ready:
+   ```bash
+   kubectl wait fireworksapp fireworksapp-composition-1 --for condition=Ready=True \
+     --timeout=300s --namespace fireworksapp-system
+   ```{{exec}}
+
+2. Check the Composition's status:
+   ```bash
+   kubectl get fireworksapp fireworksapp-composition-1 --namespace fireworksapp-system
+   ```{{exec}}
+
+Let's repeat the process to install a second composition:
+
+```bash
+kubectl apply -f /root/filesystem/fireworksapp-composition-values-2.yaml
 ```{{exec}}
 
-Check the Composition `fireworksapp-tgz` outputs
+## Step 3: Verify the Installation
 
-```plain
-kubectl get fireworksapp fireworksapp-tgz --namespace krateo-system
-```{{exec}}
+1. Wait for the Composition to be ready:
+   ```bash
+   kubectl wait fireworksapp fireworksapp-composition-2 --for condition=Ready=True \
+     --timeout=300s --namespace fireworksapp-system
+   ```{{exec}}
+
+2. Check the Composition's status:
+   ```bash
+   kubectl get fireworksapp fireworksapp-composition-2 --namespace fireworksapp-system
+   ```{{exec}}
+
+This will display the current status of your Fireworks App Composition. Verify that all components have been properly deployed and are in a ready state.
