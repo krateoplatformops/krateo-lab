@@ -20,7 +20,7 @@ Let's open [Krateo Composable Portal]({{TRAFFIC_HOST1_30080}}) with the credenti
 Let's try now to login via terminal!
 
 ```plain
-token = echo -n "admin:" | base64; kubectl get secret admin-password -n krateo-system -o jsonpath="{.data.password}" | base64 -d
+token=$(echo -n "admin:$(kubectl get secret admin-password -n krateo-system -o jsonpath="{.data.password}" | base64 -d)" | base64)
 cd && curl http://localhost:30082/basic/login -H "Authorization: Basic $token" | jq -r .data > admin.kubeconfig
 ```{{exec}}
 
