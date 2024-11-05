@@ -45,7 +45,8 @@
         {"file": "github-repo-creds.yaml", "target": "/"},
         {"file": "fireworksapp-composition-values.yaml", "target": "/"},
         {"file": "fireworksapp-composition-values-2.yaml", "target": "/"},
-        {"file": "list-resources-by-annotation.sh", "target": "/"}
+        {"file": "list-resources-by-annotation.sh", "target": "/"},
+        {"file": "stress-test-cdc.sh", "target": "/"}
       ]
     },
     "finish": {

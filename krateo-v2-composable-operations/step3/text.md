@@ -9,7 +9,7 @@ First, let's examine the Service Account created for the controller:
 ```bash
 # View the Service Account details
 kubectl get serviceaccount fireworksapps-v1-1-5-controller -n fireworksapp-system -o yaml
-```
+```{{exec}}
 
 This Service Account is used by the controller pod to interact with the Kubernetes API.
 
@@ -21,7 +21,7 @@ Roles define permissions within a specific namespace:
 ```bash
 # View detailed role configuration
 kubectl get role fireworksapps-v1-1-5-controller -n fireworksapp-system -o yaml
-```
+```{{exec}}
 
 ### 2. RoleBindings
 RoleBindings link the Roles to our Service Account within the namespace:
@@ -29,7 +29,7 @@ RoleBindings link the Roles to our Service Account within the namespace:
 ```bash
 # View detailed role binding configuration
 kubectl get rolebinding fireworksapps-v1-1-5-controller -n fireworksapp-system -o yaml
-```
+```{{exec}}
 
 ### 3. ClusterRoles
 ClusterRoles define permissions that apply across the entire cluster:
@@ -37,7 +37,7 @@ ClusterRoles define permissions that apply across the entire cluster:
 ```bash
 # View detailed cluster role configuration
 kubectl get clusterrole fireworksapps-v1-1-5-controller -o yaml
-```
+```{{exec}}
 
 ### 4. ClusterRoleBindings
 ClusterRoleBindings link the ClusterRoles to our Service Account:
@@ -45,7 +45,7 @@ ClusterRoleBindings link the ClusterRoles to our Service Account:
 ```bash
 # View detailed cluster role binding configuration
 kubectl get clusterrolebinding fireworksapps-v1-1-5-controller -o yaml
-```
+```{{exec}}
 
 ## Understanding the Generated Configuration
 
