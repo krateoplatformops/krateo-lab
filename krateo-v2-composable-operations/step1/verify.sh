@@ -1,3 +1,4 @@
 #!/bin/bash
 
-kubectl wait deployment core-provider --for condition=Available=True --namespace krateo-system
+kubectl wait krateoplatformops krateo --for condition=Ready=True --timeout=600s --namespace krateo-system
+

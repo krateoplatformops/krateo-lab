@@ -1,50 +1,34 @@
 # Krateo Core Provider
 
-Manage Krateo PlatformOps Compositions.
+Krateo Core Provider is a system for managing Krateo PlatformOps Compositions.
 
-## What is a Composition?
+## Core Concepts
 
-A Composition is an Helm Chart archive (.tgz) with a [JSON Schema](https://json-schema.org/) for the [`values.yaml`](https://helm.sh/docs/chart_template_guide/values_files/) file.
+### What is a Composition?
 
-This [JSON Schema](https://json-schema.org/) file must be named: `values.schema.json`.
+A Composition in Krateo is an Helm Chart archive (.tgz) with specific requirements:
+- Must include a JSON Schema for the `values.yaml` file
+- The schema file must be named `values.schema.json`
 
-There are many online tools to generate automatically [JSON Schema](https://json-schema.org/) from YAML, here are a few:
+#### JSON Schema Tools
 
-- https://jsonformatter.org/yaml-to-jsonschema
-- https://codebeautify.org/yaml-to-json-schema-generator
+You can use these online tools to generate JSON Schema from YAML:
+- [YAML to JSON Schema Converter](https://jsonformatter.org/yaml-to-jsonschema)
+- [Code Beautify YAML to JSON Schema Generator](https://codebeautify.org/yaml-to-json-schema-generator)
 
-Here are some online tools useful to verify the [JSON Schema](https://json-schema.org/) before building the Composition:
+To validate your JSON Schema, you can use:
+- [JSON Schema Validator](https://www.jsonschemavalidator.net/)
+- [Hyperjump JSON Schema](https://json-schema.hyperjump.io/)
 
-- https://www.jsonschemavalidator.net/
-- https://json-schema.hyperjump.io/
+### What is a CompositionDefinition?
 
-## What is a CompositionDefinition?
+A CompositionDefinition is a Krateo Custom Resource that automates two key tasks:
+1. Generates a Custom Resource Definition based on the Helm chart's `values.schema.json` file
+2. Creates a Deployment that monitors for new Custom Resources representing the Helm Chart's `values.yaml`
 
-A CompositionDefinition is the Krateo Custom Resource that takes the Helm Chart specified within the Kubernetes manifest and automatically:
-- generates a Custom Resource Definition that represents the values.schema.json file from the Helm chart
-- instantiates a Deployment that watches any new Custom Resource that represents the values.yaml from the Helm Chart
+## Verify Krateo PlatformOps Installation
 
-## Install core-provider
-First, we make sure we add the Krateo Helm charts repo to our Helm client
-
-```plain
-helm repo add krateo https://charts.krateo.io
-```{{exec}}
-
-We can update the repo
-
-```plain
-helm repo update
-```{{exec}}
-
-Now we install the chart
-
-```plain
-helm install core-provider krateo/core-provider --create-namespace --namespace krateo-system --version 0.15.1
-```{{exec}}
-
-Let's wait for the deployment to be Available
-
-```plain
-kubectl wait deployment core-provider --for condition=Available=True --timeout=300s --namespace krateo-system
+Check out for Krateo PlatformOps to become available:
+```bash
+kubectl wait krateoplatformops krateo --for condition=Ready=True --timeout=600s --namespace krateo-system
 ```{{exec}}
