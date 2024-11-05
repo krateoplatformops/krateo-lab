@@ -171,9 +171,168 @@ spec:
       version: 0.7.0
       wait: true
       waitTimeout: 5m
-  # Additional installation steps omitted for brevity...
+  - id: extract-bff-nodeport-port
+    type: var
+    with:
+      name: BFF_PORT
+      valueFrom:
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: bff
+        selector: .spec.ports[0].nodePort
+  - id: install-backend-etcd
+    type: chart
+    with:
+      name: etcd
+      repository: https://charts.krateo.io
+      set:
+      - name: auth.rbac.create
+        value: "false"
+      - name: global.compatibility.openshift.adaptSecurityContext
+        value: auto
+      - name: global.imageRegistry
+        value: ghcr.io
+      - name: image.repository
+        value: krateoplatformops/etcd
+      - name: image.pullPolicy
+        value: IfNotPresent
+      - name: image.tag
+        value: 3.5.15-debian-12-r3
+      version: 10.2.9
+      wait: true
+      waitTimeout: 5m
+  - id: install-backend
+    type: chart
+    with:
+      name: backend
+      repository: https://charts.krateo.io
+      set:
+      - name: image.repository
+        value: ghcr.io/krateoplatformops/backend
+      - name: image.pullPolicy
+        value: IfNotPresent
+      version: 0.13.0
+      wait: true
+      waitTimeout: 5m
+  - id: install-eventrouter
+    type: chart
+    with:
+      name: eventrouter
+      repository: https://charts.krateo.io
+      set:
+      - name: image.repository
+        value: ghcr.io/krateoplatformops/eventrouter
+      - name: image.pullPolicy
+        value: IfNotPresent
+      version: 0.5.7
+      wait: true
+      waitTimeout: 5m
+  - id: install-eventsse
+    type: chart
+    with:
+      name: eventsse
+      repository: https://charts.krateo.io
+      set:
+      - name: image.repository
+        value: ghcr.io/krateoplatformops/eventsse
+      - name: image.pullPolicy
+        value: IfNotPresent
+      - name: service.type
+        value: NodePort
+      - name: service.nodePort
+        value: "30083"
+      version: 0.4.3
+      wait: true
+      waitTimeout: 5m
+  - id: extract-eventsse-nodeport-port
+    type: var
+    with:
+      name: EVENTSSE_PORT
+      valueFrom:
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: eventsse-external
+        selector: .spec.ports[0].nodePort
+  - id: extract-bff-internal-port
+    type: var
+    with:
+      name: BFF_INTERNAL_PORT
+      valueFrom:
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: bff
+        selector: .spec.ports[0].port
+  - id: install-core-provider
+    type: chart
+    with:
+      name: core-provider
+      repository: https://charts.krateo.io
+      set:
+      - name: image.repository
+        value: ghcr.io/krateoplatformops/core-provider
+      - name: image.pullPolicy
+        value: IfNotPresent
+      - name: env.URL_PLURALS
+        value: http://bff.krateo-system.svc.cluster.local:$BFF_INTERNAL_PORT/api-info/names
+      version: 0.25.7
+      wait: true
+      waitTimeout: 5m
+  - id: install-patch-provider
+    type: chart
+    with:
+      name: patch-provider
+      repository: https://charts.krateo.io
+      set:
+      - name: image.repository
+        value: ghcr.io/krateoplatformops/patch-provider
+      - name: image.pullPolicy
+        value: IfNotPresent
+      version: 1.0.0
+      wait: true
+      waitTimeout: 5m
+  - id: install-composable-portal-basic
+    type: chart
+    with:
+      name: composable-portal-basic
+      repository: https://charts.krateo.io
+      version: 0.3.1
+      wait: true
+      waitTimeout: 5m
+  - id: extract-eventsse-internal-port
+    type: var
+    with:
+      name: EVENTSSE_INTERNAL_PORT
+      valueFrom:
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: eventsse-internal
+        selector: .spec.ports[0].port
+  - id: install-resource-tree-handler
+    type: chart
+    with:
+      name: resource-tree-handler
+      repository: https://charts.krateo.io
+      set:
+      - name: image.repository
+        value: ghcr.io/krateoplatformops/resource-tree-handler
+      - name: image.pullPolicy
+        value: IfNotPresent
+      - name: service.type
+        value: NodePort
+      - name: service.nodePort
+        value: "30085"
+      - name: env.URL_SSE
+        value: http://eventsse-internal.krateo-system.svc.cluster.local:$EVENTSSE_INTERNAL_PORT/notifications
+      - name: env.URL_PLURALS
+        value: http://bff.krateo-system.svc.cluster.local:$BFF_INTERNAL_PORT/api-info/names
+      version: 0.2.5
+      wait: true
+      waitTimeout: 5m
 EOF
-
 # Wait for the Krateo Platform to be ready
 
 kubectl wait krateoplatformops krateo --for condition=Ready=True --timeout=600s --namespace krateo-system
