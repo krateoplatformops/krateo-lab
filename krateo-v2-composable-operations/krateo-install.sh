@@ -9,7 +9,7 @@ kubectl apply -f https://raw.githubusercontent.com/krateoplatformops/installer-c
 
 kubectl create namespace krateo-system
 
-kubectl apply -f assets/installer.yaml
+kubectl apply -f installer.yaml
 
 # Wait for the installer to be ready
 
@@ -17,7 +17,7 @@ kubectl wait --for=condition=available --timeout=600s deployment/installer -n kr
 
 # Apply the Manifests
 
-kubectl apply -f assets/krateo-installer.yaml
+kubectl apply -f krateo-installer.yaml
 
 # Wait for the Krateo Platform to be ready
 
