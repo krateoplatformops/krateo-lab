@@ -1,6 +1,4 @@
 #!/bin/bash
-vcluster connect vcluster -n vcluster
-
 echo "apiVersion: v1
 kind: Namespace
 metadata:
