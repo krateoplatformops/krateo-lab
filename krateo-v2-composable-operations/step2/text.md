@@ -56,9 +56,9 @@ EOF
 kubectl wait compositiondefinition fireworksapp-1-1-5 --for condition=Ready=True --timeout=300s --namespace krateo-system
 ```{{exec}}
 
-2. Check the CompositionDefinition outputs (pay attention to the `RESOURCE` field):
+2. Check the CompositionDefinition outputs:
 ```bash
-kubectl get compositiondefinition fireworksapp-1-1-5 --namespace krateo-system
+kubectl get compositiondefinition fireworksapp-1-1-5 --namespace krateo-system -o yaml
 ```{{exec}}
 
 ## What Was Created?
