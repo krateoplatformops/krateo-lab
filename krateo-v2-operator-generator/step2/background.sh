@@ -8,7 +8,7 @@ while true; do
     resource_yaml=$(kubectl get restdefinition gh-repo -n gh-system -o yaml)
 
     # Check if the krateo.io/external-create-pending annotation is present
-    if grep -q ! grep -q 'krateo.io/external-create-succeeded' <<< "$resource_yaml"; then
+    if ! grep -q 'krateo.io/external-create-succeeded' <<< "$resource_yaml"; then
         echo "Removing finalizers and deleting the resource."
 
         # Remove the finalizers using kubectl patch
