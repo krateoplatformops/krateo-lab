@@ -35,6 +35,20 @@ EOF
 
 echo "Please enter your GitHub personal access token:"
 read -s ACCESS_TOKEN
+<<<<<<< HEAD
+=======
+
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+stringData:
+  token: $ACCESS_TOKEN
+kind: Secret
+metadata:
+  name: github-repo-creds
+  namespace: krateo-system
+type: Opaque
+EOF
+>>>>>>> 7077ee58a56c46a7ee0161efbad7939fd33508f9
 ```{{exec}}
 
 ```plain
