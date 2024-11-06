@@ -29,3 +29,9 @@ Wait for the generator to be available:
 ```bash
 kubectl wait deployments krateo-oasgen-provider --for condition=Available=True --namespace krateo-system --timeout=300s
 ```{{exec}}
+
+Create the `gh-system` namespace:
+
+```bash
+kubectl create namespace gh-system
+```{{exec}}
