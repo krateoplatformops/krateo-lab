@@ -10,7 +10,7 @@ The status returns the possible actions available for the user requesting the ca
 
 Focus on the `actions` array.
 
-What happens when we try to retrieve the `FormTemplate` as `cyberjoker` user?
+What happens when we try to retrieve the `Card` as `cyberjoker` user?
 
 ```plain
 kubectl get widget template-fireworksapp-card --namespace fireworksapp-system -o yaml --kubeconfig cyberjoker.kubeconfig
