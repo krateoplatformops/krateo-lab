@@ -35,7 +35,9 @@ EOF
 
 echo "Please enter your GitHub personal access token:"
 read -s ACCESS_TOKEN
+```{{exec}}
 
+```plain
 cat <<EOF | kubectl apply -f -
 apiVersion: v1
 stringData:
@@ -47,8 +49,6 @@ metadata:
 type: Opaque
 EOF
 ```{{exec}}
-
-In order to configure ArgoCD, we need to configure ArgoCD to generate a Token 
 
 Let's apply a `template-chart` in order to add a Template to the portal.
 
