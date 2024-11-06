@@ -1,33 +1,43 @@
-## Add Krateo FormTemplate to retrieve the Composition
+## Add another user to the platform
+
+Let's configure another user:
 
 ```plain
 cat <<EOF | kubectl apply -f -
-apiVersion: widgets.krateo.io/v1alpha1
-kind: FormTemplate
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/basic-auth
 metadata:
-  name: fireworksapp-tgz
-  namespace: demo-system
+  name: cyberjoker-password
+  namespace: krateo-system
+stringData:
+  password: "123456"
+---
+apiVersion: basic.authn.krateo.io/v1alpha1
+kind: User
+metadata:
+  name: cyberjoker
+  namespace: krateo-system
 spec:
-  compositionDefinitionRef:
-    name: fireworksapp-tgz
-    namespace: demo-system
+  displayName: Cyber Joker
+  avatarURL: https://i.pravatar.cc/256?img=70
+  groups:
+    - devs
+  passwordRef:
+    namespace: krateo-system
+    name: cyberjoker-password
+    key: password
 EOF
 ```{{exec}}
 
-Let's check the status of the `FormTemplate` `fireworksapp-tgz` resource:
+Now that there's a new basic user, let's try to login and check the response!
 
 ```plain
-kubectl get formtemplate fireworksapp-tgz --namespace demo-system -o yaml
+cd && curl http://localhost:30082/basic/login -H "Authorization: Basic Y3liZXJqb2tlcjoxMjM0NTY=" | jq -r .data > cyberjoker.kubeconfig
 ```{{exec}}
 
-The status returns the Custom Resource Definition (CRD) of the Composition. In Krateo, a CRD is the template we're going to expose as a Form in the Portal.
-
-Focus on the `actions` array.
-
-What happens when we try to retrieve the `FormTemplate` as `cyberjoker` user?
+The authn response contains the kubeconfig for the user logged in.
 
 ```plain
-kubectl get formtemplate fireworksapp-tgz --namespace demo-system -o yaml --kubeconfig cyberjoker.kubeconfig
+cat cyberjoker.kubeconfig | jq
 ```{{exec}}
-
-Focus again on the `actions` array.
