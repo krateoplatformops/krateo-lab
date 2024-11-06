@@ -8,7 +8,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: devs-get-list-any-widget-in-fireworksapp-namespace
-  namespace: fireworksapp
+  namespace: fireworksapp-system
 rules:
 - apiGroups:
   - widgets.krateo.io
