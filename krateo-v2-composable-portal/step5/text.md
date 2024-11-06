@@ -11,7 +11,7 @@ metadata:
   namespace: fireworksapp-system
 rules:
 - apiGroups:
-  - widgets.krateo.io
+  - templates.krateo.io
   resources:
   - '*'
   verbs:
@@ -35,7 +35,7 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: devs-create-formtemplates-in-fireworksappsystem-namespace
+  name: devs-create-compositions-in-fireworksappsystem-namespace
   namespace: fireworksapp-system
 rules:
 - apiGroups:
@@ -49,12 +49,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: devs-create-formtemplates-in-fireworksappsystem-namespace
+  name: devs-create-compositions-in-fireworksappsystem-namespace
   namespace: fireworksapp-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: devs-create-formtemplates-in-fireworksappsystem-namespace
+  name: devs-create-compositions-in-fireworksappsystem-namespace
 subjects:
 - kind: Group
   name: devs
