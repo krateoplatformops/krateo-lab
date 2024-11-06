@@ -12,19 +12,13 @@ The first step is to locate the OAS Specification file that defines the APIs for
 cat /root/filesystem/repo-def.yaml
 ```{{exec}}
 
-2. Create the `gh-system` namespace:
-
-```bash
-kubectl create namespace gh-system
-```{{exec}}
-
-3. **Apply the RestDefinition Manifest:**
+2. **Apply the RestDefinition Manifest:**
 
 ```bash
 kubectl apply -f /root/filesystem/repo-def.yaml
 ```{{exec}}
 
-4. **Wait for the RestDefinition to meet the `Ready:True` condition:**
+3. **Wait for the RestDefinition to meet the `Ready:True` condition:**
 
 ```bash
 kubectl wait restdefinitions gh-repo --for condition=Ready=True --namespace gh-system --timeout=300s
