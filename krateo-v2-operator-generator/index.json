@@ -1,0 +1,48 @@
+{
+  "title": "Krateo v2 Operator Generator lab",
+  "description": "Let's learn how to work with Krateo v2 Operator Generator",
+  "details": {
+    "intro": {
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "title": "Install Krateo Operator Generator",
+        "text": "step1/text.md",
+        "verify": "step1/verify.sh"
+      },
+      {
+        "title": "Getting Started",
+        "text": "step2/text.md",
+        "verify": "step2/verify.sh"
+      },
+      {
+        "title": "Operator Generator installation",
+        "text": "step3/text.md"
+      },
+      {
+        "title": "Creating a Repository",
+        "text": "step4/text.md",
+        "verify": "step4/verify.sh"
+      },
+      {
+        "title": "Checking Auto-Reconciliation",
+        "text": "step5/text.md"
+      }
+    ],
+    "assets": {
+      "host01": [
+        {"file": "github-repo-creds.yaml", "target": "/"},
+        {"file": "gh-auth.yaml", "target": "/"},
+        {"file": "repo-cr.yaml", "target": "/"},
+        {"file": "repo-def.yaml", "target": "/"}
+      ]
+    },
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-1node-4GB"
+  }
+}
