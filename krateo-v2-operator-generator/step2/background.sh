@@ -8,7 +8,7 @@ while true; do
     resource_yaml=$(kubectl get restdefinition gh-repo -n gh-system -o yaml)
 
     # Check if the krateo.io/external-create-pending annotation is present
-    if grep -q 'krateo.io/external-create-pending' <<< "$resource_yaml" && ! grep -q 'krateo.io/external-create-succeeded' <<< "$resource_yaml"; then
+    if ! grep -q 'krateo.io/external-create-succeeded' <<< "$resource_yaml"; then
         echo "Removing finalizers and deleting the resource."
 
         # Remove the finalizers using kubectl patch
@@ -20,31 +20,31 @@ while true; do
         # Apply the resource again
 
         cat <<EOF | kubectl apply -f -
-        kind: RestDefinition
-        apiVersion: swaggergen.krateo.io/v1alpha1
-        metadata:
-        name: gh-repo
-        namespace: gh-system
-        spec:
-            oasPath: https://raw.githubusercontent.com/krateoplatformops/github-oas3/1c1a6332378a931b5998b00742bcfbf136601b18/repo.yaml
-            resourceGroup: gen.github.com
-            resource: 
-                kind: Repo
-                identifiers:
-                - id 
-                - name
-                - html_url
-                verbsDescription:
-                - action: create
-                method: POST
-                path: /orgs/{org}/repos
-                - action: delete
-                method: DELETE
-                path: /repos/{org}/{name}
-                - action: get
-                method: GET
-                path: /repos/{org}/{name}
-        EOF
+kind: RestDefinition
+apiVersion: swaggergen.krateo.io/v1alpha1
+metadata:
+  name: gh-repo
+  namespace: gh-system
+spec:
+  oasPath: https://raw.githubusercontent.com/krateoplatformops/github-oas3/1c1a6332378a931b5998b00742bcfbf136601b18/repo.yaml
+  resourceGroup: gen.github.com
+  resource: 
+    kind: Repo
+    identifiers:
+      - id 
+      - name
+      - html_url
+    verbsDescription:
+    - action: create
+      method: POST
+      path: /orgs/{org}/repos
+    - action: delete
+      method: DELETE
+      path: /repos/{org}/{name}
+    - action: get
+      method: GET
+      path: /repos/{org}/{name}
+EOF
     else
         echo "The krateo.io/external-create-pending annotation is not present, not deleting the resource."
     fi
