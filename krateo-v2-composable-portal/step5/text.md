@@ -7,7 +7,7 @@ cat <<EOF | kubectl apply -f -
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: devs-get-list-any-widget-in-fireworksapp-namespace
+  name: devs-get-list-any-widget-in-fireworksappsystem-namespace
   namespace: fireworksapp-system
 rules:
 - apiGroups:
@@ -21,12 +21,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: devs-get-list-any-widget-in-demosystem-namespace
+  name: devs-get-list-any-widget-in-fireworksappsystem-namespace
   namespace: fireworksapp-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: devs-get-list-any-widget-in-demosystem-namespace
+  name: devs-get-list-any-widget-in-fireworksappsystem-namespace
 subjects:
 - kind: Group
   name: devs
@@ -35,7 +35,7 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: devs-create-formtemplates-in-demosystem-namespace
+  name: devs-create-formtemplates-in-fireworksappsystem-namespace
   namespace: fireworksapp-system
 rules:
 - apiGroups:
@@ -49,12 +49,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: devs-create-formtemplates-in-demosystem-namespace
+  name: devs-create-formtemplates-in-fireworksappsystem-namespace
   namespace: fireworksapp-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: devs-create-formtemplates-in-demosystem-namespace
+  name: devs-create-formtemplates-in-fireworksappsystem-namespace
 subjects:
 - kind: Group
   name: devs
@@ -63,7 +63,7 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: devs-get-list-any-compositiondefinitions-in-demosystem-namespace
+  name: devs-get-list-any-compositiondefinitions-in-fireworksappsystem-namespace
   namespace: fireworksapp-system
 rules:
 - apiGroups:
@@ -77,12 +77,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: devs-get-list-any-compositiondefinitions-in-demosystem-namespace
+  name: devs-get-list-any-compositiondefinitions-in-fireworksappsystem-namespace
   namespace: fireworksapp-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: devs-get-list-any-compositiondefinitions-in-demosystem-namespace
+  name: devs-get-list-any-compositiondefinitions-in-fireworksappsystem-namespace
 subjects:
 - kind: Group
   name: devs
@@ -91,7 +91,7 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: devs-get-list-any-secrets-and-configmaps-in-demosystem-namespace
+  name: devs-get-list-any-secrets-and-configmaps-in-fireworksappsystem-namespace
   namespace: fireworksapp-system
 rules:
 - apiGroups:
@@ -106,12 +106,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: devs-get-list-any-secrets-and-configmaps-in-demosystem-namespace
+  name: devs-get-list-any-secrets-and-configmaps-in-fireworksappsystem-namespace
   namespace: fireworksapp-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: devs-get-list-any-secrets-and-configmaps-in-demosystem-namespace
+  name: devs-get-list-any-secrets-and-configmaps-in-fireworksappsystem-namespace
 subjects:
 - kind: Group
   name: devs
