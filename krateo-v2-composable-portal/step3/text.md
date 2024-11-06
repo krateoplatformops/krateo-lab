@@ -16,7 +16,7 @@ helm install argocd argo/argo-cd --namespace krateo-system --create-namespace --
 kubectl patch configmap argocd-cm -n krateo-system --patch '{"data": {"accounts.krateo-account": "apiKey, login"}}'
 kubectl patch configmap argocd-rbac-cm -n krateo-system --patch '{"data": {"policy.default": "role:readonly"}}'
 PASSWORD=$(kubectl -n krateo-system get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
-argocd login {{TRAFFIC_HOST1_30086}} --insecure --username admin --password $PASSWORD
+argocd login localhost:30086 --insecure --username admin --password $PASSWORD
 argocd account list
 TOKEN=$(argocd account generate-token --account krateo-account)
 
@@ -31,6 +31,20 @@ stringData:
   insecure: "true"
   server-url: https://argocd-server.krateo-system.svc:443
   token: $TOKEN
+EOF
+
+echo "Please enter your GitHub personal access token:"
+read -s ACCESS_TOKEN
+
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+stringData:
+  token: $ACCESS_TOKEN
+kind: Secret
+metadata:
+  name: github-repo-creds
+  namespace: krateo-system
+type: Opaque
 EOF
 ```{{exec}}
 
