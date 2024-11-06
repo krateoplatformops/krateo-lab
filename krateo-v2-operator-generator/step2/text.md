@@ -12,6 +12,12 @@ The first step is to locate the OAS Specification file that defines the APIs for
 cat /root/filesystem/repo-def.yaml
 ```{{exec}}
 
+2. Create the `gh-system` namespace:
+
+```bash
+kubectl create namespace gh-system
+```{{exec}}
+
 3. **Apply the RestDefinition Manifest:**
 
 ```bash
