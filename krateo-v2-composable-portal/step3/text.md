@@ -16,7 +16,7 @@ helm install argocd argo/argo-cd --namespace krateo-system --create-namespace --
 kubectl patch configmap argocd-cm -n krateo-system --patch '{"data": {"accounts.krateo-account": "apiKey, login"}}'
 kubectl patch configmap argocd-rbac-cm -n krateo-system --patch '{"data": {"policy.default": "role:readonly"}}'
 PASSWORD=$(kubectl -n krateo-system get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
-argocd login {{TRAFFIC_HOST1_30086}} --insecure --username admin --password $PASSWORD
+argocd login localhost:30086 --insecure --username admin --password $PASSWORD
 argocd account list
 TOKEN=$(argocd account generate-token --account krateo-account)
 
