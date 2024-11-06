@@ -12,9 +12,26 @@ sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
 rm argocd-linux-amd64
 helm repo add argo https://argoproj.github.io/argo-helm
 helm repo update argo
-helm install argocd argo/argo-cd --namespace krateo-system --create-namespace --wait
+helm install argocd argo/argo-cd --namespace krateo-system --create-namespace --set server.service.type=NodePort --set server.service.nodePortHttp=30086 --wait
 kubectl patch configmap argocd-cm -n krateo-system --patch '{"data": {"accounts.krateo-account": "apiKey, login"}}'
 kubectl patch configmap argocd-rbac-cm -n krateo-system --patch '{"data": {"policy.default": "role:readonly"}}'
+PASSWORD=$(kubectl -n krateo-system get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
+argocd login {{TRAFFIC_HOST1_30086}} --insecure --username admin --password $PASSWORD
+argocd account list
+TOKEN=$(argocd account generate-token --account krateo-account)
+
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: argocd-endpoint
+  namespace: krateo-system
+stringData:
+  insecure: "true"
+  server-url: https://argocd-server.krateo-system.svc:443
+  token: $TOKEN
+EOF
 ```{{exec}}
 
 In order to configure ArgoCD, we need to configure ArgoCD to generate a Token 
