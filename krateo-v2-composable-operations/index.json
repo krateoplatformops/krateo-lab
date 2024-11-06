@@ -4,32 +4,44 @@
   "details": {
     "intro": {
       "text": "intro.md",
-      "background": "krateo-install.sh"
+      "foreground": "krateo-install.sh"
     },
     "steps": [
       {
-        "title": "Install Krateo Composable Operations core-provider Helm chart",
+        "title": "Install Krateo Composable Operations core-provider",
         "text": "step1/text.md",
         "verify": "step1/verify.sh"
       },
       {
-        "title": "Deploy a CompositionDefinition via tgz archive",
+        "title": "Deploying the Krateo V2 Template Fireworks App",
         "text": "step2/text.md",
         "verify": "step2/verify.sh"
       },
       {
-        "title": "Deploy a Composition",
-        "text": "step3/text.md",
-        "verify": "step3/verify.sh"
+        "title": "Exploring Core Provider Generated RBAC Resources",
+        "text": "step3/text.md"
       },
       {
-        "title": "List Resources Managed By a Composition",
-        "text": "step5/text.md",
-        "verify": "step5/verify.sh"
+        "title": "Installing a Krateo Fireworks App Composition",
+        "text": "step4/text.md",
+        "verify": "step4/verify.sh"
       },
       {
-        "title": "Delete a CompositionDefiniiton",
-        "text": "step6/text.md"
+        "title": "Exploring the Krateo Composition Resource",
+        "text": "step5/text.md"
+      },
+      {
+        "title": "Update the Fireworksapp Chart",
+        "text": "step6/text.md",
+        "verify": "step6/verify.sh"
+      },
+      {
+        "title": "Delete a Compositions",
+        "text": "step7/text.md"
+      },
+      {
+        "title": "Massive Compositions Install",
+        "text": "step8/text.md"
       }
     ],
     "assets": {
@@ -37,7 +49,8 @@
         {"file": "github-repo-creds.yaml", "target": "/"},
         {"file": "fireworksapp-composition-values.yaml", "target": "/"},
         {"file": "fireworksapp-composition-values-2.yaml", "target": "/"},
-        {"file": "list-resources-by-annotation.sh", "target": "/"}
+        {"file": "list-resources-by-annotation.sh", "target": "/"},
+        {"file": "stress-test-cdc.sh", "target": "/"}
       ]
     },
     "finish": {
