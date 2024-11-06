@@ -14,7 +14,8 @@
       {
         "title": "Getting Started",
         "text": "step2/text.md",
-        "verify": "step2/verify.sh"
+        "verify": "step2/verify.sh",
+        "background": "step2/background.md"
       },
       {
         "title": "Operator Generator installation",
