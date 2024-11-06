@@ -5,8 +5,8 @@ Now we want to add a `Composition` to the Portal.
 First of all, we need to prepare the toolchain that will be configured by the `Composition`.
 
 ```plain
-helm install github-provider krateo/github-provider --namespace krateo-system --create-namespace
-helm install git-provider krateo/git-provider --namespace krateo-system --create-namespace
+helm install github-provider krateo/github-provider --namespace krateo-system --create-namespace --wait
+helm install git-provider krateo/git-provider --namespace krateo-system --create-namespace --wait
 curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
 sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
 rm argocd-linux-amd64
