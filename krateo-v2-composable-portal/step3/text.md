@@ -1,6 +1,23 @@
-## Add a Template to the portal
+## Add a Composition to the Portal via Template
 
-Now we want to add a Template to the Portal.
+Now we want to add a `Composition` to the Portal.
+
+First of all, we need to prepare the toolchain that will be configured by the `Composition`.
+
+```plain
+helm install github-provider krateo/github-provider --namespace krateo-system --create-namespace
+helm install git-provider krateo/git-provider --namespace krateo-system --create-namespace
+curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+rm argocd-linux-amd64
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update argo
+helm install argocd argo/argo-cd --namespace krateo-system --create-namespace --wait
+kubectl patch configmap argocd-cm -n krateo-system --patch '{"data": {"accounts.krateo-account": "apiKey, login"}}'
+kubectl patch configmap argocd-rbac-cm -n krateo-system --patch '{"data": {"policy.default": "role:readonly"}}'
+```{{exec}}
+
+In order to configure ArgoCD, we need to configure ArgoCD to generate a Token 
 
 Let's apply a `template-chart` in order to add a Template to the portal.
 
