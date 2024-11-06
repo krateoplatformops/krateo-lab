@@ -6,13 +6,13 @@ At this point, you should notice that a CRD has been created based on the OpenAP
 - **Check the CRD for repository information:**
 
   ```bash
-  kubectl get crds repoes.gen.github.com
+  kubectl get crds repoes.gen.github.com -o yaml
   ```{{exec}}
 
 - **Check the CRD for centralized authentication information:**
 
   ```bash
-  kubectl get crds bearerauths.gen.github.com
+  kubectl get crds bearerauths.gen.github.com -o yaml
   ```{{exec}}
 
 The first CRD (`repoes.gen.github.com`) defines the schema for information about the repository you want to create on GitHub. The second CRD (`bearerauths.gen.github.com`) provides a centralized reference for authentication information for GitHub (specifically for any resource within the `gen.github.com` group).
