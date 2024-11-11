@@ -30,6 +30,18 @@ Wait for the generator to be available:
 kubectl wait deployments krateo-oasgen-provider --for condition=Available=True --namespace krateo-system --timeout=300s
 ```{{exec}}
 
+# Install Krateo BFF for handling K8s plurals
+
+```
+helm install bff krateo/bff -n krateo-system --create-namespace
+```{{exec}}
+
+Wait for the BFF to be available:
+
+```bash
+kubectl wait deployments bff --for condition=Available=True --namespace krateo-system --timeout=300s
+```{{exec}}
+
 Create the `gh-system` namespace:
 
 ```bash
