@@ -1,12 +1,12 @@
-**## Apply the Custom Resource**
+## Apply the Custom Resource
 
 If you've set up the necessary authentication in the previous step, you can skip the prerequisites.
 
-**## Prerequisites**
+## Prerequisites
 
 Before creating the repositories, you'll need to configure GitHub authentication by setting up the appropriate credentials in the cluster.
 
-**### Step 1: Configure GitHub Token**
+### Step 1: Configure GitHub Token
 
 1. Open the Killercoda IDE and navigate to the following file:
 ```
@@ -18,13 +18,13 @@ Before creating the repositories, you'll need to configure GitHub authentication
 kubectl apply -f /root/filesystem/github-repo-creds.yaml
 ```{{exec}}
 
-**### Step 2: Install the BearerAuth CR**
+### Step 2: Install the BearerAuth CR
 Install the BearerAuth custom resource to enable GitHub authentication:
 ```bash
 kubectl apply -f /root/filesystem/gh-auth.yaml
 ```{{exec}}
 
-**## Edit the Custom Resource Specifications**
+## Edit the Custom Resource Specifications
 Open the following file in the Killercoda IDE:
 ```
 /root/filesystem/collaborators-cr.yaml
@@ -41,7 +41,7 @@ Once you've updated the Custom Resource specification, apply it:
 kubectl apply -f /root/filesystem/collaborators-cr.yaml
 ```{{exec}}
 
-**## Step 5: Verify the Installation**
+## Step 5: Verify the Installation
 1. Wait for the Collaborators CR to reach the `Ready=True` condition:
  ```bash
  kubectl wait collaborators.gen.github.com/gh-collaborator --for condition=Ready=True --namespace gh-system
