@@ -21,7 +21,7 @@ A k8s controller that generates CRDs and controller to manage resources from Ope
 ```bash
 helm repo add krateo https://charts.krateo.io
 helm repo update krateo
-helm install krateo-oasgen-provider krateo/oasgen-provider --namespace krateo-system --create-namespace 
+helm install krateo-oasgen-provider krateo/oasgen-provider --version 0.3.0 --namespace krateo-system --create-namespace 
 ```{{exec}}
 
 Wait for the generator to be available:
@@ -33,7 +33,7 @@ kubectl wait deployments krateo-oasgen-provider --for condition=Available=True -
 # Install Krateo BFF for handling K8s plurals
 
 ```
-helm install bff krateo/bff -n krateo-system --create-namespace
+helm install bff krateo/bff --version 0.8.3 -n krateo-system  --create-namespace 
 ```{{exec}}
 
 Wait for the BFF to be available:

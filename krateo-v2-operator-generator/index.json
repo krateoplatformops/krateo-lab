@@ -42,8 +42,7 @@
       {
         "title": "Create the Github Collaborators RestDefinition",
         "text": "step8/text.md",
-        "verify": "step8/verify.sh",
-        "background": "step8/background.sh"
+        "verify": "step8/verify.sh"
       },
       {
         "title": "Apply the Custom Resource",
