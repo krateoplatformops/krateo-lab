@@ -1,0 +1,14 @@
+kind: Collaborators
+apiVersion: gen.github.com/v1alpha1
+metadata:
+  name: gh-collaborator
+  namespace: gh-system
+  annotations:
+    krateo.io/connector-verbose: "true"
+spec:
+  owner: operator-generator-demo # Owner of the repository, organization or user
+  repo: test-collaborators # Repository name
+  username: username # Username of the collaborator
+  permission: "read" # Permission level for the collaborator
+  authenticationRefs:
+    bearerAuthRef: bearer-gh-ref
