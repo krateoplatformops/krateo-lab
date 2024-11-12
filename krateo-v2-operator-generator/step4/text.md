@@ -38,12 +38,12 @@ kubectl apply -f /root/filesystem/repo-cr.yaml
 
 ## Step 5: Verify the Installation
 
-1. Wait for the Composition to reach the `Ready=True` condition:
+1. Wait for the Repo CR to reach the `Ready=True` condition:
    ```bash
    kubectl wait repoes gh-repo1 --for condition=Ready=True --namespace gh-system --timeout=300s 
    ```{{exec}}
 
-2. Check the status of the Composition:
+2. Check the status of the Repo CR:
    ```bash
    kubectl get repoes gh-repo1 --namespace gh-system -o yaml
    ```{{exec}}

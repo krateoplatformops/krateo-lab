@@ -29,6 +29,30 @@
       {
         "title": "Checking Auto-Reconciliation",
         "text": "step5/text.md"
+      },
+      {
+        "title": "Handling Resources with Non-Standard APIs",
+        "text": "step6/text.md"
+      },
+      {
+        "title": "Implementing the Fix",
+        "text": "step7/text.md",
+        "verify": "step7/verify.sh"
+      },
+      {
+        "title": "Create the Github Collaborators RestDefinition",
+        "text": "step8/text.md",
+        "verify": "step8/verify.sh",
+        "background": "step8/background.sh"
+      },
+      {
+        "title": "Apply the Custom Resource",
+        "text": "step9/text.md",
+        "verify": "step9/verify.sh"
+      },
+      {
+        "title": "Testing the Web Service",
+        "text": "step10/text.md"
       }
     ],
     "assets": {
@@ -36,7 +60,9 @@
         {"file": "github-repo-creds.yaml", "target": "/"},
         {"file": "gh-auth.yaml", "target": "/"},
         {"file": "repo-cr.yaml", "target": "/"},
-        {"file": "repo-def.yaml", "target": "/"}
+        {"file": "repo-def.yaml", "target": "/"},
+        {"file": "collaborators-def.yaml", "target": "/"},
+        {"file": "collaborators-cr.yaml", "target": "/"}
       ]
     },
     "finish": {
