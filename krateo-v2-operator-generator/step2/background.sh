@@ -48,7 +48,7 @@ spec:
     - action: get
       method: GET
       path: /repos/{org}/{name}
-EOF 2> /dev/null
+EOF
     else
         echo "The krateo.io/external-create-pending annotation is not present, not deleting the resource."
     fi
