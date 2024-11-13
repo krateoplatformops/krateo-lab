@@ -14,8 +14,7 @@
       {
         "title": "Getting Started",
         "text": "step2/text.md",
-        "verify": "step2/verify.sh",
-        "foreground": "step2/background.sh"
+        "verify": "step2/verify.sh"
       },
       {
         "title": "Operator Generator installation",
@@ -69,6 +68,6 @@
     }
   },
   "backend": {
-    "imageid": "kubernetes-kubeadm-1node-4GB"
+    "imageid": "kubernetes-kubeadm-2nodes"
   }
 }
