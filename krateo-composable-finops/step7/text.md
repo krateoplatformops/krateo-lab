@@ -19,6 +19,7 @@ spec:
     key: # secret key
 ```
 
+Run the following scripts to compile the database configuration and the secret with the CrateDB account's password:
 ```plain
 ./database-input.sh
 kubectl apply -f token.yaml
