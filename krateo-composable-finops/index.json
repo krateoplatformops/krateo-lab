@@ -32,7 +32,8 @@
       },
       {
         "title": "Let's configure CrateDB",
-        "text": "step6/text.md"
+        "text": "step6/text.md",
+        "verify": "step6/verify.sh"
       },
       {
         "title": "Let's configure the FinOps Database Handler",
