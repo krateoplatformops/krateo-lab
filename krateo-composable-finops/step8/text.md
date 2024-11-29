@@ -53,6 +53,7 @@ spec:
     bearerToken:
       name: mock-token
       namespace: finops
+      key: bearer-token
     metricType: cost
     pollingIntervalHours: 1
     additionalVariables:
@@ -75,8 +76,48 @@ The upload may take some time. Check when it's terminated with:
 kubectl logs -n finops -f deployment/exporterscraperconfig-sample-scraper-deployment
 ```{{exec}}
 
-You can verify the data in the SQL warehouse with a simple select. Make sure to select the correct catalog or enter the full path in the table name.
+We can verify the data in CrateDB with a simple query to the database. Let's upload a query notebook to the FinOps Database Handler:
+```python
+def main():   
+    table_name_arg = sys.argv[5]
+    table_name_key_value = str.split(table_name_arg, '=')
+    if len(table_name_key_value) == 2:
+        if table_name_key_value[0] == 'table_name':
+            table_name = table_name_key_value[1]
+    try:
+        resource_query = f"SELECT * FROM {table_name}"
+        cursor.execute(resource_query)
+        raw_data = cursor.fetchall()
+        print(raw_data)
+    finally:
+        cursor.close()
+        connection.close()
+if __name__ == "__main__":
+    main()
+```
 
-```
-SELECT * FROM krateo-finops-tutorial
-```
+Upload the notebook:
+```plain
+echo "def main():   
+    table_name_arg = sys.argv[5]
+    table_name_key_value = str.split(table_name_arg, '=')
+    if len(table_name_key_value) == 2:
+        if table_name_key_value[0] == 'table_name':
+            table_name = table_name_key_value[1]
+    try:
+        resource_query = f\"SELECT * FROM {table_name}\"
+        cursor.execute(resource_query)
+        raw_data = cursor.fetchall()
+        print(raw_data)
+    finally:
+        cursor.close()
+        connection.close()
+if __name__ == \"__main__\":
+    main()" > query.py
+curl -X POST -u system:$(kubectl get secret user-system-cratedb-cluster -n finops -o json | jq -r '.data.password' | base64 --decode) http://localhost:$(kubectl get service -n finops finops-database-handler -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/compute/query/upload --data-binary "@query.py"
+```{{exec}}
+
+Run the notebook:
+```plain
+curl -X POST -u system:$(kubectl get secret user-system-cratedb-cluster -n finops -o json | jq -r '.data.password' | base64 --decode) http://localhost:$(kubectl get service -n finops finops-database-handler -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/compute/query --header "Content-Type: application/json" --data '{"table_name":"krateo_finops_tutorial"}'
+```{{exec}}

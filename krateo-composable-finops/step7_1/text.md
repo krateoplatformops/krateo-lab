@@ -1,15 +1,4 @@
-## Let's configure the Azure Databricks notebook - credentials input
-
-Input your data in the following configuration script:
-```plain
-./database-input.sh
-```{{exec}}
-
-Then apply the configuration of the database to the cluster:
-```plain
-kubectl apply -f token.yaml
-kubectl apply -f database.yaml
-```{{exec}}
+## Let's configure the Custom Metrics
 
 We also need to add the resource metrics configuration: when we obtain a FOCUS report, we can analyze it to identify the resources that are generating costs and obtain the relevant metrics. These metrics are specified by provider and resource, through dedicated custom resources with the following structure:
 ```

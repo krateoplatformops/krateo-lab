@@ -1,26 +1,20 @@
-## Databricks notebook for data analysis
-For this following step, there is requirement of having a route between the Databricks database and the Kubernetes cluster. Since this is not possible on Killercoda, the following steps will only be shown. You can follow them if you are using your own cluster.
+## Notebook for data analysis
+For this following step, there is requirement of having an active Azure Virtual Machine to collect data from and optimize. Since this is not possible on Killercoda, the following steps will only be shown. You can follow them if you are using your own cluster.
 
-Create a new notebook on Databricks with the following code. This code computes unused resources on a Virtual Machine and forwards the optimization to the FinOps HTTP REST Queue:
-```
+Create a new notebook with the following code. This code computes unused resources on a Virtual Machine and forwards the optimization to the FinOps HTTP REST Queue:
+```python
 import pandas as pd
 import numpy as np
-import random
-import requests
 
-from pyspark.sql.functions import col
-from datetime import timedelta, datetime
-
+# Global variables
 json_template = {'resourceId': '', 'optimization': None}
 json_template_optimization = {'resourceName':'', 'resourceDelta':0, 'typeChange':None}
 json_template_type_change = {'cyclic':'', 'from':'', 'to':''}
-topic = 'optimizations'
-url = '<your_url_here>:<service_port>/upload?topic=' + topic
 
-TIME_GRANULARITY = 5 # in minutes
+TIME_GRANULARITY = 5  # in minutes
 
 def compute(df: pd.DataFrame, resource_id: str, metric_name: str):
-    time_durations = [int(60/TIME_GRANULARITY)] # in minutes
+    time_durations = [int(60/TIME_GRANULARITY)]  # in minutes
     _, moving_average_values = moving_average(df, np.min(time_durations))
     usage, usage_max = utilization_per_unit(df, moving_average_values, 'd')
     proposed_optimization = optimize(usage, usage_max)
@@ -31,35 +25,28 @@ def compute(df: pd.DataFrame, resource_id: str, metric_name: str):
     json_template_type_change['to'] = str(window_low_utilization[1] + window_low_utilization[2]) + ':00'
     json_template_optimization['resourceName'] = metric_name
     json_template_optimization['resourceDelta'] = -window_low_utilization[0]
-    json_template_optimization['typeChange'] = json_template_type_change
+    json_template_optimization['typeChange'] = json_template_type_change.copy()  # Added .copy()
     json_template['resourceId'] = resource_id
-    json_template['optimization'] = json_template_optimization
+    json_template['optimization'] = json_template_optimization.copy()  # Added .copy()
 
-    #_ = requests.post(url, json=json_template)
-    print('For resource', resource_id)
-    print('Remove', str(min(proposed_optimization))+'%', 'CPU(s) overall')
-    print('Remove', str(window_low_utilization[0])+'%', 'CPU(s) from', str(24 + window_low_utilization[2] if window_low_utilization[2] < 0 else window_low_utilization[2]) + ':00', 'to', str(window_low_utilization[1] + window_low_utilization[2]) + ':00')
+    print(json_template)
 
-    print("JSON:\n", json_template)
-
-
-
-def moving_average(df: pd.DataFrame, time_duration: int) -> list:
-    moving_average_values = [0.0 for _ in range(len(df['Value']))]
+def moving_average(df: pd.DataFrame, time_duration: int) -> tuple[list, list]:  # Fixed return type hint
+    moving_average_values = [0.0 for _ in range(len(df['average']))]
     result = []
     contiguos = False
-    for i in range(len(df['Value'])):
+    for i in range(len(df['average'])):
         partial = 0.0
         cur_index = i
         for _ in range(cur_index, cur_index + time_duration):
-            if cur_index < len(df['Value']):
-                partial += df['Value'][cur_index]
+            if cur_index < len(df['average']):
+                partial += df['average'][cur_index]
                 cur_index += 1
         partial = float(partial)/float(time_duration)
         moving_average_values[i] = partial
-        if partial > np.average(df['Value']) and contiguos:
+        if partial > np.average(df['average']) and contiguos:
             result[-1] = (result[-1][0], result[-1][1]+1)
-        elif partial > np.average(df['Value']):
+        elif partial > np.average(df['average']):
             result.append((df['timestamp'][i], 1))
             contiguos = True
         else:
@@ -74,7 +61,7 @@ def utilization_per_unit(df: pd.DataFrame, moving_average_values: list, unit: st
     usage_counter = [0 for _ in range(fields)]
 
     for index, value in enumerate(moving_average_values):
-        if value > np.average(df['Value']):
+        if value > np.average(df['average']):
             usage[df['timestamp'][index].hour] += value
             usage_counter[df['timestamp'][index].hour] += 1
         if value > usage_max[df['timestamp'][index].hour]:
@@ -85,7 +72,7 @@ def utilization_per_unit(df: pd.DataFrame, moving_average_values: list, unit: st
             usage[index] = usage[index] / float(usage_counter[index])
 
     return usage, usage_max
-            
+
 def optimize(usage: list, usage_max: list) -> list:
     result = [0 for _ in range(len(usage))]
     for index, value in enumerate(usage):
@@ -103,34 +90,227 @@ def find_start_finish_window_low_utilization(proposed_optimization: list) -> tup
         if value != lowest_length_temp[0] and value != lowest_length_temp[0] + 1 and value != lowest_length_temp[0] - 1:
             if lowest_length_temp[1] > lowest_length[1]:
                 lowest_length = (lowest_length_temp[0], lowest_length_temp[1], lowest_length_temp[2])
-            else:
-                lowest_length_temp = (proposed_optimization[index], 0, 0)    
+            lowest_length_temp = (proposed_optimization[index], 0, index)  # Fixed: Added index
         else:
             lowest_length_temp = (lowest_length_temp[0], lowest_length_temp[1]+1, lowest_length_temp[2])
+    
     # Check backwards if index is 0
     if lowest_length[2] == 0:
-        for index, value in enumerate(proposed_optimization):
-            if index == 0:
-                continue
+        for index in range(1, len(proposed_optimization)):
             if proposed_optimization[-index] == lowest_length[0] or proposed_optimization[-index] == lowest_length[0] + 1 or proposed_optimization[-index] == lowest_length[0] - 1:
                 lowest_length = (lowest_length[0], lowest_length[1] + 1, -index)
             else:
                 return lowest_length
     return lowest_length
 
-def main():
-    table_name = dbutils.widgets.get('table_name')
-    table = spark.table(table_name)
-    for resource_id in table.select('ResourceId').distinct().toPandas()['ResourceId']:
-        for metric_name in table.select('metricName').distinct().where(f"ResourceId == '{resource_id}'").toPandas()['metricName']:
-            table_compute = table.where("ResourceId == '%s' AND metricName == '%s'" % (resource_id, metric_name))
-            compute(table_compute.sort('timestamp').toPandas(), resource_id, metric_name)
+def main():   
+    table_name_arg = sys.argv[5]
+    table_name_key_value = str.split(table_name_arg, '=')
+    if len(table_name_key_value) == 2:
+        if table_name_key_value[0] == 'table_name':
+            table_name = table_name_key_value[1]
+    try:
+        resource_query = f"SELECT DISTINCT ResourceId FROM {table_name}"
+        cursor.execute(resource_query)
+        resource_ids = pd.DataFrame(cursor.fetchall(), columns=['ResourceId'])
 
-if __name__=='__main__':
+        for resource_id in resource_ids['ResourceId']:
+            metric_query = ("SELECT DISTINCT metricName\n"
+                f"FROM {table_name}\n"
+                "WHERE ResourceId = ?"
+            )
+            cursor.execute(metric_query, (resource_id,))
+            metric_names = pd.DataFrame(cursor.fetchall(), columns=['metricName'])
+            
+            for metric_name in metric_names['metricName']:
+                data_query = ("SELECT *\n"
+                    f"FROM {table_name}\n"
+                    "WHERE ResourceId = ?\n"
+                    "AND metricName = ?\n"
+                    "ORDER BY timestamp"
+                )
+                cursor.execute(data_query, (resource_id, metric_name))
+                raw_data = cursor.fetchall()
+                column_names = [desc[0] for desc in cursor.description]
+
+                table_compute = pd.DataFrame(raw_data, columns=column_names)
+
+                # Convert timestamp column to datetime
+                if 'timestamp' in table_compute.columns:
+                    table_compute['timestamp'] = pd.to_datetime(table_compute['timestamp'], unit='ms')
+                    table_compute['timestamp'] = pd.to_datetime(table_compute['timestamp'], unit='ms').dt.tz_localize('UTC')
+
+                if 'average' in table_compute.columns:
+                    table_compute['average'] = pd.to_numeric(table_compute['average'], errors='coerce')
+                
+                compute(table_compute, resource_id, metric_name)
+    
+    finally:
+        cursor.close()
+        connection.close()
+
+if __name__ == "__main__":
     main()
 ```
 
-You should compile the two global variables "url" and "topic". The first one is the public domain url of your Kubernetes cluster, including the port for the FinOps HTTP REST Queue application, which by default will be 31723. The second one is the topic to publish the json of the optimization on. You can also schedule this notebook to run periodically and optimize your cluster every specified period. 
+```plain
+echo "import pandas as pd
+import numpy as np
+
+# Global variables
+json_template = {'resourceId': '', 'optimization': None}
+json_template_optimization = {'resourceName':'', 'resourceDelta':0, 'typeChange':None}
+json_template_type_change = {'cyclic':'', 'from':'', 'to':''}
+
+TIME_GRANULARITY = 5  # in minutes
+
+def compute(df: pd.DataFrame, resource_id: str, metric_name: str):
+    time_durations = [int(60/TIME_GRANULARITY)]  # in minutes
+    _, moving_average_values = moving_average(df, np.min(time_durations))
+    usage, usage_max = utilization_per_unit(df, moving_average_values, 'd')
+    proposed_optimization = optimize(usage, usage_max)
+    window_low_utilization = find_start_finish_window_low_utilization(proposed_optimization)
+
+    json_template_type_change['cyclic'] = 'day'
+    json_template_type_change['from'] = str(24 + window_low_utilization[2] if window_low_utilization[2] < 0 else window_low_utilization[2]) + ':00'
+    json_template_type_change['to'] = str(window_low_utilization[1] + window_low_utilization[2]) + ':00'
+    json_template_optimization['resourceName'] = metric_name
+    json_template_optimization['resourceDelta'] = -window_low_utilization[0]
+    json_template_optimization['typeChange'] = json_template_type_change.copy()  # Added .copy()
+    json_template['resourceId'] = resource_id
+    json_template['optimization'] = json_template_optimization.copy()  # Added .copy()
+
+    print(json_template)
+    
+    # Send the data to the HTTP REST Queue
+
+def moving_average(df: pd.DataFrame, time_duration: int) -> tuple[list, list]:  # Fixed return type hint
+    moving_average_values = [0.0 for _ in range(len(df['average']))]
+    result = []
+    contiguos = False
+    for i in range(len(df['average'])):
+        partial = 0.0
+        cur_index = i
+        for _ in range(cur_index, cur_index + time_duration):
+            if cur_index < len(df['average']):
+                partial += df['average'][cur_index]
+                cur_index += 1
+        partial = float(partial)/float(time_duration)
+        moving_average_values[i] = partial
+        if partial > np.average(df['average']) and contiguos:
+            result[-1] = (result[-1][0], result[-1][1]+1)
+        elif partial > np.average(df['average']):
+            result.append((df['timestamp'][i], 1))
+            contiguos = True
+        else:
+            contiguos = False
+    return result, moving_average_values
+
+def utilization_per_unit(df: pd.DataFrame, moving_average_values: list, unit: str) -> tuple[list, list]:
+    if unit == 'd':
+        fields = 24
+    usage = [0.0 for _ in range(fields)]
+    usage_max = [-1.0 for _ in range(fields)]
+    usage_counter = [0 for _ in range(fields)]
+
+    for index, value in enumerate(moving_average_values):
+        if value > np.average(df['average']):
+            usage[df['timestamp'][index].hour] += value
+            usage_counter[df['timestamp'][index].hour] += 1
+        if value > usage_max[df['timestamp'][index].hour]:
+            usage_max[df['timestamp'][index].hour] = value
+    
+    for index, _ in enumerate(usage):
+        if usage_counter[index] != 0:
+            usage[index] = usage[index] / float(usage_counter[index])
+
+    return usage, usage_max
+
+def optimize(usage: list, usage_max: list) -> list:
+    result = [0 for _ in range(len(usage))]
+    for index, value in enumerate(usage):
+        left_over_average = 100 - value
+        left_over_max = 100 - usage_max[index]
+        if left_over_average > 0 and left_over_max > 0:
+            smaller_left_over = min(left_over_average, left_over_max)
+            result[index] = int(smaller_left_over)
+    return result
+
+def find_start_finish_window_low_utilization(proposed_optimization: list) -> tuple:
+    lowest_length = (proposed_optimization[0], 0, 0)
+    lowest_length_temp = (proposed_optimization[0], 0, 0)
+    for index, value in enumerate(proposed_optimization):
+        if value != lowest_length_temp[0] and value != lowest_length_temp[0] + 1 and value != lowest_length_temp[0] - 1:
+            if lowest_length_temp[1] > lowest_length[1]:
+                lowest_length = (lowest_length_temp[0], lowest_length_temp[1], lowest_length_temp[2])
+            lowest_length_temp = (proposed_optimization[index], 0, index)  # Fixed: Added index
+        else:
+            lowest_length_temp = (lowest_length_temp[0], lowest_length_temp[1]+1, lowest_length_temp[2])
+    
+    # Check backwards if index is 0
+    if lowest_length[2] == 0:
+        for index in range(1, len(proposed_optimization)):
+            if proposed_optimization[-index] == lowest_length[0] or proposed_optimization[-index] == lowest_length[0] + 1 or proposed_optimization[-index] == lowest_length[0] - 1:
+                lowest_length = (lowest_length[0], lowest_length[1] + 1, -index)
+            else:
+                return lowest_length
+    return lowest_length
+
+def main():   
+    table_name_arg = sys.argv[5]
+    table_name_key_value = str.split(table_name_arg, '=')
+    if len(table_name_key_value) == 2:
+        if table_name_key_value[0] == 'table_name':
+            table_name = table_name_key_value[1]
+    try:
+        resource_query = f\"SELECT DISTINCT ResourceId FROM {table_name}\"
+        cursor.execute(resource_query)
+        resource_ids = pd.DataFrame(cursor.fetchall(), columns=['ResourceId'])
+
+        for resource_id in resource_ids['ResourceId']:
+            metric_query = (\"SELECT DISTINCT metricName\n\"
+                f\"FROM {table_name}\n\"
+                \"WHERE ResourceId = ?\"
+            )
+            cursor.execute(metric_query, (resource_id,))
+            metric_names = pd.DataFrame(cursor.fetchall(), columns=['metricName'])
+            
+            for metric_name in metric_names['metricName']:
+                data_query = (\"SELECT *\n\"
+                    f\"FROM {table_name}\n\"
+                    \"WHERE ResourceId = ?\n\"
+                    \"AND metricName = ?\n\"
+                    \"ORDER BY timestamp\"
+                )
+                cursor.execute(data_query, (resource_id, metric_name))
+                raw_data = cursor.fetchall()
+                column_names = [desc[0] for desc in cursor.description]
+
+                table_compute = pd.DataFrame(raw_data, columns=column_names)
+
+                # Convert timestamp column to datetime
+                if 'timestamp' in table_compute.columns:
+                    table_compute['timestamp'] = pd.to_datetime(table_compute['timestamp'], unit='ms')
+                    table_compute['timestamp'] = pd.to_datetime(table_compute['timestamp'], unit='ms').dt.tz_localize('UTC')
+
+                if 'average' in table_compute.columns:
+                    table_compute['average'] = pd.to_numeric(table_compute['average'], errors='coerce')
+                
+                compute(table_compute, resource_id, metric_name)
+    
+    finally:
+        cursor.close()
+        connection.close()
+
+if __name__ == \"__main__\":
+    main()" > cyclic.py
+curl -X POST -u system:$(kubectl get secret user-system-cratedb-cluster -n finops -o json | jq -r '.data.password' | base64 --decode) http://localhost:$(kubectl get service -n finops finops-database-handler -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/compute/cyclic/upload --data-binary "@cyclic.py"
+```{{exec}}
+
+Query the new notebook for the optimizations:
+```plain
+curl -X POST -u system:$(kubectl get secret user-system-cratedb-cluster -n finops -o json | jq -r '.data.password' | base64 --decode) http://localhost:$(kubectl get service -n finops finops-database-handler -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/compute/cyclic --header "Content-Type: application/json" --data '{"table_name":"krateo_finops_tutorial_res"}'
+```{{exec}}
 
 ### Installing the FinOps HTTP REST Queue
 To receive optimizations, you should install in your cluster the FinOps HTTP REST Queue. Since this component relies on a NATS server, install the NATS server first through HELM:
