@@ -153,24 +153,21 @@ if __name__ == "__main__":
     main()
 ```
 
+Upload the notebook into the database:
 ```plain
 echo "import pandas as pd
 import numpy as np
-
 # Global variables
 json_template = {'resourceId': '', 'optimization': None}
 json_template_optimization = {'resourceName':'', 'resourceDelta':0, 'typeChange':None}
 json_template_type_change = {'cyclic':'', 'from':'', 'to':''}
-
 TIME_GRANULARITY = 5  # in minutes
-
 def compute(df: pd.DataFrame, resource_id: str, metric_name: str):
     time_durations = [int(60/TIME_GRANULARITY)]  # in minutes
     _, moving_average_values = moving_average(df, np.min(time_durations))
     usage, usage_max = utilization_per_unit(df, moving_average_values, 'd')
     proposed_optimization = optimize(usage, usage_max)
     window_low_utilization = find_start_finish_window_low_utilization(proposed_optimization)
-
     json_template_type_change['cyclic'] = 'day'
     json_template_type_change['from'] = str(24 + window_low_utilization[2] if window_low_utilization[2] < 0 else window_low_utilization[2]) + ':00'
     json_template_type_change['to'] = str(window_low_utilization[1] + window_low_utilization[2]) + ':00'
@@ -179,11 +176,7 @@ def compute(df: pd.DataFrame, resource_id: str, metric_name: str):
     json_template_optimization['typeChange'] = json_template_type_change.copy()  # Added .copy()
     json_template['resourceId'] = resource_id
     json_template['optimization'] = json_template_optimization.copy()  # Added .copy()
-
     print(json_template)
-    
-    # Send the data to the HTTP REST Queue
-
 def moving_average(df: pd.DataFrame, time_duration: int) -> tuple[list, list]:  # Fixed return type hint
     moving_average_values = [0.0 for _ in range(len(df['average']))]
     result = []
@@ -205,27 +198,22 @@ def moving_average(df: pd.DataFrame, time_duration: int) -> tuple[list, list]:  
         else:
             contiguos = False
     return result, moving_average_values
-
 def utilization_per_unit(df: pd.DataFrame, moving_average_values: list, unit: str) -> tuple[list, list]:
     if unit == 'd':
         fields = 24
     usage = [0.0 for _ in range(fields)]
     usage_max = [-1.0 for _ in range(fields)]
     usage_counter = [0 for _ in range(fields)]
-
     for index, value in enumerate(moving_average_values):
         if value > np.average(df['average']):
             usage[df['timestamp'][index].hour] += value
             usage_counter[df['timestamp'][index].hour] += 1
         if value > usage_max[df['timestamp'][index].hour]:
             usage_max[df['timestamp'][index].hour] = value
-    
     for index, _ in enumerate(usage):
         if usage_counter[index] != 0:
             usage[index] = usage[index] / float(usage_counter[index])
-
     return usage, usage_max
-
 def optimize(usage: list, usage_max: list) -> list:
     result = [0 for _ in range(len(usage))]
     for index, value in enumerate(usage):
@@ -235,7 +223,6 @@ def optimize(usage: list, usage_max: list) -> list:
             smaller_left_over = min(left_over_average, left_over_max)
             result[index] = int(smaller_left_over)
     return result
-
 def find_start_finish_window_low_utilization(proposed_optimization: list) -> tuple:
     lowest_length = (proposed_optimization[0], 0, 0)
     lowest_length_temp = (proposed_optimization[0], 0, 0)
@@ -246,7 +233,6 @@ def find_start_finish_window_low_utilization(proposed_optimization: list) -> tup
             lowest_length_temp = (proposed_optimization[index], 0, index)  # Fixed: Added index
         else:
             lowest_length_temp = (lowest_length_temp[0], lowest_length_temp[1]+1, lowest_length_temp[2])
-    
     # Check backwards if index is 0
     if lowest_length[2] == 0:
         for index in range(1, len(proposed_optimization)):
@@ -255,7 +241,6 @@ def find_start_finish_window_low_utilization(proposed_optimization: list) -> tup
             else:
                 return lowest_length
     return lowest_length
-
 def main():   
     table_name_arg = sys.argv[5]
     table_name_key_value = str.split(table_name_arg, '=')
@@ -285,23 +270,17 @@ def main():
                 cursor.execute(data_query, (resource_id, metric_name))
                 raw_data = cursor.fetchall()
                 column_names = [desc[0] for desc in cursor.description]
-
                 table_compute = pd.DataFrame(raw_data, columns=column_names)
-
                 # Convert timestamp column to datetime
                 if 'timestamp' in table_compute.columns:
                     table_compute['timestamp'] = pd.to_datetime(table_compute['timestamp'], unit='ms')
                     table_compute['timestamp'] = pd.to_datetime(table_compute['timestamp'], unit='ms').dt.tz_localize('UTC')
-
                 if 'average' in table_compute.columns:
                     table_compute['average'] = pd.to_numeric(table_compute['average'], errors='coerce')
-                
                 compute(table_compute, resource_id, metric_name)
-    
     finally:
         cursor.close()
         connection.close()
-
 if __name__ == \"__main__\":
     main()" > cyclic.py
 curl -X POST -u system:$(kubectl get secret user-system-cratedb-cluster -n finops -o json | jq -r '.data.password' | base64 --decode) http://localhost:$(kubectl get service -n finops finops-database-handler -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/compute/cyclic/upload --data-binary "@cyclic.py"
@@ -310,6 +289,11 @@ curl -X POST -u system:$(kubectl get secret user-system-cratedb-cluster -n finop
 Query the new notebook for the optimizations:
 ```plain
 curl -X POST -u system:$(kubectl get secret user-system-cratedb-cluster -n finops -o json | jq -r '.data.password' | base64 --decode) http://localhost:$(kubectl get service -n finops finops-database-handler -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/compute/cyclic --header "Content-Type: application/json" --data '{"table_name":"krateo_finops_tutorial_res"}'
+```{{exec}}
+
+Note: this code may fail notifying the user that the table does not exist, however, this is due to Killercoda slow execution of the scrapers' upload. To avoid this, check the status of the resource scrapers and their uploads:
+```plain
+kubectl logs -n finops -f deployment/exporterscraperconfig-azure-res0-scraper-deployment
 ```{{exec}}
 
 ### Installing the FinOps HTTP REST Queue
