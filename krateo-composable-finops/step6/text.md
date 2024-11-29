@@ -53,7 +53,6 @@ kubectl apply -f dev-cluster.yaml
 
 Wait for the database to be ready:
 ```plain
-kubectl wait pod crate-data-hot-cratedb-cluster-0 -n finops --for condition=Ready=True --timeout=300s
+kubectl wait pod crate-data-hot-cratedb-cluster-0 -n finops --for condition=Ready=True --timeout=600s
 ```{{exec}}
-
-
+This step can take a long time.
