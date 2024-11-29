@@ -25,3 +25,8 @@ Run the following scripts to compile the database configuration and the secret w
 kubectl apply -f token.yaml
 kubectl apply -f database.yaml
 ```{{exec}}
+
+Let's wait for the FinOps Database Handler to be ready:
+```plain
+kubectl wait deployment -n finops finops-database-handler --for condition=Available=True --timeout=300s
+```{{exec}}
