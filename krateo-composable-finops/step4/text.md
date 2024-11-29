@@ -19,9 +19,10 @@ spec:
     url: # url including http/https of the CSV-based API to export, parts with <varName> are taken from additionalVariables: http://<varName> -> http://sample 
     requireAuthentication: # true/false
     authenticationMethod: # one of: bearer-token, cert-file
-    # bearerToken: # optional, if "authenticationMethod: bearer-token", objectRef to a standard Kubernetes secret with key: bearer-token
+    # bearerToken: # optional, if "authenticationMethod: bearer-token", objectRef to a standard Kubernetes secret with specified key
     #  name: # secret name
     #  namespace: # secret namespace
+    #  key: # key of the secret
     # metricType: # optional, one of: cost, resource; default value: resource
     pollingIntervalHours: # int
     additionalVariables:
@@ -57,6 +58,7 @@ spec:
     bearerToken:
       name: mock-token
       namespace: finops
+      key: bearer-token
     metricType: cost
     pollingIntervalHours: 1
     additionalVariables:

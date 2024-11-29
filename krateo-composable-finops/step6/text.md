@@ -1,21 +1,55 @@
-## Let's configure Azure Databricks for data storage
-In this step, we will configure a new Databricks resource on Azure to allow the scrapers to upload the exported data to a database. If you already have a Databricks cluster, skip to the next step.
+## Let's configure CrateDB
+In this step, we will configure a new CrateDB cluster. To begin, create a persistent volume claim to store CrateDB's data:
+```plain
+echo "apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: local-path-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi" > pvc.yaml
+kubectl apply -f pvc.yaml
+```{{exec}}
 
-Create a new Databricks resource on Azure.
-![azure-databricks-create-button](./azure-databricks-create-button.png)
+Install the CrateDB operator:
+```plain
+helm repo add crate-operator https://crate.github.io/crate-operator
+helm repo update
+helm install crate-operator crate-operator/crate-operator --namespace crate-operator --create-namespace --set env.CRATEDB_OPERATOR_DEBUG_VOLUME_STORAGE_CLASS=local-path
+```{{exec}}
 
-Assign a subscription, resource group and name, then click on review and create to proceed. Create the deployment.
-![azure-databricks-create-form](./azure-databricks-create-form.png)
+Then, create the CR for the CrateDB operator to initialize the database:
+```plain
+echo "apiVersion: cloud.crate.io/v1
+kind: CrateDB
+metadata:
+  name: cratedb-cluster
+  namespace: finops
+spec:
+  cluster:
+    imageRegistry: crate
+    name: crate-dev
+    version: 5.9.2
+  nodes:
+    data:
+    - name: hot
+      replicas: 1
+      resources:
+        limits:
+          cpu: 0.5
+          memory: 1Gi
+        disk:
+          count: 1
+          size: 1000MiB
+          storageClass: local-path
+        heapRatio: 0.25" > dev-cluster.yaml
+kubectl apply -f dev-cluster.yaml
+```{{exec}}
 
-Hit launch workspace.
-![azure-databricks-launch](./azure-databricks-launch.png)
 
-In Databricks, in the top left, select new -> compute -> cluster.
 
-In the compute resource creation form, select the type of machine type you would like to use, the number of instances (min-max) and the name, then create it. This is necessary to run the Python notebook. Keep the name of the cluster at hand.
-![databricks-compute-form](./databricks-compute-form.png)
-
-In the left menu, select "SQL warehouse", then click on "Starter warehouse". Switch to the second tab, connection details. Copy the hostname. Then, in the bottom right, create a new personal access token. Generate a new token and save the token. Keep the token at hand.
-![databricks-sql-warehouse](./databricks-sql-warehouse.png)
-
-You now have a Databricks cluster ready.
