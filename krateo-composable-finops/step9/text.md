@@ -295,6 +295,7 @@ Note: this code may fail notifying the user that the table does not exist, howev
 ```plain
 kubectl logs -n finops -f deployment/exporterscraperconfig-azure-res0-scraper-deployment
 ```{{exec}}
+This step may take multiple minutes.
 
 ### Installing the FinOps HTTP REST Queue
 To receive optimizations, you should install in your cluster the FinOps HTTP REST Queue. Since this component relies on a NATS server, install the NATS server first through HELM:

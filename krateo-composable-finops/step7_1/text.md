@@ -1,6 +1,6 @@
-## Let's configure the Custom Metrics
+## Let's configure the Custom Usage Metrics
 
-We also need to add the resource metrics configuration: when we obtain a FOCUS report, we can analyze it to identify the resources that are generating costs and obtain the relevant metrics. These metrics are specified by provider and resource, through dedicated custom resources with the following structure:
+When we obtain a FOCUS report, we can analyze it to identify the resources that are generating costs. To configure the resource usage metrics and obtain the relevant metrics, we specify them through a set of CRs that specify provider, resource, and metrics, using the following structure:
 ```
 apiVersion: finops.krateo.io/v1
 kind: ProviderConfig
@@ -37,7 +37,7 @@ spec:
   interval: # data granularity
 ```
 
-The following custom resources enable the scraping of the CPU metrics for Virtual Machines on Azure. Let's apply them to the cluster:
+The following custom resources enable the exporting and scraping of the CPU metrics for the CPU usage of Virtual Machines on Azure. Let's apply them to the cluster:
 ```plain
 echo "apiVersion: finops.krateo.io/v1
 kind: ProviderConfig
