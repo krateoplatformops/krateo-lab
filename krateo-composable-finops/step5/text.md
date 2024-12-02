@@ -1,11 +1,10 @@
 ## Let's deploy an exporter from a static FOCUS cost
-We will create a new Custom Resource for the operator-focus, this will result in the creation of an exporter, a configmap containing the data for the exporter, a service to expose the exporter and a custom resource for the operator-scraper.
+We will create a new Custom Resource for the operator-focus, this allows us to encode a cost that does not come from an API. It will result in the creation of an exporter, a configmap containing the data for the exporter, a service to expose the exporter and a custom resource for the operator-scraper. The exporter will use the Kubernetes API server as the endpoint.
 
 Let's start from the bare config-sample.yaml in the repository finops-operator-focus.
 
-We will only consider the exporterConfig for this tutorial.
-sample-config.yaml:
-```
+We will only consider the exporting for this step.
+```yaml
 apiVersion: finops.krateo.io/v1
 kind: FocusConfig
 metadata:
@@ -27,33 +26,7 @@ spec:
     billingCurrency:
     billingPeriodEnd:
     billingPeriodStart:
-    chargeCategory:
-    chargeClass:
-    chargeDescription:
-    chargeFrequency:
-    chargePeriodEnd:
-    chargePeriodStart:
-    commitmentDiscountCategory:
-    commitmentDiscountName:
-    commitmentDiscountStatus:
-    commitmentDiscountType:
-    commitmentDiscoutId:
-    consumedQuantity:
-    consumedUnit:
-    contractedCost:
-    contractedUnitCost:
-    effectiveCost:
-    invoiceIssuerName:
-    listCost:
-    listUnitPrice:
-    pricingCategory:
-    pricingQuantity:
-    pricingUnit:
-    providerName:
-    publisherName:
-    regionId:
-    regionName:
-    resourceId:
+    ...
     resourceName:
     resourceType:
     serviceCategory:
@@ -66,9 +39,9 @@ spec:
       - key:
         value:
 ```
+The custom resource contains the scraper configuration, just like the ExporterScraperConfig, but instead of requiring the configuration of the endpoint to export data from, it requires the data itself. The data is encoded following the FinOps Cost and Usage Specification, FOCUS.
 
-Compile the CR as follows to create a sample resource: 
-As usual, we omit the scraper configuration for this tutorial.
+Run the following code to create a sample resource (omitting the scraper configuration): 
 ```plain
 echo "apiVersion: finops.krateo.io/v1
 kind: FocusConfig
@@ -116,10 +89,6 @@ spec:
         value: \"testvalue\"
       - key: \"testkey2\"
         value: \"testvalue\" " > sample.yaml
-```{{exec}}
-
-Deploy the sample configuration:
-```plain
 kubectl apply -f sample.yaml
 ```{{exec}}
 

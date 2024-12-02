@@ -55,4 +55,9 @@ Wait for the database to be ready:
 ```plain
 kubectl wait pod crate-data-hot-cratedb-cluster-0 -n finops --for condition=Ready=True --timeout=600s
 ```{{exec}}
-This step can take a long time.
+
+Note: if you get 
+```plain
+Error from server (NotFound): pods "crate-data-hot-cratedb-cluster-0" not found
+```
+Wait a few moments and run the wait command again. This step can take a long time due to the limited resources available on Killercoda.

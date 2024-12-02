@@ -1,6 +1,6 @@
 ## Deploy the scrapers and automatically upload the data
-Let's go back to the sample exporter configuration. We can now add the information related to the database for the scrapers.
 
+Let's go back to the sample exporter configuration. We can now add the information related to the database and the scrapers.
 ```
 apiVersion: finops.krateo.io/v1
 kind: ExporterScraperConfig
@@ -8,23 +8,8 @@ metadata:
   name: # ExporterScraperConfig name
   namespace: # ExporterScraperConfig namespace
 spec:
-  exporterConfig: # same as krateoplatformops/finops-prometheus-exporter-generic
-    provider: 
-      name: # name of the provider config
-      namespace: # namespace of the provider config
-    url: # url including http/https of the CSV-based API to export, parts with <varName> are taken from additionalVariables: http://<varName> -> http://sample 
-    requireAuthentication: # true/false
-    authenticationMethod: # one of: bearer-token, cert-file
-    # bearerToken: # optional, if "authenticationMethod: bearer-token", objectRef to a standard Kubernetes secret with key: bearer-token
-    #  name: # secret name
-    #  namespace: # secret namespace
-    # metricType: # optional, one of: cost, resource; default value: resource
-    pollingIntervalHours: # int
-    additionalVariables:
-      varName: sample
-      # Variables whose value only contains uppercase letters are taken from environment variables
-      # FROM_THE_ENVIRONMENT must be the name of an environment variable inside the target exporter container
-      envExample: FROM_THE_ENVIRONMENT
+  exporterConfig:
+    ...
   scraperConfig: # configuration for krateoplatformops/finops-operator-scraper
     tableName: # tableName in the database to upload the data to
     # url: # path to the exporter, optional (if missing, its taken from the exporter)
@@ -34,8 +19,7 @@ spec:
       namespace: # namespace of the databaseConfigRef CR
 ```
 
-Run the following to create a new yaml configuration file and create the deployment.
-
+Run the following code to create a new YAML configuration file and create the deployment:
 ```plain
 echo "apiVersion: finops.krateo.io/v1
 kind: ExporterScraperConfig
@@ -75,8 +59,15 @@ The upload may take some time. Check when it's terminated with:
 ```plain
 kubectl logs -n finops -f deployment/exporterscraperconfig-sample-scraper-deployment
 ```{{exec}}
+Note: you may get one of the following errors:
+```
+error: error from server (NotFound): deployments.apps "exporterscraperconfig-sample-scraper-deployment" not found in namespace "finops"
+Error from server (BadRequest): container "scraper" in pod "exporterscraperconfig-sample-scraper-deployment-78796bd756fcsw8" is waiting to start: ContainerCreating
+```
+These are caused by the slow startup time of the exporter/scraper on Killercoda. Wait a few moments, and then try again.
+The upload is completed when the scraper stops writing "successfully uploaded" logs.
 
-We can verify the data in CrateDB with a simple query to the database. Let's upload a query notebook to the FinOps Database Handler:
+We can verify the data in CrateDB with a simple notebook to query the database:
 ```python
 def main():   
     table_name_arg = sys.argv[5]
@@ -96,7 +87,7 @@ if __name__ == "__main__":
     main()
 ```
 
-Upload the notebook:
+Let's upload the query notebook to the FinOps Database Handler:
 ```plain
 echo "def main():   
     table_name_arg = sys.argv[5]

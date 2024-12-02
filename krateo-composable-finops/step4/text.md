@@ -3,8 +3,7 @@ We will create a new Custom Resource for the operator-exporter, this will result
 
 Let's start from the bare config-sample.yaml in the repository finops-operator-exporter.
 
-We will only consider the exporterConfig for this tutorial.
-sample-config.yaml:
+We will only consider the exporterConfig for this step. The sample is organized as follows:
 ```
 apiVersion: finops.krateo.io/v1
 kind: ExporterScraperConfig
@@ -31,8 +30,9 @@ spec:
       # FROM_THE_ENVIRONMENT must be the name of an environment variable inside the target exporter container
       envExample: FROM_THE_ENVIRONMENT
 ```
+Each field is explained by the comment.
 
-Compile the CR as follows to connect to a mock API server in the cluster:
+The following code creates a new CR to connect to a mock API server in the cluster:
 ```plain
 echo "apiVersion: v1
 kind: Secret
@@ -66,14 +66,10 @@ spec:
       subscription_id: d3sad326-42a4-5434-9623-a3sd22fefb84
       host: WEBSERVICE_API_MOCK_SERVICE_HOST
       port: WEBSERVICE_API_MOCK_SERVICE_PORT" > sample.yaml
-```{{exec}}
-
-Deploy the sample configuration:
-```plain
 kubectl apply -f sample.yaml
 ```{{exec}}
 
-Let's wait for the deployment to be available
+Let's wait for the operator to create the deployment and for it to be available:
 ```plain
 kubectl wait deployment -n finops exporterscraperconfig-sample-deployment --for condition=Available=True --timeout=300s
 ```{{exec}}

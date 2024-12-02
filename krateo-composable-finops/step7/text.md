@@ -4,7 +4,7 @@ Install the Database Handler, a proxy that allows the scrapers to upload data to
 helm install finops-database-handler krateo/finops-database-handler -n finops --set service.type=NodePort
 ```{{exec}}
 
-Let's create the Databricks database configuration custom resource:
+To configure the scrapers' access to the finops-database-handler, we use the following CR:
 ```yaml
 apiVersion: finops.krateo.io/v1
 kind: DatabaseConfig
@@ -18,8 +18,9 @@ spec:
     namespace: # secret namespace
     key: # secret key
 ```
+It contains the username and password to login into the database.
 
-Run the following scripts to compile the database configuration and the secret with the CrateDB account's password:
+To continue the tutorial, run the following scripts to compile the database configuration and the secret with the CrateDB account's password:
 ```plain
 ./database-input.sh
 kubectl apply -f token.yaml
