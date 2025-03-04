@@ -1,7 +1,5 @@
 ## Notebook for data analysis
-For this following step, there is requirement of having an active Azure Virtual Machine to collect data from and optimize. Since this is not possible on Killercoda, the following steps will only be shown. You can follow them if you are using your own cluster.
-
-Create a new notebook with the following code. This code computes unused resources on a Virtual Machine and forwards the optimization to the FinOps HTTP REST Queue:
+Create a new notebook with the following code. This code computes unused resources on a Virtual Machine:
 ```python
 import pandas as pd
 import numpy as np
@@ -293,6 +291,6 @@ curl -X POST -u system:$(kubectl get secret user-system-finops -n krateo-system 
 
 Note: this code may fail notifying the user that the table does not exist, however, this is due to Killercoda slow execution of the scrapers' upload. To avoid this, check the status of the resource scrapers and their uploads:
 ```plain
-kubectl logs -n finops -f deployment/exporterscraperconfig-azure-res0-scraper-deployment
+kubectl logs -n krateo-system -f deployment/exporterscraperconfig-azure-res0-scraper-deployment
 ```{{exec}}
 This step may take multiple minutes.
