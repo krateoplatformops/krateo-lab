@@ -1,80 +1,79 @@
-## Let's deploy an exporter from an API endpoint
-We will create a new Custom Resource for the operator-exporter, this will result in the creation of an exporter, a configmap containing the data for the exporter, a service to expose the exporter and a custom resource for the operator-scraper.
+## Let's configure the Custom Usage Metrics
 
-Let's start from the bare config-sample.yaml in the repository finops-operator-exporter.
-
-We will only consider the exporterConfig for this step. The sample is organized as follows:
+When we obtain a FOCUS report, we can analyze it to identify the resources that are generating costs. To configure the resource usage metrics and obtain the relevant metrics, we specify them through a set of CRs that specify provider, resource, and metrics, using the following structure:
 ```
 apiVersion: finops.krateo.io/v1
-kind: ExporterScraperConfig
+kind: ProviderConfig
 metadata:
-  name: # ExporterScraperConfig name
-  namespace: # ExporterScraperConfig namespace
+  name: # name
+  namespace: # namespace
 spec:
-  exporterConfig: # same as krateoplatformops/finops-prometheus-exporter-generic
-    provider: 
-      name: # name of the provider config
-      namespace: # namespace of the provider config
-    url: # url including http/https of the CSV-based API to export, parts with <varName> are taken from additionalVariables: http://<varName> -> http://sample 
-    requireAuthentication: # true/false
-    authenticationMethod: # one of: bearer-token, cert-file
-    # bearerToken: # optional, if "authenticationMethod: bearer-token", objectRef to a standard Kubernetes secret with specified key
-    #  name: # secret name
-    #  namespace: # secret namespace
-    #  key: # key of the secret
-    # metricType: # optional, one of: cost, resource; default value: resource
-    pollingIntervalHours: # int
-    additionalVariables:
-      varName: sample
-      # Variables whose value only contains uppercase letters are taken from environment variables
-      # FROM_THE_ENVIRONMENT must be the name of an environment variable inside the target exporter container
-      envExample: FROM_THE_ENVIRONMENT
-```
-Each field is explained by the comment.
-
-The following code creates a new CR to connect to a mock API server in the cluster:
-```plain
-echo "apiVersion: v1
-kind: Secret
-metadata:
-  name: mock-token
-  namespace: finops
-data:
-  bearer-token: bW9ja3Rva2Vu
+  resourcesRef: # list of references to the resource types to scrape
+  - name: # name of the first resource type ref 
+    namespace: # namespace
 ---
 apiVersion: finops.krateo.io/v1
-kind: ExporterScraperConfig
+kind: ResourceConfig
 metadata:
-  name: exporterscraperconfig-sample
-  namespace: finops
+  name: # resource type ref 
+  namespace: # namespace
 spec:
-  exporterConfig:
-    provider: 
-      name: not_used
-      namespace: finops
-    url: http://<host>:<port>/subscriptions/<subscription_id>/providers/Microsoft.Consumption/usageDetails
-    requireAuthentication: true
-    authenticationMethod: bearer-token
-    bearerToken:
-      name: mock-token
-      namespace: finops
-      key: bearer-token
-    metricType: cost
-    pollingIntervalHours: 1
-    additionalVariables:
-      # Variables that contain only uppercase letters are taken from environment variables
-      subscription_id: d3sad326-42a4-5434-9623-a3sd22fefb84
-      host: WEBSERVICE_API_MOCK_SERVICE_HOST
-      port: WEBSERVICE_API_MOCK_SERVICE_PORT" > sample.yaml
-kubectl apply -f sample.yaml
+  resourceFocusName: # name of the resource in the FOCUS report, such as "Virtual machine"
+  metricsRef: # list of metrics to scrape for this specific resource type
+  - name: # name of the first metric type ref
+    namespace: # namespace 
+---
+apiVersion: finops.krateo.io/v1
+kind: MetricConfig
+metadata:
+  name: # metric object name
+  namespace: # namespace
+spec:
+  metricName: # metric name 
+  endpoint:
+    resourcePrefix: # information to add before the resource path, such as the API url
+    resourceSuffix: # information to add after the resource path, such as query parameters
+  timespan: # timespan, such as month, day, hour
+  interval: # data granularity
+```
+
+The following custom resources enable the exporting and scraping of the CPU metrics for the CPU usage of Virtual Machines on Azure. Let's apply them to the cluster:
+```plain
+cat <<EOF | kubectl apply -f -
+apiVersion: finops.krateo.io/v1
+kind: ProviderConfig
+metadata:
+  name: azure
+  namespace: krateo-system
+spec:
+  resourcesRef:
+  - name: azure-virtual-machines
+    namespace: krateo-system
+---
+apiVersion: finops.krateo.io/v1
+kind: ResourceConfig
+metadata:
+  name: azure-virtual-machines
+  namespace: krateo-system
+spec:
+  resourceFocusName: Virtual machine
+  metricsRef:
+  - name: azure-vm-cpu-usage
+    namespace: krateo-system
+---
+apiVersion: finops.krateo.io/v1
+kind: MetricConfig
+metadata:
+  name: azure-vm-cpu-usage
+  namespace: krateo-system
+spec:
+  metricName: Percentage CPU
+  endpoint:
+    resourcePrefix: unused for now
+    resourceSuffix: /providers/microsoft.insights/metrics?api-version=2023-10-01&metricnames=%s&timespan=%s&interval=%s
+  timespan: month
+  interval: PT15M
+EOF
 ```{{exec}}
 
-Let's wait for the operator to create the deployment and for it to be available:
-```plain
-kubectl wait deployment -n finops exporterscraperconfig-sample-deployment --for condition=Available=True --timeout=300s
-```{{exec}}
-
-You can now verify the exporter output with:
-```plain
-curl localhost:$(kubectl get service -n finops exporterscraperconfig-sample-service -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/metrics 
-```{{exec}}
+You can proceed to the creation of the combined exporter/scraper configuration.

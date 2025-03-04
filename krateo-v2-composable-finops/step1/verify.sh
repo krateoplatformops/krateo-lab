@@ -1,3 +1,3 @@
 #!/bin/bash
 
-kubectl wait deployment finops-operator-exporter-controller-manager --for condition=Available=True --timeout=300s --namespace finops
+kubectl wait krateoplatformops krateo --for condition=Ready=True --namespace krateo-system --timeout=660s

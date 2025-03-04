@@ -7,57 +7,36 @@
     },
     "steps": [
       {
-        "title": "Install Krateo Composable FinOps - operator-exporter",
+        "title": "Install Krateo and the Composable FinOps",
         "text": "step1/text.md",
         "foreground": "step1/webserver-mock.sh",
         "verify": "step1/verify.sh"
       },
       {
-        "title": "Install Krateo Composable FinOps - operator-scraper",
-        "text": "step2/text.md",
-        "verify": "step2/verify.sh"
-      },
-      {
-        "title": "Install Krateo Composable FinOps - operator-focus",
-        "text": "step3/text.md",
-        "verify": "step3/verify.sh"
-      },
-      {
         "title": "Let's deploy an exporter from an API endpoint",
-        "text": "step4/text.md"
+        "text": "step2/text.md"
       },
       {
         "title": "Let's deploy an exporter from a static FOCUS cost",
-        "text": "step5/text.md"
+        "text": "step3/text.md"
       },
       {
-        "title": "Let's configure CrateDB",
-        "text": "step6/text.md",
-        "verify": "step6/verify.sh"
-      },
-      {
-        "title": "Let's configure the FinOps Database Handler",
-        "text": "step7/text.md",
-        "foreground": "step7/foreground.sh",
-        "verify": "step7/verify.sh"
-      },
-      {
-        "title": "Custom metrics creation",
-        "text": "step7_1/text.md"
+        "title": "Let's configure the Custom Usage Metrics",
+        "text": "step4/text.md",
+        "verify": "step4/verify.sh"
       },
       {
         "title": "Deploy the scrapers and automatically upload the data",
-        "text": "step8/text.md"
+        "text": "step5/text.md"
       },
       {
-        "title": "Deploy the data analysis and optimizations pipeline",
-        "text": "step9/text.md"
+        "title": "Notebook for data analysis",
+        "text": "step6/text.md"
       }
     ],
     "assets": {
       "host01": [
-      {"file": "mock-webserver.yaml", "target": "/"},
-      {"file": "database-input.sh", "target": "/"}
+      {"file": "mock-webserver.yaml", "target": "/"}
      ]
     },
     "finish": {
