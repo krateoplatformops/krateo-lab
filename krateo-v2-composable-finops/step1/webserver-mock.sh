@@ -2,13 +2,13 @@
 echo "apiVersion: v1
 kind: Namespace
 metadata:
-  name: finops
+  name: krateo-system
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: webservice-api-mock-deployment
-  namespace: finops
+  namespace: krateo-system
   labels:
     app: webservice-api-mock
 spec:
@@ -32,7 +32,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: webservice-api-mock
-  namespace: finops
+  namespace: krateo-system
 spec:
   selector:
     app: webservice-api-mock
@@ -40,6 +40,14 @@ spec:
   ports:
   - protocol: TCP
     port: 8080
-    targetPort: 8080" > webserver-mock.yaml
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Secret
+metadata: 
+  name: webservice-mock-endpoint
+  namespace: krateo-system
+stringData:
+  server-url: http://<host>:<port>" > webserver-mock.yaml
     
 kubectl apply -f webserver-mock.yaml
