@@ -23,7 +23,7 @@ spec:
     #  namespace: # secret namespace
     #  key: # key of the secret
     # metricType: # optional, one of: cost, resource; default value: resource
-    pollingIntervalHours: # int
+    pollingInterval: # time duration, e.g., 12h30m
     additionalVariables:
       varName: sample
       # Variables whose value only contains uppercase letters are taken from environment variables
@@ -49,7 +49,7 @@ spec:
         name: webservice-mock-endpoint
         namespace: krateo-system
     metricType: cost
-    pollingIntervalHours: 1
+    pollingInterval: "1h"
     additionalVariables:
       subscription_id: d3sad326-42a4-5434-9623-a3sd22fefb84
       host: WEBSERVICE_API_MOCK_SERVICE_HOST
