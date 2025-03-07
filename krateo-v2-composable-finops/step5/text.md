@@ -12,7 +12,7 @@ spec:
     ...
   scraperConfig: # configuration for krateoplatformops/finops-operator-scraper
     tableName: # tableName in the database to upload the data to
-    pollingIntervalHours: # int
+    pollingInterval: # time duration, e.g., 12h30m
     scraperDatabaseConfigRef: # See above kind DatabaseConfig
       name: # name of the databaseConfigRef CR 
       namespace: # namespace of the databaseConfigRef CR
@@ -39,14 +39,14 @@ spec:
         name: webservice-mock-endpoint
         namespace: krateo-system
     metricType: cost
-    pollingIntervalHours: 1
+    pollingInterval: "1h"
     additionalVariables:
       subscription_id: d3sad326-42a4-5434-9623-a3sd22fefb84
       host: WEBSERVICE_API_MOCK_SERVICE_HOST
       port: WEBSERVICE_API_MOCK_SERVICE_PORT
   scraperConfig:
     tableName: krateo_finops_tutorial
-    pollingIntervalHours: 1
+    pollingInterval: "1h"
     scraperDatabaseConfigRef:
       name:  finops-database-handler
       namespace: krateo-system
