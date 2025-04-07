@@ -18,16 +18,16 @@
         "verify": "step2/verify.sh"
       },
       {
-        "title": "Exploring Core Provider Generated RBAC Resources",
-        "text": "step3/text.md"
-      },
-      {
         "title": "Installing a Krateo Fireworks App Composition",
-        "text": "step4/text.md",
-        "verify": "step4/verify.sh"
+        "text": "step3/text.md",
+        "verify": "step3/verify.sh"
       },
       {
         "title": "Exploring the Krateo Composition Resource",
+        "text": "step4/text.md"
+      },
+      {
+        "title": "Exploring the Generated RBAC",
         "text": "step5/text.md"
       },
       {
@@ -36,11 +36,11 @@
         "verify": "step6/verify.sh"
       },
       {
-        "title": "Delete a Compositions",
+        "title": "How to Have Different Versions of the Same Composition Installed",
         "text": "step7/text.md"
       },
       {
-        "title": "Massive Compositions Install",
+        "title": "Composition Management",
         "text": "step8/text.md"
       }
     ],
@@ -49,8 +49,8 @@
         {"file": "github-repo-creds.yaml", "target": "/"},
         {"file": "fireworksapp-composition-values.yaml", "target": "/"},
         {"file": "fireworksapp-composition-values-2.yaml", "target": "/"},
-        {"file": "list-resources-by-annotation.sh", "target": "/"},
-        {"file": "stress-test-cdc.yaml", "target": "/"}
+        {"file": "fireworksapp-composition-values-copy.yaml", "target": "/"},
+        {"file": "list-resources-by-annotation.sh", "target": "/"}
       ]
     },
     "finish": {

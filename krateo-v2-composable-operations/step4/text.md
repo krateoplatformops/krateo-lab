@@ -1,57 +1,41 @@
-# Installing a Krateo Fireworks App Composition
+# Exploring the Krateo Composition Resource
 
-## Prerequisites
-Before creating the Composition, we need to configure GitHub authentication. This requires setting up proper credentials in the cluster.
+The Krateo Composition resource is the main entry point for managing deployments created by the `core-provider`. Let's take a closer look at the resource.
 
-## Step 1: Configure GitHub Token
-1. Open the Killercoda IDE and navigate to the file:
-   ```
-   /root/filesystem/github-repo-creds.yaml
-   ```
-2. Modify the file to include your GitHub token.
+## Inspecting a Composition Instance
 
-3. Apply the credentials manifest:
-   ```bash
-   kubectl apply -f /root/filesystem/github-repo-creds.yaml
-   ```{{exec}}
-
-## Step 2: Create the Composition
-Now that GitHub authentication is configured, we can create an instance of the composition:
+First, let's examine the `fireworksapp-composition-1` Composition:
 
 ```bash
-kubectl apply -f /root/filesystem/fireworksapp-composition-values.yaml
+kubectl get fireworksapp fireworksapp-composition-1 --namespace fireworksapp-system -o yaml
 ```{{exec}}
 
-## Step 3: Verify the Installation
+This will display the full YAML representation of the Composition resource.
 
-1. Wait for the Composition to be ready:
-   ```bash
-   kubectl wait fireworksapp fireworksapp-composition-1 --for condition=Ready=True \
-     --timeout=300s --namespace fireworksapp-system
-   ```{{exec}}
+### The Status
 
-2. Check the Composition's status:
-   ```bash
-   kubectl get fireworksapp fireworksapp-composition-1 --namespace fireworksapp-system
-   ```{{exec}}
+- The `managed` array lists all the Kubernetes resources that have been created by the Composition.
+- Each item in the `managed` array includes the resource's `apiVersion`, `resource`, `name`, and `namespace`.
+- This provides a comprehensive view of all the resources that make up the deployed application.
 
-Let's repeat the process to install a second composition:
+## Inspecting Another Composition Instance
+
+Let's also look at the `fireworksapp-composition-2` Composition:
 
 ```bash
-kubectl apply -f /root/filesystem/fireworksapp-composition-values-2.yaml
+kubectl get fireworksapp fireworksapp-composition-2 --namespace fireworksapp-system -o yaml
 ```{{exec}}
 
-## Step 3: Verify the Installation
+This will show the details of the second Composition instance.
 
-1. Wait for the Composition to be ready:
-   ```bash
-   kubectl wait fireworksapp fireworksapp-composition-2 --for condition=Ready=True \
-     --timeout=300s --namespace fireworksapp-system
-   ```{{exec}}
+## Understanding the Composition Resource
 
-2. Check the Composition's status:
-   ```bash
-   kubectl get fireworksapp fireworksapp-composition-2 --namespace fireworksapp-system
-   ```{{exec}}
+The Krateo Composition resource serves as a single point of control for managing deployed applications. By inspecting the `managed` array in the `Status` section, you can gain a comprehensive understanding of the resources that make up each deployed application.
 
-This will display the current status of your Fireworks App Composition. Verify that all components have been properly deployed and are in a ready state.
+This centralized view and management of the deployed application's resources is a key benefit of using the Krateo `core-provider` and Composition resources.
+
+At this point, we can also see that at any action performed with the lifecycle of the Compositions, an event is thrown:
+
+```bash
+kubectl get events --sort-by='.lastTimestamp' -n fireworksapp-system
+```{{exec}}

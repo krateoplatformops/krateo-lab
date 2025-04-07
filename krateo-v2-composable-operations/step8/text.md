@@ -1,24 +1,25 @@
-# Massive composition install
-Try to Install 25 compositions in the cluster and wait for `Ready:True` condition
+# Pause Composition Reconciliation
+
+If, for some reason, you need to pause the reconciliation of a composition in any Krateo provider, including the `composition-dynamic-controller`, you can do so by adding the annotation `"krateo.io/paused"` with the value `true`.
+
+For example, to stop the reconciliation of the last created composition `fireworksapp-composition-copy`, run the following command:
 
 ```bash
-kubectl apply -f /root/filesystem/stress-test-cdc.yaml
+kubectl annotate fireworksapp fireworksapp-composition-copy -n fireworksapp-system "krateo.io/paused=true"
 ```{{exec}}
 
-Let's see the status:
+# Composition Deletion
+
+What happens when you delete a Composition? You might expect that the related Helm chart will be removed from the cluster. This is exactly what happens when you run the following command:
 
 ```bash
-kubectl get compositions -n fireworksapp-system
+kubectl delete fireworksapps fireworksapp-composition-1 -n fireworksapp-system
 ```{{exec}}
 
-Now, try to delete them:
+To verify if the release is still installed in the cluster, run:
 
 ```bash
-kubectl delete -f /root/filesystem/stress-test-cdc.yaml
+helm list -n fireworksapp-system
 ```{{exec}}
 
-Let's see the status:
-
-```bash
-kubectl get compositions -n fireworksapp-system
-```{{exec}}
+As you can see, the `fireworksapp-composition-1` is no longer installed in the cluster!
