@@ -1,7 +1,7 @@
 apiVersion: composition.krateo.io/v1-1-13
 kind: FireworksApp
 metadata:
-  name: fireworksapp-composition-2
+  name: fireworksapp-composition-copy
   namespace: fireworksapp-system
 spec:
   app:
@@ -46,7 +46,7 @@ spec:
           namespace: krateo-system
       initialize: true
       org: your-organization # change here
-      name: fireworksapp-test-v2-2 # you could also change here, but it is not necessary. This will be the name of the created repository
+      name: fireworksapp-test-v2-copy # you could also change here, but it is not necessary. This will be the name of the created repository
       path: /
       private: false
       scmUrl: https://github.com

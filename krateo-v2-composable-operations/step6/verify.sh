@@ -1,5 +1,5 @@
 #!/bin/bash
 
-kubectl wait deployment fireworksapps-v1-1-6-controller --namespace fireworksapp-system --for condition=Available=True
+kubectl wait deployment fireworksapps-v1-1-14-controller --namespace fireworksapp-system --for condition=Available=True
 
-kubectl wait compositiondefinition fireworksapp-1-1-5 --for condition=Ready=True --namespace fireworksapp-system
+kubectl wait compositiondefinition fireworksapp-1-1-13 --for condition=Ready=True --namespace fireworksapp-system

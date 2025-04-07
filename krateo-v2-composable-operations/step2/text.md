@@ -35,7 +35,7 @@ Create the `fireworksapp-system` namespace:
 kubectl create namespace fireworksapp-system
 ```{{exec}}
 
-Apply the `CompositionDefinition` manifest that installs version 1.1.5 of the chart in the `fireworksapp-system` namespace:
+Apply the `CompositionDefinition` manifest that installs version 1.1.13 of the chart in the `fireworksapp-system` namespace:
 
 ```bash
 cat <<EOF | kubectl apply -f -
@@ -44,13 +44,13 @@ kind: CompositionDefinition
 metadata:
   annotations:
     krateo.io/connector-verbose: "true"
-  name: fireworksapp-1-1-5
+  name: fireworksapp-1-1-13
   namespace: fireworksapp-system
 spec:
   chart:
     repo: fireworks-app
     url: https://charts.krateo.io
-    version: 1.1.5
+    version: 1.1.13
 EOF
 ```{{exec}}
 
@@ -59,12 +59,12 @@ EOF
 
 1. Wait for the CompositionDefinition to be ready:
 ```bash
-kubectl wait compositiondefinition fireworksapp-1-1-5 --for condition=Ready=True --timeout=300s --namespace fireworksapp-system
+kubectl wait compositiondefinition fireworksapp-1-1-13 --for condition=Ready=True --timeout=300s --namespace fireworksapp-system
 ```{{exec}}
 
 2. Check the CompositionDefinition outputs:
 ```bash
-kubectl get compositiondefinition fireworksapp-1-1-5 --namespace fireworksapp-system -o yaml
+kubectl get compositiondefinition fireworksapp-1-1-13 --namespace fireworksapp-system -o yaml
 ```{{exec}}
 
 ## What Was Created?
@@ -78,5 +78,5 @@ kubectl get crd fireworksapps.composition.krateo.io -o yaml
 
 2. A specific Deployment that uses the `composition-dynamic-controller` image. This deployment watches for new Custom Resources related to the generated CRD and the specific version:
 ```bash
-kubectl get deployment fireworksapps-v1-1-5-controller --namespace fireworksapp-system
+kubectl get deployment fireworksapps-v1-1-13-controller --namespace fireworksapp-system
 ```{{exec}}

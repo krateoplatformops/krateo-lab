@@ -1,4 +1,4 @@
-apiVersion: composition.krateo.io/v1-1-5
+apiVersion: composition.krateo.io/v1-1-13
 kind: FireworksApp
 metadata:
   name: fireworksapp-composition-1
@@ -25,7 +25,7 @@ spec:
     fromRepo:
       branch: main
       credentials:
-        authMethod: basic
+        authMethod: generic
         secretRef:
           key: token
           name: github-repo-creds
@@ -39,14 +39,14 @@ spec:
       apiUrl: https://api.github.com
       branch: main
       credentials:
-        authMethod: basic
+        authMethod: generic
         secretRef:
           key: token
           name: github-repo-creds
           namespace: krateo-system
       initialize: true
-      name: fireworksapp-test-v2
-      org: krateoplatformops-archive
+      org: your-organization # change here
+      name: fireworksapp-test-v2 # you could also change here, but it is not necessary. This will be the name of the created repository
       path: /
       private: false
       scmUrl: https://github.com
