@@ -1,4 +1,25 @@
-# Krateo Core Provider
+# Install Krateo
+To install Krateo, we will follow the [official Krateo Documentation](https://docs.krateo.io/how-to-guides/install-krateo/installing-krateo-kind).
+
+```plain
+helm repo add krateo https://charts.krateo.io
+helm repo update krateo
+helm upgrade installer installer \
+  --repo https://charts.krateo.io \
+  --namespace krateo-system \
+  --create-namespace \
+  --install \
+  --version 2.4.1 \
+  --wait
+```{{exec}}
+
+Wait for Krateo to be ready:
+```plain
+kubectl wait krateoplatformops krateo --for condition=Ready=True --namespace krateo-system --timeout=660s
+```{{exec}}
+This step might take upwards of 10 minutes, go grab a coffee in the meantime or learn more about `core-provider`!
+
+# Learn about Krateo Core Provider
 
 Krateo Core Provider is a system for managing Krateo PlatformOps Compositions.
 
