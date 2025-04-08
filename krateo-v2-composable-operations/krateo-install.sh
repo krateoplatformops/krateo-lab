@@ -115,7 +115,7 @@ EOF
 kubectl wait --for=condition=available --timeout=600s deployment/installer -n krateo-system
 
 # Apply Krateo Installer Manifest
-cat <<EOF | kubectl apply -f -
+cat <<'EOF' | kubectl apply -f -
 # krateo-installer.yaml
 apiVersion: krateo.io/v1alpha1
 kind: KrateoPlatformOps
