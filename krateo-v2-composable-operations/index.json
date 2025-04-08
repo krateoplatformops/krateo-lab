@@ -3,8 +3,7 @@
   "description": "Let's learn how to work with Krateo v2 Composable Operations",
   "details": {
     "intro": {
-      "text": "intro.md",
-      "foreground": "krateo-install.sh"
+      "text": "intro.md"
     },
     "steps": [
       {
