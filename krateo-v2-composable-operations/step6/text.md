@@ -1,14 +1,14 @@
 # Update the Fireworksapp Chart in the `compositiondefinition`
 
-1. Update the existing CompositionDefinition fireworksapp-1-1-13 in the fireworksapp-system namespace to change the spec.chart.version to 1.1.14:
+1. Update the existing CompositionDefinition fireworksapp-cd in the fireworksapp-system namespace to change the spec.chart.version to 1.1.14:
 ```bash
-kubectl patch compositiondefinition fireworksapp-1-1-13 -n fireworksapp-system --type=merge -p '{"spec":{"chart":{"version":"1.1.14"}}}'
+kubectl patch compositiondefinition fireworksapp-cd -n fireworksapp-system --type=merge -p '{"spec":{"chart":{"version":"1.1.14"}}}'
 ```{{exec}}
 
-2. Wait for the `fireworksapp-1-1-13` CompositionDefinition to be in the `Ready=True` condition in the `fireworksapp-system` namespace:
+2. Wait for the `fireworksapp-cd` CompositionDefinition to be in the `Ready=True` condition in the `fireworksapp-system` namespace:
 
 ```bash
-kubectl wait compositiondefinition fireworksapp-1-1-13 --for condition=Ready=True --namespace fireworksapp-system --timeout=300s
+kubectl wait compositiondefinition fireworksapp-cd --for condition=Ready=True --namespace fireworksapp-system --timeout=300s
 ```{{exec}}
 
 3. Inspect the CustomResourceDefinition `fireworksapps.composition.krateo.io` to see the added version:
