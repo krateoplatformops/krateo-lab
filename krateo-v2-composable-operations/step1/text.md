@@ -46,10 +46,3 @@ To validate your JSON Schema, you can use:
 A CompositionDefinition is a Krateo Custom Resource that automates two key tasks:
 1. Generates a Custom Resource Definition based on the Helm chart's `values.schema.json` file
 2. Creates a Deployment that monitors for new Custom Resources representing the Helm Chart's `values.yaml`
-
-## Verify Krateo PlatformOps Installation
-
-Check out for Krateo PlatformOps to become available:
-```bash
-kubectl wait krateoplatformops krateo --for condition=Ready=True --timeout=600s --namespace krateo-system
-```{{exec}}

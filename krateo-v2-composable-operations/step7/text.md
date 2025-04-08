@@ -11,7 +11,7 @@ kind: CompositionDefinition
 metadata:
   annotations:
     krateo.io/connector-verbose: "true"
-  name: fireworksapp-1-1-13-copy
+  name: fireworksapp-cd-copy
   namespace: fireworksapp-system
 spec:
   chart:
@@ -25,7 +25,7 @@ EOF
 
 1. Wait for the `CompositionDefinition` to be ready:
    ```bash
-   kubectl wait compositiondefinition fireworksapp-1-1-13-copy --for condition=Ready=True --timeout=300s --namespace fireworksapp-system
+   kubectl wait compositiondefinition fireworksapp-cd-copy --for condition=Ready=True --timeout=600s --namespace fireworksapp-system
    ```{{exec}}
 
 2. Check the specific Deployment that uses the `composition-dynamic-controller` image. This deployment monitors new Custom Resources related to the generated CRD and the specific version:
@@ -54,7 +54,7 @@ Before proceeding, update the references to the GitHub organization where the re
 1. Wait for the Composition to be ready:
    ```bash
    kubectl wait fireworksapp fireworksapp-composition-copy --for condition=Ready=True \
-     --timeout=300s --namespace fireworksapp-system
+     --timeout=600s --namespace fireworksapp-system
    ```{{exec}}
 
 2. Verify that the previously installed charts have the expected versions:
@@ -79,7 +79,7 @@ At this point, you should see two charts: one at version 1.1.14 and the other at
 1. Wait for the Composition to be ready:
    ```bash
    kubectl wait fireworksapp fireworksapp-composition-copy --for condition=Ready=True \
-     --timeout=300s --namespace fireworksapp-system
+     --timeout=600s --namespace fireworksapp-system
    ```{{exec}}
 
 2. Verify that the previously installed charts have the expected versions:
