@@ -3,7 +3,7 @@
 ## Prerequisites
 Before creating the Composition, we need to configure GitHub authentication. This requires setting up proper credentials in the cluster.
 
-## Step 1: Configure GitHub Token
+## Configure GitHub Token
 1. Open the Killercoda IDE and navigate to the file:
    ```
    /root/filesystem/github-repo-creds.yaml
@@ -15,7 +15,7 @@ Before creating the Composition, we need to configure GitHub authentication. Thi
    kubectl apply -f /root/filesystem/github-repo-creds.yaml
    ```{{exec}}
 
-## Step 2: Configure the Composition
+## Configure the Composition
 
 Now that GitHub authentication is configured, you can create an instance of the composition.
 
@@ -32,7 +32,7 @@ Before proceeding, update the references to the GitHub organization where the re
    ```{{exec}}
 
 
-## Step 3: Verify the Installation
+## Verify the Installation
 
 1. Wait for the Composition to be ready:
    ```bash
@@ -45,9 +45,15 @@ Before proceeding, update the references to the GitHub organization where the re
    kubectl get fireworksapp fireworksapp-composition-1 --namespace fireworksapp-system
    ```{{exec}}
 
+## Install another Composition
+
 To install a second composition, repeat the process from Step 2 using the file `fireworksapp-composition-values-2.yaml`:
 
-## Step 3: Verify the Installation
+```bash
+kubectl apply -f /root/filesystem/fireworksapp-composition-values-2.yaml
+```{{exec}}
+
+## Verify the Installation
 
 1. Wait for the Composition to be ready:
    ```bash
