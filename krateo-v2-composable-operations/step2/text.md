@@ -59,7 +59,7 @@ EOF
 
 1. Wait for the CompositionDefinition to be ready:
 ```bash
-kubectl wait compositiondefinition fireworksapp-cd --for condition=Ready=True --timeout=300s --namespace fireworksapp-system
+kubectl wait compositiondefinition fireworksapp-cd --for condition=Ready=True --timeout=600s --namespace fireworksapp-system
 ```{{exec}}
 
 2. Check the CompositionDefinition outputs:
