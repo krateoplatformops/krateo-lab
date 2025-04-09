@@ -9,7 +9,7 @@ helm upgrade installer installer \
   --namespace krateo-system \
   --create-namespace \
   --install \
-  --version 2.3.2 \
+  --version 2.4.1 \
   --set krateoplatformops.finopscratedbcustomresource.resources.disk.storageClass=local-path \
   --set krateoplatformops.finopsoperatorcratedb.env.CRATEDB_OPERATOR_DEBUG_VOLUME_STORAGE_CLASS=local-path \
   --wait

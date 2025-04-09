@@ -15,20 +15,26 @@ spec:
     provider: 
       name: # name of the provider config
       namespace: # namespace of the provider config
-    url: # url including http/https of the CSV-based API to export, parts with <varName> are taken from additionalVariables: http://<varName> -> http://sample 
-    requireAuthentication: # true/false
-    authenticationMethod: # one of: bearer-token, cert-file
-    # bearerToken: # optional, if "authenticationMethod: bearer-token", objectRef to a standard Kubernetes secret with specified key
-    #  name: # secret name
-    #  namespace: # secret namespace
-    #  key: # key of the secret
-    # metricType: # optional, one of: cost, resource; default value: resource
+    api: # the API to call
+      path: # the path inside the domain
+      verb: GET # the method to call the API with
+      endpointRef: # secret with the url in the format http(s)://host:port, it can contain variables, such as http://<varName>.com:<envExample>, which will be compiled with the additionalVariables fields
+        name: 
+        namespace:
+    # metricType: # optional, one of: cost, resource; default value: cost
     pollingInterval: # time duration, e.g., 12h30m
     additionalVariables:
       varName: sample
       # Variables whose value only contains uppercase letters are taken from environment variables
-      # FROM_THE_ENVIRONMENT must be the name of an environment variable inside the target exporter container
+      # FROM_THE_ENVIRONMENT must be the name of an environment variable inside the target exporter container (e.g., kubernetes services)
       envExample: FROM_THE_ENVIRONMENT
+  scraperConfig: # same fields as krateoplatformops/finops-prometheus-scraper-generic
+    tableName: # tableName in the database to upload the data to
+    # api: # api to the exporter, optional (if missing, it uses the exporter)
+    pollingInterval: # time duration, e.g., 12h30m
+    scraperDatabaseConfigRef: # See above kind DatabaseConfig
+      name: # name of the databaseConfigRef CR 
+      namespace: # namespace of the databaseConfigRef CR
 ```
 Each field is explained by the comment.
 

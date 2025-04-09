@@ -69,7 +69,11 @@ metadata:
 spec:
   metricName: Percentage CPU
   endpoint:
-    resourcePrefix: unused for now
+    resourcePrefixAPI:
+      verb: GET
+      endpointRef:
+        name: webservice-mock-endpoint
+        namespace: krateo-system
     resourceSuffix: /providers/microsoft.insights/metrics?api-version=2023-10-01&metricnames=%s&timespan=%s&interval=%s
   timespan: month
   interval: PT15M

@@ -13,7 +13,6 @@ metadata:
 spec:
   scraperConfig: # same fields as krateoplatformops/finops-prometheus-scraper-generic
     tableName: # tableName in the database to upload the data to
-    # url: # path to the exporter, optional (if missing, its taken from the exporter)
     pollingInterval: # time duration, e.g., 12h30m
     scraperDatabaseConfigRef: # See above kind DatabaseConfig
       name: # name of the databaseConfigRef CR 
