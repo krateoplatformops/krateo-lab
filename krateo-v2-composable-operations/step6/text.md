@@ -17,6 +17,13 @@ kubectl wait compositiondefinition fireworksapp-cd --for condition=Ready=True --
 kubectl get crd fireworksapps.composition.krateo.io -o yaml
 ```{{exec}}
 
+In the CRD, you can observe three versions: `v1-1-13`, `v1-1-14`, and `vacuum`. When you create a new version of a CRD, the stored version of the resource will be marked as `vacuum`. 
+
+Although the `vacuum` version is not marked as `served` meaning you cannot create new resources of this version—it is used to store any resource of this type moving forward. Resources are validated against either the `v1-1-14` or `v1-1-13` version and then stored as the `vacuum` version.
+
+This mechanism ensures that resources remain in the cluster and are not deleted when you update the chart version, while still providing validation for the resources.
+
+
 4. Check if the `fireworksapps-v1-1-14-controller` deployment to be ready in the `fireworksapp-system` namespace:
 
 ```bash
