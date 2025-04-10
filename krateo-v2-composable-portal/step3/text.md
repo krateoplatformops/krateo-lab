@@ -1,8 +1,4 @@
-## Add a Composition to the Portal via Template
-
-Now we want to add a `Composition` to the Portal.
-
-First of all, we need to prepare the toolchain that will be configured by the `Composition`.
+## Let's prepare the toolchain managed by Krateo
 
 ```plain
 helm install github-provider krateo/github-provider --namespace krateo-system --create-namespace --wait
@@ -50,16 +46,18 @@ type: Opaque
 EOF
 ```{{exec}}
 
-Let's apply a `template-chart` in order to add a Template to the portal.
+## Add a Form to the Portal
+
+A `CompositionDefinition` is a construct from Krateo’s [core-provider](https://github.com/krateoplatformops/core-provider/) that allows [Helm](https://helm.sh/) to become a native Kubernetes resource. What we propose as a platform is to implement infrastructure blueprints using Helm charts, which Krateo then takes and makes available within Kubernetes.
+A `Composition` is essentially a Helm release, but it goes through Kubernetes' native validation process.
+A Composition can be created either manually (using kubectl apply) or through a form in the Portal.
+
+Let's add a `Card` and a `CustomForm` in order to add a form to the portal. In this case we're leveraging [Fireworksapp](https://github.com/krateoplatformops/krateo-v2-template-fireworksapp), our showcase example.
 
 ```plain
-helm upgrade fireworksapp template \
-  --repo https://charts.krateo.io \
-  --namespace fireworksapp-system \
-  --create-namespace \
-  --install \
-  --wait \
-  --version 0.1.0
+kubectl create ns fireworksapp-system
+kubectl apply -f https://raw.githubusercontent.com/krateoplatformops/krateo-v2-template-fireworksapp/refs/tags/1.1.15/compositiondefinition.yaml
+kubectl apply -f https://raw.githubusercontent.com/krateoplatformops/krateo-v2-template-fireworksapp/refs/tags/1.1.15/customform.yaml
 ```{{exec}}
 
 Let's wait for the CompositionDefinition `fireworksapp` to be Ready
@@ -84,5 +82,5 @@ kubectl get crd fireworksapps.composition.krateo.io -o yaml
 * started a specific Deployment (which leverages the `composition-dynamic-controller` image) which will watch for new Custom Resources related to the generated CRD and the specific version.
 
 ```plain
-kubectl get deployment fireworksapps-v1-1-8-controller --namespace fireworksapp-system
+kubectl get deployment fireworksapps-v1-1-15-controller --namespace fireworksapp-system
 ```{{exec}}

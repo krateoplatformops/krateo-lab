@@ -146,10 +146,10 @@ subjects:
 EOF
 ```{{exec}}
 
-Let's try again to read the `Form` `template-fireworksapp-form` as `cyberjoker` user.
+Let's try again to read the `Form` `template-fireworksapp-customform` as `cyberjoker` user.
 
 ```plain
-kubectl get form template-fireworksapp-form --namespace fireworksapp-system -o yaml --kubeconfig cyberjoker.kubeconfig
+kubectl get form template-fireworksapp-customform --namespace fireworksapp-system -o yaml --kubeconfig cyberjoker.kubeconfig
 ```{{exec}}
 
-Now `cyberjoker` is able to get the `Form` `template-fireworksapp-form`.
+Now `cyberjoker` is able to get the `Form` `template-fireworksapp-customform`.
