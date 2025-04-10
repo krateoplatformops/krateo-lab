@@ -6,7 +6,7 @@ Let's check the status of the `Card` `template-fireworksapp-card` resource:
 kubectl get widget template-fireworksapp-card --namespace fireworksapp-system -o yaml --kubeconfig admin.kubeconfig
 ```{{exec}}
 
-The status returns the possible actions available for the user requesting the cardtemplate. In Krateo, the Kubernetes RBAC is evaluated to populate the actions array.
+The status returns the possible actions available for the user requesting the `Card`. In Krateo, the Kubernetes RBAC is evaluated to populate the actions array.
 
 Focus on the `actions` array.
 

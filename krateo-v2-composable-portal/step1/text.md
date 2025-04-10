@@ -33,11 +33,11 @@ helm upgrade installer installer \
   --create-namespace \
   --install \
   --wait \
-  --version 2.3.0 \
+  --version 2.4.1 \
   --set krateoplatformops.authn.KUBECONFIG_SERVER_URL=$KUBECONFIG_SERVER_URL \
   --set krateoplatformops.frontend.overrideconf=true \
   --set krateoplatformops.frontend.config.AUTHN_API_BASE_URL="{{TRAFFIC_HOST1_30082}}" \
-  --set krateoplatformops.frontend.config.BFF_API_BASE_URL="{{TRAFFIC_HOST1_30081}}" \
+  --set krateoplatformops.frontend.config.BACKEND_API_BASE_URL="{{TRAFFIC_HOST1_30081}}" \
   --set krateoplatformops.frontend.config.EVENTS_PUSH_API_BASE_URL="{{TRAFFIC_HOST1_30083}}" \
   --set krateoplatformops.frontend.config.EVENTS_API_BASE_URL="{{TRAFFIC_HOST1_30083}}"
 ```{{exec}}

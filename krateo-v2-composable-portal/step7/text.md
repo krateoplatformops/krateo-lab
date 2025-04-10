@@ -1,17 +1,17 @@
 ## Check Template Column and Row
 
-Let's check the status of the `Column` `templates-row-column-1` resource:
+Let's check the status of the `CustomForm` `template-fireworksapp-customform` resource:
 
 ```plain
-kubectl get collection templates-row-column-1 --namespace krateo-system -o yaml --kubeconfig admin.kubeconfig
+kubectl get widget template-fireworksapp-card --namespace krateo-system -o yaml --kubeconfig admin.kubeconfig
 ```{{exec}}
 
-The status returns all the cardtemplate referenced by the column. In Krateo, the Kubernetes RBAC is evaluated to populate the actions array.
+The status returns the CustomForm and the relative schema. In Krateo, the Kubernetes RBAC is evaluated to populate the actions array.
 
-Let's check the status of the `Row` `templates-row` resource:
+Let's check the status in detail:
 
 ```plain
-kubectl get collection templates-row --namespace krateo-system -o yaml --kubeconfig admin.kubeconfig
+kubectl get widget template-fireworksapp-card --namespace krateo-system -o yaml --kubeconfig admin.kubeconfig -o yaml
 ```{{exec}}
 
-The status returns all the columns referenced by the row. In Krateo, the Kubernetes RBAC is evaluated to populate the actions array.
+The status returns the JSON schema referenced by the API.
