@@ -20,24 +20,24 @@
         "text": "step3/text.md"
       },
       {
-        "title": "Add Cyberjoker user to the platform",
+        "title": "Add cyberjoker user to the platform",
         "text": "step4/text.md"
       },
       {
-        "title": "Add RBAC to retrieve the FormTemplate",
+        "title": "Set RBAC for cyberjoker user",
         "text": "step5/text.md"
       },
       {
-        "title": "Add Krateo CardTemplate to retrieve the FormTemplate",
+        "title": "Check Card to retrieve the Form",
         "text": "step6/text.md"
       },
       {
-        "title": "Add Krateo Column and Row to retrieve the CardTemplate",
+        "title": "Check Form",
         "text": "step7/text.md"
       },
       {
-        "title": "Add Krateo Column and Row to retrieve the CardTemplate",
-        "text": "step7/text.md"
+        "title": "Navigate the Portal to find the Template Card",
+        "text": "step8/text.md"
       }
     ],
     "finish": {
