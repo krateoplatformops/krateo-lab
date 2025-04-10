@@ -6,7 +6,7 @@ helm repo add krateo https://charts.krateo.io
 ```{{exec}}
 
 ```plain
-read ACCESS_TOKEN
+read -s ACCESS_TOKEN
 ```{{exec}}
 
 
