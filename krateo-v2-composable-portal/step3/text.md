@@ -29,12 +29,8 @@ stringData:
   token: $TOKEN
 EOF
 
-echo "Please enter your GitHub personal access token:"
+read -s ACCESS_TOKEN
 ```{{exec}}
-
-```plain
-export ACCESS_TOKEN=
-```{{exec interrupt}}
 
 ```plain
 cat <<EOF | kubectl apply -f -
