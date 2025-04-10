@@ -9,11 +9,12 @@
       {
         "title": "Install Krateo and the Composable FinOps",
         "text": "step1/text.md",
-        "foreground": "step1/webserver-mock.sh",
+        "foreground": "step1/pre-install.sh",
         "verify": "step1/verify.sh"
       },
       {
         "title": "Let's deploy an exporter from an API endpoint",
+        "foreground": "step2/scale.sh",
         "text": "step2/text.md"
       },
       {
@@ -44,6 +45,6 @@
     }
   },
   "backend": {
-    "imageid": "kubernetes-kubeadm-1node-4GB"
+    "imageid": "kubernetes-kubeadm-2nodes"
   }
 }

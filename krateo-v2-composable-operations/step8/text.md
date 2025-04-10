@@ -8,6 +8,19 @@ For example, to stop the reconciliation of the last created composition `firewor
 kubectl annotate fireworksapp fireworksapp-composition-copy -n fireworksapp-system "krateo.io/paused=true"
 ```{{exec}}
 
+To check if the annotation is paused, run:
+
+```bash
+kubectl get events -n fireworksapp-system --sort-by='.metadata.creationTimestamp' | grep "fireworksapp-composition-copy"
+```{{exec}}
+
+You should probably retry some time before the event is generated.
+To resume the reconciliation, remove the annotation:
+
+```bash
+kubectl annotate fireworksapp fireworksapp-composition-copy -n fireworksapp-system "krateo.io/paused-"
+```{{exec}}
+
 # Composition Deletion
 
 What happens when you delete a Composition? You might expect that the related Helm chart will be removed from the cluster. This is exactly what happens when you run the following command:
