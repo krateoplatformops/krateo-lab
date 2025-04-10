@@ -34,7 +34,7 @@ echo "Please enter your GitHub personal access token:"
 
 ```plain
 export ACCESS_TOKEN=
-```{{copy}}
+```{{exec interrupt}}
 
 ```plain
 cat <<EOF | kubectl apply -f -
