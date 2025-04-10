@@ -51,3 +51,5 @@ stringData:
   server-url: http://<host>:<port>" > webserver-mock.yaml
     
 kubectl apply -f webserver-mock.yaml
+
+kubectl taint nodes controlplane node-role.kubernetes.io/control-plane:NoSchedule-
