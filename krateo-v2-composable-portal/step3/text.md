@@ -28,7 +28,11 @@ stringData:
   server-url: https://argocd-server.krateo-system.svc:443
   token: $TOKEN
 EOF
+```{{exec}}
 
+Add the github token:
+
+```plain
 read -s ACCESS_TOKEN
 ```{{exec}}
 

@@ -5,11 +5,6 @@ First, we make sure we add the Krateo Helm charts repo to our Helm client
 helm repo add krateo https://charts.krateo.io
 ```{{exec}}
 
-```plain
-read -s ACCESS_TOKEN
-```{{exec}}
-
-
 We can update the repo
 
 ```plain
