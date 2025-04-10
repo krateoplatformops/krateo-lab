@@ -1,4 +1,4 @@
-## Check Template Column and Row
+## Check Form
 
 Let's check the status of the `CustomForm` `template-fireworksapp-customform` resource:
 

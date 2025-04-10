@@ -1,4 +1,4 @@
-## Let's navigate the Portal
+## Let's navigate the Portal to find the Template Card
 
 Now that everything is ready, let's navigate through the [Portal]({{TRAFFIC_HOST1_30082}}/strategies).
 

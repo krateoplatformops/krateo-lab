@@ -14,11 +14,8 @@ helm repo update
 Let's extract the server url of our Kubernetes cluster:
 
 ```plain
-# Set the file path and variable name
-file_path="/root/.kube/config"
-
 # Extract the value of the variable from the file
-server_value=$(yq eval '.clusters[0].cluster.server' "$file_path")
+server_value=$(yq -r '.clusters[0].cluster.server' /root/.kube/config)
 
 # Export the value to an environment variable
 export KUBECONFIG_SERVER_URL="$server_value"
@@ -45,5 +42,5 @@ helm upgrade installer installer \
 Let's wait for Krateo PlatformOps to be Available:
 
 ```plain
-kubectl wait krateoplatformops krateo --for condition=Ready=True --timeout=300s --namespace krateo-system
+kubectl wait krateoplatformops krateo --for condition=Ready=True --timeout=660s --namespace krateo-system
 ```{{exec}}
