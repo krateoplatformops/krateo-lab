@@ -21,5 +21,5 @@ kubectl apply -f /root/filesystem/repo-def.yaml
 3. **Wait for the RestDefinition to meet the `Ready:True` condition:**
 
 ```bash
-kubectl wait restdefinitions gh-repo --for condition=Ready=True --namespace gh-system --timeout=300s
+kubectl wait restdefinitions gh-repo --for condition=Ready=True --namespace gh-system --timeout=600s
 ```{{exec}}

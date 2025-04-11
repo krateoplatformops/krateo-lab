@@ -21,7 +21,7 @@ A k8s controller that generates CRDs and controller to manage resources from Ope
 ```bash
 helm repo add krateo https://charts.krateo.io
 helm repo update krateo
-helm install krateo-oasgen-provider krateo/oasgen-provider --version 0.3.0 --namespace krateo-system --create-namespace 
+helm install krateo-oasgen-provider krateo/oasgen-provider --version 0.4.2 --namespace krateo-system --create-namespace 
 ```{{exec}}
 
 Wait for the generator to be available:
@@ -30,16 +30,16 @@ Wait for the generator to be available:
 kubectl wait deployments krateo-oasgen-provider --for condition=Available=True --namespace krateo-system --timeout=300s
 ```{{exec}}
 
-# Install Krateo BFF for handling K8s plurals
+# Install Snowplow for handling K8s plurals
 
 ```
-helm install bff krateo/bff --version 0.8.3 -n krateo-system  --create-namespace 
+helm install snowplow krateo/snowplow --version 0.4.3 -n krateo-system  --create-namespace 
 ```{{exec}}
 
-Wait for the BFF to be available:
+Wait for the Snowplow to be available:
 
 ```bash
-kubectl wait deployments bff --for condition=Available=True --namespace krateo-system --timeout=300s
+kubectl wait deployments snowplow --for condition=Available=True --namespace krateo-system --timeout=300s
 ```{{exec}}
 
 Create the `gh-system` namespace:
