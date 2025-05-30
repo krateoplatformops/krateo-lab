@@ -11,7 +11,7 @@ metadata:
 spec:
   exporterConfig:
     api: 
-      path: /providers/microsoft.insights/metrics?api-version=2023-10-01&metricnames=Percentage%20CPU&timespan=2025-04-01/2025-05-01&interval=PT15M
+      path: /subscriptions/d3sad326-42a4-5434-9623-a3sd22fefb84/resourcegroups/mar-ccm/providers/microsoft.compute/virtualmachines/mar-ccm-vm01/providers/microsoft.insights/metrics?api-version=2023-10-01&metricnames=Percentage%20CPU&timespan=2025-04-01/2025-05-01&interval=PT15M
       verb: GET
       endpointRef:
         name: webservice-mock-endpoint
@@ -19,10 +19,12 @@ spec:
     metricType: resource
     pollingInterval: "1h"
     additionalVariables:
-      ResourceId: /subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/resourcegroups/mar-ccm/providers/microsoft.compute/virtualmachines/mar-ccm-vm01
+      ResourceId: /subscriptions/d3sad326-42a4-5434-9623-a3sd22fefb84/resourcegroups/mar-ccm/providers/microsoft.compute/virtualmachines/mar-ccm-vm01
+      host: WEBSERVICE_API_MOCK_SERVICE_HOST
+      port: WEBSERVICE_API_MOCK_SERVICE_PORT
   scraperConfig:
+    tableName: krateo_finops_tutorial_res
     pollingInterval: "1h"
-    tableName: finops_res
     scraperDatabaseConfigRef:
       name: finops-database-handler
       namespace: krateo-system

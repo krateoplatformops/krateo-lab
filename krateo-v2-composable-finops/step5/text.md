@@ -103,10 +103,10 @@ echo "def main():
         connection.close()
 if __name__ == \"__main__\":
     main()" > query.py
-curl -X POST -u system:$(kubectl get secret user-system-finops -n krateo-system -o json | jq -r '.data.password' | base64 --decode) http://localhost:$(kubectl get service -n krateo-system finops-database-handler -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/compute/query/upload --data-binary "@query.py"
+curl -X POST -u system:$(kubectl get secret cratedb-system-credentials -n krateo-system -o json | jq -r '.data.password' | base64 --decode) http://localhost:$(kubectl get service -n krateo-system finops-database-handler -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/compute/query/upload --data-binary "@query.py"
 ```{{exec}}
 
 Run the notebook:
 ```plain
-curl -X POST -u system:$(kubectl get secret user-system-finops -n krateo-system -o json | jq -r '.data.password' | base64 --decode) http://localhost:$(kubectl get service -n krateo-system finops-database-handler -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/compute/query --header "Content-Type: application/json" --data '{"table_name":"krateo_finops_tutorial"}'
+curl -X POST -u system:$(kubectl get secret cratedb-system-credentials -n krateo-system -o json | jq -r '.data.password' | base64 --decode) http://localhost:$(kubectl get service -n krateo-system finops-database-handler -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/compute/query --header "Content-Type: application/json" --data '{"table_name":"krateo_finops_tutorial"}'
 ```{{exec}}
