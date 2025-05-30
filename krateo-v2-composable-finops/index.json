@@ -14,7 +14,6 @@
       },
       {
         "title": "Let's deploy an exporter from an API endpoint",
-        "foreground": "step2/scale.sh",
         "text": "step2/text.md"
       },
       {
