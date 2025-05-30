@@ -22,8 +22,7 @@
       },
       {
         "title": "Let's configure the Custom Usage Metrics",
-        "text": "step4/text.md",
-        "verify": "step4/verify.sh"
+        "text": "step4/text.md"
       },
       {
         "title": "Deploy the scrapers and automatically upload the data",
