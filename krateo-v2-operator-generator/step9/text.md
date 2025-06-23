@@ -1,54 +1,37 @@
-## Apply the Custom Resource
+## Verifying CRD and Controller Deployment
+At this point, you should notice that a CRD has been created based on the OpenAPI Specification provided in the RestDefinition Manifest.
 
-If you've set up the necessary authentication in the previous step, you can skip the prerequisites.
+1. **Check CRD creation:**
+   ```bash
+   kubectl get crds | grep github.kog.krateo.io 
+   ```{{exec}}
 
-## Prerequisites
+   You should see:
+   ```text
+   bearerauths.github.kog.krateo.io           2025-06-13T08:28:06Z
+   teamrepos.github.kog.krateo.io             2025-06-13T08:28:06Z
+   ```
 
-Before creating the repositories, you'll need to configure GitHub authentication by setting up the appropriate credentials in the cluster.
+   If you see `bearerauths` and `teamrepos`, the CRDs are created successfully. The second CRD represents the `teamrepo` object, while the first one is the `bearerauth` object used to authenticate requests to the GitHub API.
 
-### Step 1: Configure GitHub Token
+   **Note:** If you've previously created the `repo` RestDefinition, you'll also see the `repoes.github.kog.krateo.io` CRD. However, the `bearerauths.github.kog.krateo.io` CRD is shared between RestDefinitions because they use the same group and authentication scheme.
 
-1. Open the Killercoda IDE and navigate to the following file:
-```
-/root/filesystem/github-repo-creds.yaml
-```
-2. Modify the file to include your GitHub token.
-3. Apply the credentials manifest:
+2. **Verify controller deployment:**
+   ```bash
+   kubectl get deploy -n gh-system
+   ```{{exec}}
+   
+   You should see a deployment named `gh-teamrepo-controller` responsible for managing the `teamrepo` resources.
+   
+   If you see the deployment, check the controller pod logs to verify it's running correctly:
+   ```bash
+   kubectl logs deploy/gh-teamrepo-controller -n gh-system
+   ```{{exec}}
+
+3. **Check RestDefinition status:**
 ```bash
-kubectl apply -f /root/filesystem/github-repo-creds.yaml
+kubectl get restdefinition -n gh-system
+kubectl describe restdefinition gh-teamrepo -n gh-system
 ```{{exec}}
 
-### Step 2: Install the BearerAuth CR
-Install the BearerAuth custom resource to enable GitHub authentication:
-```bash
-kubectl apply -f /root/filesystem/gh-auth.yaml
-```{{exec}}
-
-## Edit the Custom Resource Specifications
-Open the following file in the Killercoda IDE:
-```
-/root/filesystem/collaborators-cr.yaml
-```
-In this file, update the following fields according to your needs:
-- `spec.owner`
-- `spec.repo`
-- `spec.username`
-- `spec.permission`
-
-**## Apply the Custom Resource**
-Once you've updated the Custom Resource specification, apply it:
-```bash
-kubectl apply -f /root/filesystem/collaborators-cr.yaml
-```{{exec}}
-
-## Step 5: Verify the Installation
-1. Wait for the Collaborators CR to reach the `Ready=True` condition:
- ```bash
- kubectl wait collaborators.gen.github.com/gh-collaborator --for condition=Ready=True --namespace gh-system
- ```{{exec}}
-2. Check the status of the Collaborators CR:
- ```bash
- kubectl get collaborators.gen.github.com/gh-collaborator --namespace gh-system -o yaml
- ```{{exec}}
-
-At this point, if the specified user was not part of the repository, an invitation to be added as a collaborator has been sent.
+At this point, you have a running operator capable of handling GitHub teamrepos. You can create, update, and delete teamrepos using the custom resource.

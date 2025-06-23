@@ -1,3 +1,3 @@
 #!/bin/bash
 
-kubectl wait restdefinitions gh-collaborators --for condition=Ready=True --namespace gh-system --timeout=300s
+kubectl wait restdefinition gh-teamrepo --for condition=Ready=True --namespace gh-system --timeout=600s

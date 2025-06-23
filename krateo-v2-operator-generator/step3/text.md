@@ -1,28 +1,29 @@
 ## Verifying CRD and Controller Deployment
 At this point, you should notice that a CRD has been created based on the OpenAPI Specification provided in the RestDefinition Manifest.
 
-## Verify the Creation of the CRDs
-
-- **Check the CRD for repository information:**
-
-  ```bash
-  kubectl get crds repoes.gen.github.com -o yaml
-  ```{{exec}}
-
-- **Check the CRD for centralized authentication information:**
-
-  ```bash
-  kubectl get crds bearerauths.gen.github.com -o yaml
-  ```{{exec}}
-
-The first CRD (`repoes.gen.github.com`) defines the schema for information about the repository you want to create on GitHub. The second CRD (`bearerauths.gen.github.com`) provides a centralized reference for authentication information for GitHub (specifically for any resource within the `gen.github.com` group).
-
-## Check for Deployed Resources
-
-To verify the deployment of the controller managing these resources, run:
-
+1. **Verify the CRD creation**
 ```bash
-kubectl get deployments --namespace gh-system
+kubectl get crds | grep github.kog.krateo.io 
 ```{{exec}}
 
-This deployment runs a Pod containing a dynamic controller that manages custom resources (CRs) of type `repoes.gen.github.com`, handling necessary actions to manage the lifecycle of the resource.
+You should see:
+```text
+bearerauths.github.kog.krateo.io           2025-06-13T08:28:06Z
+repoes.github.kog.krateo.io                2025-06-13T08:28:06Z
+```
+
+If you see `bearerauths` and `repoes`, the CRDs have been created successfully. The second CRD represents the `repo` object. The first one is the `bearerauth` object, which is used to authenticate requests to the GitHub API.
+
+2. **Verify the Controller is Running**
+```bash
+kubectl get deploy -n gh-system
+```{{exec}}
+
+You should see a deployment named `gh-repo-controller`, which is responsible for managing the `Repo` resources.
+
+If you see the deployment, you can check the logs of the controller pod to see if it is running correctly:
+```bash
+kubectl logs deploy/gh-repo-controller -n gh-system
+```{{exec}}
+
+At this point you have a running operator able to handle GitHub repositories. You can create, update, and delete repositories using the custom resource.
