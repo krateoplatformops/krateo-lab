@@ -1,9 +1,9 @@
 ---
 apiVersion: v1
-stringData:
-  token: <PAT>
 kind: Secret
 metadata:
-  name: github-repo-creds
+  name: gh-token
   namespace: gh-system
 type: Opaque
+stringData:
+  token: <PAT>
