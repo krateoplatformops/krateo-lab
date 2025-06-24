@@ -9,7 +9,7 @@ helm upgrade installer installer \
   --set krateoplatformops.composablefinops.enabled=false \
   --set krateoplatformops.composableportal.enabled=false \
   --set krateoplatformops.oasgenprovider.env.OASGEN_PROVIDER_POLL_INTERVAL=30s \
-  --set krateoplatformops.oasgenprovider.rdc.REST_CONTROLLER_RESYNC_INTERVAL=30s \
+  --set krateoplatformops.oasgenprovider.rdc.env.REST_CONTROLLER_RESYNC_INTERVAL=30s \
   --repo https://charts.krateo.io \
   --namespace krateo-system \
   --create-namespace \

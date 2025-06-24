@@ -70,3 +70,11 @@ Events:
 ```
 
 Any edits to the `Repo` custom resource will trigger the controller to update the corresponding repository in GitHub.
+
+## Step 3: Wait for for the CR to become Ready
+Wait for the controller to process the `Repo` resource. You can check the status of the
+controller by running:
+
+```bash
+kubectl wait repoes gh-repo-1 --for condition=Ready=True --namespace gh-system
+```{{exec}}
