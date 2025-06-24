@@ -58,5 +58,3 @@ spec:
       path: /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
 EOF
 ```{{exec}}
-
-Notes: The verification of this step could require some minutes, so please be patient.
