@@ -17,7 +17,7 @@
         "verify": "step2/verify.sh"
       },
       {
-        "title": "Operator Generator installation",
+        "title": "Verifying CRD and Controller Deployment",
         "text": "step3/text.md"
       },
       {
@@ -30,37 +30,58 @@
         "text": "step5/text.md"
       },
       {
-        "title": "Handling Resources with Non-Standard APIs",
+        "title": "Patch the Repo CR",
         "text": "step6/text.md"
       },
       {
-        "title": "Implementing the Fix",
-        "text": "step7/text.md",
-        "verify": "step7/verify.sh"
+        "title": "Delete the Repo CR",
+        "text": "step7/text.md"
       },
       {
-        "title": "Create the Github Collaborators RestDefinition",
+        "title": "Extended Example: External API that requires a plugin to handle external API calls",
         "text": "step8/text.md",
         "verify": "step8/verify.sh"
       },
       {
-        "title": "Apply the Custom Resource",
-        "text": "step9/text.md",
-        "verify": "step9/verify.sh"
+        "title": "Verifying CRD and Controller Deployment",
+        "text": "step9/text.md"
       },
       {
-        "title": "Testing the Web Service",
+        "title": "Create the TeamRepo CR",
         "text": "step10/text.md"
+      },
+      {
+        "title": "How to Create the webservice",
+        "text": "step11/text.md"
+      },
+      {
+        "title": "Update the RestDefinition to Use the Web Service",
+        "text": "step12/text.md",
+        "verify": "step8/verify.sh"
+      },
+      {
+        "title": "Manage TeamRepo CR",
+        "text": "step13/text.md"
       }
     ],
     "assets": {
       "host01": [
-        {"file": "github-repo-creds.yaml", "target": "/"},
-        {"file": "gh-auth.yaml", "target": "/"},
-        {"file": "repo-cr.yaml", "target": "/"},
-        {"file": "repo-def.yaml", "target": "/"},
-        {"file": "collaborators-def.yaml", "target": "/"},
-        {"file": "collaborators-cr.yaml", "target": "/"}
+        {
+          "file": "github-repo-creds.yaml",
+          "target": "/"
+        },
+        {
+          "file": "teamrepo_no_ws.yaml",
+          "target": "/"
+        },
+        {
+          "file": "repo.yaml",
+          "target": "/"
+        },
+        {
+          "file": "teamrepo_ws.yaml",
+          "target": "/"
+        }
       ]
     },
     "finish": {
