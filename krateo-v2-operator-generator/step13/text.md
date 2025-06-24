@@ -1,5 +1,27 @@
 # Manage TeamRepo CR
 
+## Verify the TeamRepo Status
+
+We wait until the `RestDefinition` is ready and the message is empty, indicating that the controller has successfully updated the RestDefinition to use the web service for the `get` operation.
+
+```bash
+#!/bin/bash
+
+# Wait for the restdefinition to be ready with an empty message
+kubectl wait teamrepo.github.kog.krateo.io/test-teamrepo --for condition=Ready=True --namespace gh-system --timeout=600s
+
+# Additional check to ensure the message is empty
+while true; do
+  MESSAGE=$(kubectl get teamrepo.github.kog.krateo.io/test-teamrepo -n gh-system -o jsonpath='{.status.conditions[?(@.type=="Ready")].message}')
+  if [ -z "$MESSAGE" ]; then
+    break
+  else
+    echo "Waiting for empty message... Current message: '$MESSAGE'"
+    sleep 5
+  fi
+done
+```{{exec}}
+
 ## Check the TeamRepo Status
 
 We expect the controller to update the RestDefinition and start using the web service to handle the `get` operation for teamrepos.

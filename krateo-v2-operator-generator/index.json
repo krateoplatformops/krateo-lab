@@ -56,8 +56,7 @@
       },
       {
         "title": "Update the RestDefinition to Use the Web Service",
-        "text": "step12/text.md",
-        "verify": "step8/verify.sh"
+        "text": "step12/text.md"
       },
       {
         "title": "Manage TeamRepo CR",
