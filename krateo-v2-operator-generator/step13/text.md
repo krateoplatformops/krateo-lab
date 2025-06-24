@@ -62,7 +62,7 @@ You should see an event for the TeamRepo resource indicating that the external r
 
 ```bash
 kubectl get events --sort-by='.lastTimestamp' -n gh-system | grep teamrepo/test-teamrepo
-```
+```{{exec}}
 
 ```text
 Events:
