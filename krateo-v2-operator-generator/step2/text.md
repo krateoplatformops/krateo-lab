@@ -51,7 +51,7 @@ kubectl create configmap repo --from-file=/root/filesystem/repo.yaml -n gh-syste
 ## Step 3: Create RestDefinition for GitHub Repositories
 
 1. **Create a `RestDefinition` resource**
-In order to create a RestDefinition for GitHub repositories, you need to define the resource group, resource kind, and the verbs that the controller will support. The `oasPath` should point to the ConfigMap containing your OAS. You can learn more about the `RestDefinition` resource [here](README.md#restdefinition-specifications).
+In order to create a RestDefinition for GitHub repositories, you need to define the resource group, resource kind, and the verbs that the controller will support. The `oasPath` should point to the ConfigMap containing your OAS. You can learn more about the `RestDefinition` resource [here](https://github.com/krateoplatformops/oasgen-provider?tab=readme-ov-file#restdefinition-specifications).
 
 ```bash
 cat <<EOF | kubectl apply -f -
