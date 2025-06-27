@@ -5,11 +5,15 @@ To install Krateo, we will follow the [official Krateo Documentation](https://do
 helm repo add krateo https://charts.krateo.io
 helm repo update krateo
 helm upgrade installer installer \
+  --set krateoplatformops.composablefinops.enabled=false \
+  --set krateoplatformops.composableportal.enabled=false \
+  --set krateoplatformops.oasgenprovider.env.OASGEN_PROVIDER_POLL_INTERVAL=30s \
+  --set krateoplatformops.oasgenprovider.rdc.env.REST_CONTROLLER_RESYNC_INTERVAL=30s \
   --repo https://charts.krateo.io \
   --namespace krateo-system \
   --create-namespace \
   --install \
-  --version 2.4.1 \
+  --version 2.5.0 \
   --wait
 ```{{exec}}
 
