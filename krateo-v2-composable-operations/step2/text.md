@@ -14,17 +14,11 @@ First, add and update the necessary Helm repositories, then install the required
 # Add and update Krateo repository
 helm repo add krateo https://charts.krateo.io
 helm repo update krateo
-
-# Install GitHub and Git providers
-helm install github-provider krateo/github-provider --namespace krateo-system --create-namespace
-helm install git-provider krateo/git-provider --namespace krateo-system --create-namespace
-
-# Add and update Argo repository
+helm install github-provider-kog krateo/github-provider-kog --namespace krateo-system --create-namespace --wait --version 0.0.7
+helm install git-provider krateo/git-provider --namespace krateo-system --create-namespace --wait --version 0.10.1
 helm repo add argo https://argoproj.github.io/argo-helm
 helm repo update argo
-
-# Install ArgoCD
-helm install argocd argo/argo-cd --namespace krateo-system --create-namespace --wait
+helm install argocd argo/argo-cd --namespace krateo-system --create-namespace --wait --version 8.0.17
 ```{{exec}}
 
 ## Step 2: Apply the CompositionDefinition Manifest
@@ -35,7 +29,7 @@ Create the `fireworksapp-system` namespace:
 kubectl create namespace fireworksapp-system
 ```{{exec}}
 
-Apply the `CompositionDefinition` manifest that installs version 1.1.13 of the chart in the `fireworksapp-system` namespace:
+Apply the `CompositionDefinition` manifest that installs version 2.0.2 of the chart in the `fireworksapp-system` namespace:
 
 ```bash
 cat <<EOF | kubectl apply -f -
@@ -50,7 +44,7 @@ spec:
   chart:
     repo: fireworks-app
     url: https://charts.krateo.io
-    version: 1.1.13
+    version: 2.0.2
 EOF
 ```{{exec}}
 
@@ -78,5 +72,5 @@ kubectl get crd fireworksapps.composition.krateo.io -o yaml
 
 2. A specific Deployment that uses the `composition-dynamic-controller` image. This deployment watches for new Custom Resources related to the generated CRD and the specific version:
 ```bash
-kubectl get deployment fireworksapps-v1-1-13-controller --namespace fireworksapp-system
+kubectl get deployment fireworksapps-v2-0-2-controller --namespace fireworksapp-system
 ```{{exec}}

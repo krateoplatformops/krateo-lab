@@ -1,53 +1,38 @@
-# Update the Fireworksapp Chart in the `compositiondefinition`
+# Pause Composition Reconciliation
 
-1. Update the existing CompositionDefinition fireworksapp-cd in the fireworksapp-system namespace to change the spec.chart.version to 1.1.14:
-```bash
-kubectl patch compositiondefinition fireworksapp-cd -n fireworksapp-system --type=merge -p '{"spec":{"chart":{"version":"1.1.14"}}}'
-```{{exec}}
+If, for some reason, you need to pause the reconciliation of a composition in any Krateo provider, including the `composition-dynamic-controller`, you can do so by adding the annotation `"krateo.io/paused"` with the value `true`.
 
-2. Wait for the `fireworksapp-cd` CompositionDefinition to be in the `Ready=True` condition in the `fireworksapp-system` namespace:
+For example, to stop the reconciliation of the last created composition `fireworksapp-composition-2`, run the following command:
 
 ```bash
-kubectl wait compositiondefinition fireworksapp-cd --for condition=Ready=True --namespace fireworksapp-system --timeout=600s
+kubectl annotate fireworksapp fireworksapp-composition-2 -n fireworksapp-system "krateo.io/paused=true"
 ```{{exec}}
 
-3. Inspect the CustomResourceDefinition `fireworksapps.composition.krateo.io` to see the added version:
+To check if the annotation is paused, run:
 
 ```bash
-kubectl get crd fireworksapps.composition.krateo.io -o yaml
+kubectl get events -n fireworksapp-system --sort-by='.metadata.creationTimestamp' | grep "fireworksapp-composition-2"
 ```{{exec}}
 
-In the CRD, you can observe three versions: `v1-1-13`, `v1-1-14`, and `vacuum`. When you create a new version of a CRD, the stored version of the resource will be marked as `vacuum`. 
-
-Although the `vacuum` version is not marked as `served` meaning you cannot create new resources of this version—it is used to store any resource of this type moving forward. Resources are validated against either the `v1-1-14` or `v1-1-13` version and then stored as the `vacuum` version.
-
-This mechanism ensures that resources remain in the cluster and are not deleted when you update the chart version, while still providing validation for the resources.
-
-
-4. Check if the `fireworksapps-v1-1-14-controller` deployment to be ready in the `fireworksapp-system` namespace:
+You should probably retry some time before the event is generated.
+To resume the reconciliation, remove the annotation:
 
 ```bash
-kubectl wait deployment fireworksapps-v1-1-14-controller --namespace fireworksapp-system --for condition=Available=True --timeout=600s
+kubectl annotate fireworksapp fireworksapp-composition-2 -n fireworksapp-system "krateo.io/paused-"
 ```{{exec}}
 
-5. Check that the previously installed chart have the expected version: 
+# Composition Deletion
+
+What happens when you delete a Composition? You might expect that the related Helm chart will be removed from the cluster. This is exactly what happens when you run the following command:
+
+```bash
+kubectl delete fireworksapps fireworksapp-composition-1 -n fireworksapp-system
+```{{exec}}
+
+To verify if the release is still installed in the cluster, run:
 
 ```bash
 helm list -n fireworksapp-system
 ```{{exec}}
 
-This procedure update the existing fireworksapp installations to use the new version `1.1.14` of the chart, since the `values.schema.json` does not change between the two versions.
-
-
-## Automatic Deletion of Unused `composition-dynamic-controller` Deployments
-
-Notice that the previously deployed instances (pods) of `composition-dynamic-controller` that were configured to manage resources of version 1.1.13 no longer exist in the cluster.
-
-This is due to the automatic cleanup mechanism that removes older and unused deployments along with their associated RBAC resources from the cluster:
-
-```bash
-kubectl get po -n fireworksapp-system
-```{{exec}}
-
-This automatic cleanup helps maintain cluster cleaniness by removing outdated controller instances when they are no longer needed.
-
+As you can see, the `fireworksapp-composition-1` is no longer installed in the cluster!
