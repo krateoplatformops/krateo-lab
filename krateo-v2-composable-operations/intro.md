@@ -1,1 +1,1 @@
-Learn how to work with Krateo v2 Operator Generator
+Learn how to work with Krateo v2 Composable Operations

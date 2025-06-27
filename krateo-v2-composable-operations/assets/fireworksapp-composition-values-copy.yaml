@@ -1,4 +1,4 @@
-apiVersion: composition.krateo.io/v1-1-13
+apiVersion: composition.krateo.io/v2-0-2
 kind: FireworksApp
 metadata:
   name: fireworksapp-composition-copy

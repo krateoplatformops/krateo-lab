@@ -3,6 +3,19 @@
 ## Prerequisites
 Before creating the Composition, we need to configure GitHub authentication. This requires setting up proper credentials in the cluster.
 
+
+## Wait for the Github Provider to be ready
+
+Wait for the Github Provider to be ready:
+
+```bash
+until kubectl get deployment github-provider-kog-repo-controller -n krateo-system &>/dev/null; do
+  echo "Waiting for Repo controller deployment to be created..."
+  sleep 5
+done
+kubectl wait deployments github-provider-kog-repo-controller --for condition=Available=True --namespace krateo-system --timeout=300s
+```{{exec}}
+
 ## Configure GitHub Token
 1. Open the Killercoda IDE and navigate to the file:
    ```
@@ -14,6 +27,24 @@ Before creating the Composition, we need to configure GitHub authentication. Thi
    ```bash
    kubectl apply -f /root/filesystem/github-repo-creds.yaml
    ```{{exec}}
+
+
+## Create a BearerAuth Custom Resource
+
+Create a BearerAuth Custom Resource to make the GitHub Provider able to authenticate with the GitHub API using the previously created token.
+
+cat <<EOF | kubectl apply -f -
+apiVersion: github.kog.krateo.io/v1alpha1
+kind: BearerAuth
+metadata:
+  name: bearer-github-ref
+  namespace: fireworksapp-system
+spec:
+  tokenRef:
+    key: token
+    name: github-repo-creds
+    namespace: krateo-system
+EOF
 
 ## Configure the Composition
 

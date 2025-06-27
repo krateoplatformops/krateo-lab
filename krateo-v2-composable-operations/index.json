@@ -30,17 +30,8 @@
         "text": "step5/text.md"
       },
       {
-        "title": "Update the Fireworksapp Chart",
-        "text": "step6/text.md",
-        "verify": "step6/verify.sh"
-      },
-      {
-        "title": "How to Have Different Versions of the Same Composition Installed",
-        "text": "step7/text.md"
-      },
-      {
         "title": "Composition Management",
-        "text": "step8/text.md"
+        "text": "step6/text.md"
       }
     ],
     "assets": {
