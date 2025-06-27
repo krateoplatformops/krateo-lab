@@ -14,7 +14,7 @@ helm upgrade installer installer \
   --namespace krateo-system \
   --create-namespace \
   --install \
-  --version 2.4.3 \
+  --version 2.5.0 \
   --wait
 ```{{exec}}
 
