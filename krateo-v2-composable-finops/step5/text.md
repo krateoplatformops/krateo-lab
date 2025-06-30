@@ -29,9 +29,6 @@ metadata:
   namespace: krateo-system
 spec:
   exporterConfig:
-    provider:
-      name: azure
-      namespace: krateo-system
     api: 
       path: /subscriptions/<subscription_id>/providers/Microsoft.Consumption/usageDetails
       verb: GET
