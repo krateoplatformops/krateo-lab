@@ -281,7 +281,7 @@ def main():
         connection.close()
 if __name__ == \"__main__\":
     main()" > cyclic.py
-curl -X POST -u system:$(kubectl get secret cratedb-system-credentials -n krateo-system -o json | jq -r '.data.password' | base64 --decode) http://localhost:$(kubectl get service -n krateo-system finops-database-handler -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/compute/cyclic/upload --data-binary "@cyclic.py"
+curl -X POST -u system:$(kubectl get secret cratedb-system-credentials -n krateo-system -o json | jq -r '.data.password' | base64 --decode) http://localhost:$(kubectl get service -n krateo-system finops-database-handler -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/compute/cyclic/upload?overwrite=true --data-binary "@cyclic.py"
 ```{{exec}}
 
 Query the new notebook for the optimizations:
