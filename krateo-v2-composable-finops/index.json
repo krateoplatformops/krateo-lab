@@ -35,7 +35,8 @@
     ],
     "assets": {
       "host01": [
-      {"file": "mock-webserver.yaml", "target": "/"}
+      {"file": "mock-webserver.yaml", "target": "/"},
+      {"file": "eventrouter-registration-crd.yaml", "target": "/"} 
      ]
     },
     "finish": {
