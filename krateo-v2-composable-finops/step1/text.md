@@ -7,4 +7,4 @@ kubectl wait krateoplatformops krateo --for condition=Ready=True --namespace kra
 ```{{exec}}
 This step might take upwards of 10 minutes, go grab a coffee in the meantime! :)
 
-Note: this is a modified installation that disables some components to avoid to overload the Killercoda environment.
+Note: this installation disables the Composable Operations and Composable Portal to avoid overloading the Killercoda environment.

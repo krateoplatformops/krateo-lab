@@ -12,9 +12,6 @@ metadata:
   namespace: # ExporterScraperConfig namespace
 spec:
   exporterConfig: # same as krateoplatformops/finops-prometheus-exporter-generic
-    provider: 
-      name: # name of the provider config
-      namespace: # namespace of the provider config
     api: # the API to call
       path: # the path inside the domain
       verb: GET # the method to call the API with
