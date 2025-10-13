@@ -255,24 +255,24 @@ spec:
             if table_name_key_value[0] == 'table_name':
                 table_name = table_name_key_value[1]
         try:
-            resource_query = f\"SELECT DISTINCT ResourceId FROM {table_name}\"
+            resource_query = f"SELECT DISTINCT ResourceId FROM {table_name}"
             cursor.execute(resource_query)
             resource_ids = pd.DataFrame(cursor.fetchall(), columns=['ResourceId'])
 
             for resource_id in resource_ids['ResourceId']:
-                metric_query = (\"SELECT DISTINCT metricName\n\"
-                    f\"FROM {table_name}\n\"
-                    \"WHERE ResourceId = ?\"
+                metric_query = ("SELECT DISTINCT metricName\n"
+                    f"FROM {table_name}\n"
+                    "WHERE ResourceId = ?"
                 )
                 cursor.execute(metric_query, (resource_id,))
                 metric_names = pd.DataFrame(cursor.fetchall(), columns=['metricName'])
                 
                 for metric_name in metric_names['metricName']:
-                    data_query = (\"SELECT *\n\"
-                        f\"FROM {table_name}\n\"
-                        \"WHERE ResourceId = ?\n\"
-                        \"AND metricName = ?\n\"
-                        \"ORDER BY timestamp\"
+                    data_query = ("SELECT *\n"
+                        f"FROM {table_name}\n"
+                        "WHERE ResourceId = ?\n"
+                        "AND metricName = ?\n"
+                        "ORDER BY timestamp"
                     )
                     cursor.execute(data_query, (resource_id, metric_name))
                     raw_data = cursor.fetchall()
@@ -288,7 +288,7 @@ spec:
         finally:
             cursor.close()
             connection.close()
-    if __name__ == \"__main__\":
+    if __name__ == "__main__":
         main()
 EOF
 ```{{exec}}

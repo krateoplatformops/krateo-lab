@@ -100,14 +100,14 @@ spec:
           if table_name_key_value[0] == 'table_name':
               table_name = table_name_key_value[1]
       try:
-          resource_query = f\"SELECT * FROM {table_name}\"
+          resource_query = f"SELECT * FROM {table_name}"
           cursor.execute(resource_query)
           raw_data = cursor.fetchall()
           print(raw_data)
       finally:
           cursor.close()
           connection.close()
-    if __name__ == \"__main__\":
+    if __name__ == "__main__":
         main()
 EOF
 ```{{exec}}
