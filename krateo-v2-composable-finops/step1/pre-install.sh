@@ -15,7 +15,7 @@ helm upgrade installer-crd installer-crd \
   --create-namespace \
   --install \
   --version 2.6.0 \
-  -- wait
+  --wait
 helm upgrade installer installer \
   --repo https://charts.krateo.io \
   --namespace krateo-system \
