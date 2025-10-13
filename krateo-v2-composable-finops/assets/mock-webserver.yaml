@@ -23,7 +23,7 @@ spec:
       containers:
       - name: webservice
         imagePullPolicy: Always
-        image: ghcr.io/krateoplatformops/finops-webservice-api-mock:latest
+        image: ghcr.io/krateoplatformops/finops-webservice-api-mock:0.3.0
         ports:
         - containerPort: 8080
 ---

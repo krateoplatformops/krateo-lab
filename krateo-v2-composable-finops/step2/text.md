@@ -46,7 +46,7 @@ metadata:
 spec:
   exporterConfig:
     api: 
-      path: /subscriptions/<subscription_id>/providers/Microsoft.Consumption/usageDetails
+      path: /costs/csv
       verb: GET
       endpointRef:
         name: webservice-mock-endpoint
@@ -54,7 +54,6 @@ spec:
     metricType: cost
     pollingInterval: "1h"
     additionalVariables:
-      subscription_id: d3sad326-42a4-5434-9623-a3sd22fefb84
       host: WEBSERVICE_API_MOCK_SERVICE_HOST
       port: WEBSERVICE_API_MOCK_SERVICE_PORT
 EOF

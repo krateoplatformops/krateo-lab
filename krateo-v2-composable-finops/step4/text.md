@@ -11,7 +11,7 @@ metadata:
 spec:
   exporterConfig:
     api: 
-      path: /subscriptions/d3sad326-42a4-5434-9623-a3sd22fefb84/resourcegroups/mar-ccm/providers/microsoft.compute/virtualmachines/mar-ccm-vm01/providers/microsoft.insights/metrics?api-version=2023-10-01&metricnames=Percentage%20CPU&timespan=2025-04-01/2025-05-01&interval=PT15M
+      path: /usage
       verb: GET
       endpointRef:
         name: webservice-mock-endpoint

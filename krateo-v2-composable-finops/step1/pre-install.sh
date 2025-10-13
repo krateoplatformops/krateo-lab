@@ -14,7 +14,7 @@ helm upgrade installer installer \
   --namespace krateo-system \
   --create-namespace \
   --install \
-  --version 2.5.0 \
+  --version 2.6.0 \
   --set krateoplatformops.composablefinops.enabled=true \
   --set krateoplatformops.composableoperations.enabled=false \
   --set krateoplatformops.composableportal.enabled=false \
