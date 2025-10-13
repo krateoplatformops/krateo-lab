@@ -11,7 +11,7 @@ metadata:
 spec:
   exporterConfig:
     api: 
-      path: /usage
+      path: /metrics
       verb: GET
       endpointRef:
         name: webservice-mock-endpoint
