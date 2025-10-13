@@ -30,7 +30,7 @@ metadata:
 spec:
   exporterConfig:
     api: 
-      path: /subscriptions/<subscription_id>/providers/Microsoft.Consumption/usageDetails
+      path: /costs/csv
       verb: GET
       endpointRef:
         name: webservice-mock-endpoint
@@ -82,25 +82,34 @@ if __name__ == "__main__":
     main()
 ```
 
-Let's upload the query notebook to the FinOps Database Handler:
+Let's upload the query notebook to the FinOps Database Handler using the uploader:
 ```plain
-echo "def main():   
-    table_name_arg = sys.argv[5]
-    table_name_key_value = str.split(table_name_arg, '=')
-    if len(table_name_key_value) == 2:
-        if table_name_key_value[0] == 'table_name':
-            table_name = table_name_key_value[1]
-    try:
-        resource_query = f\"SELECT * FROM {table_name}\"
-        cursor.execute(resource_query)
-        raw_data = cursor.fetchall()
-        print(raw_data)
-    finally:
-        cursor.close()
-        connection.close()
-if __name__ == \"__main__\":
-    main()" > query.py
-curl -X POST -u system:$(kubectl get secret cratedb-system-credentials -n krateo-system -o json | jq -r '.data.password' | base64 --decode) http://localhost:$(kubectl get service -n krateo-system finops-database-handler -o custom-columns=ports:spec.ports[0].nodePort | tail -1)/compute/query/upload --data-binary "@query.py"
+cat <<'EOF' | kubectl apply -f -
+apiVersion: finops.krateo.io/v1
+kind: Notebook
+metadata:
+  name: query
+  namespace: krateo-system
+spec: 
+  type: inline
+  inline: |
+    def main():   
+      table_name_arg = sys.argv[5]
+      table_name_key_value = str.split(table_name_arg, '=')
+      if len(table_name_key_value) == 2:
+          if table_name_key_value[0] == 'table_name':
+              table_name = table_name_key_value[1]
+      try:
+          resource_query = f\"SELECT * FROM {table_name}\"
+          cursor.execute(resource_query)
+          raw_data = cursor.fetchall()
+          print(raw_data)
+      finally:
+          cursor.close()
+          connection.close()
+    if __name__ == \"__main__\":
+        main()
+EOF
 ```{{exec}}
 
 Run the notebook:
