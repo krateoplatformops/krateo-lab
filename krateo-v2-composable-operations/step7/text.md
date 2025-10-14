@@ -23,7 +23,7 @@ The `global.gracefullyPaused` value provides a way to gracefully pause both the 
 
 **Example**: Use `krateo.io/gracefully-paused` when you need to pause an entire application stack, or `krateo.io/paused` for immediate composition-only pausing.
 
-More details on how to include the pause in a resource included in your chart in the [composition-dynamic-controller documentation](https://github.com/krateoplatformops/composition-dynamic-controller/blob/main/README.md#how-to-include-the-pause-in-a-resource-included-in-the-chart).
+More details on how to include the pause in a resource included in your chart in the [composition-dynamic-controller documentation](https://docs.krateo.io/key-concepts/kco/composition-dynamic-controller/#how-to-include-the-pause-in-a-resource-included-in-the-chart).
 
 ### Pause a Composition and its resources
 

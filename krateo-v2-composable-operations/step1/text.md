@@ -56,4 +56,4 @@ The `core-provider` is a Kubernetes operator that downloads and manages Helm cha
 
 Kubernetes is designed to validate resource inputs before applying them to the cluster, and the `core-provider` provides input validation to ensure that incorrect inputs are not accepted.
 
-Learn more about the `core-provider` in the [official documentation](https://github.com/krateoplatformops/core-provider/blob/main/README.md)
+Learn more about the `core-provider` in the [official documentation](https://docs.krateo.io/key-concepts/kco/core-provider)
