@@ -1,0 +1,58 @@
+apiVersion: composition.krateo.io/v1-0-0
+kind: GithubScaffolding
+metadata:
+  name: gh-scaffolding-composition-copy
+  namespace: ghscaffolding-system
+spec:
+  argocd:
+    namespace: krateo-system
+    application:
+      project: default
+      source:
+        path: chart/
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: fireworks-app
+      syncEnabled: false
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+  app:
+    service:
+      type: NodePort
+      port: 31180
+  git:
+    unsupportedCapabilities: true
+    insecure: true
+    fromRepo:
+      scmUrl: https://github.com
+      org: krateoplatformops-blueprints
+      name: github-scaffolding
+      branch: main
+      path: skeleton/
+      credentials:
+        authMethod: generic
+        secretRef:
+          namespace: krateo-system
+          name: github-repo-creds
+          key: token
+    toRepo:
+      scmUrl: https://github.com
+      org: your-organization # change here
+      name: githubscaffolding-test-v2-copy # you could also change here, but it is not necessary. This will be the name of the created repository
+      branch: main
+      path: /
+      credentials:
+        authMethod: generic
+        secretRef:
+          namespace: krateo-system
+          name: github-repo-creds
+          key: token
+      private: false
+      initialize: true
+      deletionPolicy: Delete
+      verbose: false
+      configurationRef:
+        name: repo-config
+        namespace: demo-system

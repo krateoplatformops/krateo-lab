@@ -1,3 +1,3 @@
 #!/bin/bash
 
-kubectl wait compositiondefinition fireworksapp-cd --for condition=Ready=True --namespace fireworksapp-system
+kubectl wait compositiondefinition github-scaffolding --for condition=Ready=True --namespace ghscaffolding-system

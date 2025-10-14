@@ -4,19 +4,13 @@
 Before creating the Composition, we need to configure GitHub authentication. This requires setting up proper credentials in the cluster.
 
 
-## Wait for the Github Provider to be ready
+### Generate a token for GitHub user
 
-Wait for the Github Provider to be ready:
+In order to generate a token, follow this instructions: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic
 
-```bash
-until kubectl get deployment github-provider-kog-repo-controller -n krateo-system &>/dev/null; do
-  echo "Waiting for Repo controller deployment to be created..."
-  sleep 5
-done
-kubectl wait deployments github-provider-kog-repo-controller --for condition=Available=True --namespace krateo-system --timeout=300s
-```{{exec}}
+Give the following permissions: delete:packages, delete_repo, repo, workflow, write:packages
 
-## Configure GitHub Token
+### Configure GitHub Token
 1. Open the Killercoda IDE and navigate to the file:
    ```
    /root/filesystem/github-repo-creds.yaml
@@ -28,23 +22,33 @@ kubectl wait deployments github-provider-kog-repo-controller --for condition=Ava
    kubectl apply -f /root/filesystem/github-repo-creds.yaml
    ```{{exec}}
 
+### Wait for Github Provider to be Ready
 
-## Create a BearerAuth Custom Resource
+```bash
+kubectl wait restdefinitions.ogen.krateo.io github-provider-kog-repo --for condition=Ready=True --namespace krateo-system --timeout=300s
+```{{exec}}
 
-Create a BearerAuth Custom Resource to make the GitHub Provider able to authenticate with the GitHub API using the previously created token.
 
+### Create a RepoConfiguration Custom Resource
+
+Create a RepoConfiguration Custom Resource to make the GitHub Provider able to authenticate with the GitHub API using the previously created token.
+
+```bash
 cat <<EOF | kubectl apply -f -
-apiVersion: github.kog.krateo.io/v1alpha1
-kind: BearerAuth
+apiVersion: github.ogen.krateo.io/v1alpha1
+kind: RepoConfiguration
 metadata:
-  name: bearer-github-ref
-  namespace: fireworksapp-system
+  name: repo-config
+  namespace: demo-system
 spec:
-  tokenRef:
-    key: token
-    name: github-repo-creds
-    namespace: krateo-system
+  authentication:
+    bearer:
+      tokenRef:
+        name: github-repo-creds
+        namespace: krateo-system
+        key: token
 EOF
+```{{exec}}
 
 ## Configure the Composition
 
@@ -54,12 +58,12 @@ Before proceeding, update the references to the GitHub organization where the re
 
 1. Open the Killercoda IDE and navigate to the following file:
    ```
-   /root/filesystem/fireworksapp-composition-values.yaml
+   /root/filesystem/githubscaffolding-composition-values.yaml
    ```
 2. Modify the `spec.toRepo.org` field to include your GitHub organization name.
 3. Apply the updated manifest:
    ```bash
-   kubectl apply -f /root/filesystem/fireworksapp-composition-values.yaml
+   kubectl apply -f /root/filesystem/githubscaffolding-composition-values.yaml
    ```{{exec}}
 
 
@@ -67,34 +71,34 @@ Before proceeding, update the references to the GitHub organization where the re
 
 1. Wait for the Composition to be ready:
    ```bash
-   kubectl wait fireworksapp fireworksapp-composition-1 --for condition=Ready=True \
-     --timeout=300s --namespace fireworksapp-system
+   kubectl wait githubscaffolding gh-scaffolding-composition-1 --for condition=Ready=True \
+     --timeout=300s --namespace ghscaffolding-system
    ```{{exec}}
 
 2. Check the Composition's status:
    ```bash
-   kubectl get fireworksapp fireworksapp-composition-1 --namespace fireworksapp-system
+   kubectl get githubscaffolding gh-scaffolding-composition-1 --namespace ghscaffolding-system
    ```{{exec}}
 
 ## Install another Composition
 
-To install a second composition, repeat the process from Step 2 using the file `fireworksapp-composition-values-2.yaml`:
+To install a second composition, repeat the process from Step 2 using the file `githubscaffolding-composition-values-2.yaml`:
 
 ```bash
-kubectl apply -f /root/filesystem/fireworksapp-composition-values-2.yaml
+kubectl apply -f /root/filesystem/githubscaffolding-composition-values-2.yaml
 ```{{exec}}
 
 ## Verify the Installation
 
 1. Wait for the Composition to be ready:
    ```bash
-   kubectl wait fireworksapp fireworksapp-composition-2 --for condition=Ready=True \
-     --timeout=300s --namespace fireworksapp-system
+   kubectl wait githubscaffolding gh-scaffolding-composition-2 --for condition=Ready=True \
+     --timeout=300s --namespace ghscaffolding-system
    ```{{exec}}
 
 2. Check the Composition's status:
    ```bash
-   kubectl get fireworksapp fireworksapp-composition-2 --namespace fireworksapp-system
+   kubectl get githubscaffolding gh-scaffolding-composition-2 --namespace ghscaffolding-system
    ```{{exec}}
 
 This will display the current status of your Fireworks App Composition. Verify that all components have been properly deployed and are in a ready state.

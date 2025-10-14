@@ -2,23 +2,23 @@
 
 If, for some reason, you need to pause the reconciliation of a composition in any Krateo provider, including the `composition-dynamic-controller`, you can do so by adding the annotation `"krateo.io/paused"` with the value `true`.
 
-For example, to stop the reconciliation of the last created composition `gh-scaffolding-composition-2`, run the following command:
+For example, to stop the reconciliation of the last created composition `fireworksapp-composition-copy`, run the following command:
 
 ```bash
-kubectl annotate githubscaffolding gh-scaffolding-composition-2 -n ghscaffolding-system "krateo.io/paused=true"
+kubectl annotate fireworksapp fireworksapp-composition-copy -n fireworksapp-system "krateo.io/paused=true"
 ```{{exec}}
 
 To check if the annotation is paused, run:
 
 ```bash
-kubectl get events -n ghscaffolding-system --sort-by='.metadata.creationTimestamp' | grep "gh-scaffolding-composition-2"
+kubectl get events -n fireworksapp-system --sort-by='.metadata.creationTimestamp' | grep "fireworksapp-composition-copy"
 ```{{exec}}
 
 You should probably retry some time before the event is generated.
 To resume the reconciliation, remove the annotation:
 
 ```bash
-kubectl annotate githubscaffolding gh-scaffolding-composition-2 -n ghscaffolding-system "krateo.io/paused-"
+kubectl annotate fireworksapp fireworksapp-composition-copy -n fireworksapp-system "krateo.io/paused-"
 ```{{exec}}
 
 # Composition Deletion
@@ -26,13 +26,13 @@ kubectl annotate githubscaffolding gh-scaffolding-composition-2 -n ghscaffolding
 What happens when you delete a Composition? You might expect that the related Helm chart will be removed from the cluster. This is exactly what happens when you run the following command:
 
 ```bash
-kubectl delete githubscaffoldings gh-scaffolding-composition-1 -n ghscaffolding-system
+kubectl delete fireworksapps fireworksapp-composition-1 -n fireworksapp-system
 ```{{exec}}
 
 To verify if the release is still installed in the cluster, run:
 
 ```bash
-helm list -n ghscaffolding-system
+helm list -n fireworksapp-system
 ```{{exec}}
 
-As you can see, the `gh-scaffolding-composition-1` is no longer installed in the cluster!
+As you can see, the `fireworksapp-composition-1` is no longer installed in the cluster!

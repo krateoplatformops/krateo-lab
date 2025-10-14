@@ -4,13 +4,22 @@ To install Krateo, we will follow the [official Krateo Documentation](https://do
 ```plain
 helm repo add krateo https://charts.krateo.io
 helm repo update krateo
+
+helm upgrade installer-crd installer-crd \
+  --repo https://charts.krateo.io \
+  --namespace krateo-system \
+  --create-namespace \
+  --install \
+  --version 2.6.0 \
+  --wait
+
 helm upgrade installer installer \
   --set krateoplatformops.composablefinops.enabled=false \
   --repo https://charts.krateo.io \
   --namespace krateo-system \
   --create-namespace \
   --install \
-  --version 2.5.0 \
+  --version 2.6.0 \
   --wait
 ```{{exec}}
 

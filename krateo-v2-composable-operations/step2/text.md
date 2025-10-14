@@ -4,7 +4,7 @@ This guide demonstrates how to generate and deploy a Custom Resource Definition 
 
 ## Prerequisites
 
-As described in the [chart's README](https://github.com/krateoplatformops/krateo-v2-template-fireworksapp/blob/main/README.md), you need to install the toolchain in the `krateo-system` namespace.
+As described in the [chart's README](https://github.com/krateoplatformops-blueprints/github-scaffolding/blob/main/README.md), you need to install the toolchain in the `krateo-system` namespace.
 
 ## Step 1: Install Required Components
 
@@ -12,39 +12,39 @@ First, add and update the necessary Helm repositories, then install the required
 
 ```bash
 # Add and update Krateo repository
-helm repo add krateo https://charts.krateo.io
-helm repo update krateo
-helm install github-provider-kog krateo/github-provider-kog --namespace krateo-system --create-namespace --wait --version 0.0.7
+helm repo add marketplace https://marketplace.krateo.io
+helm repo update marketplace
+helm install github-provider-kog-repo marketplace/github-provider-kog-repo --namespace krateo-system --create-namespace --wait --version 1.0.0
 helm install git-provider krateo/git-provider --namespace krateo-system --create-namespace --wait --version 0.10.1
 helm repo add argo https://argoproj.github.io/argo-helm
 helm repo update argo
 helm install argocd argo/argo-cd --namespace krateo-system --create-namespace --wait --version 8.0.17
 ```{{exec}}
 
+In this guide, we skip the argo-cd configuration steps, as it does not properly works in the Killercoda environment.
+
 ## Step 2: Apply the CompositionDefinition Manifest
 
-Create the `fireworksapp-system` namespace:
+Create the `ghscaffolding-system` namespace:
 
 ```bash
-kubectl create namespace fireworksapp-system
+kubectl create namespace ghscaffolding-system
 ```{{exec}}
 
-Apply the `CompositionDefinition` manifest that installs version 2.0.2 of the chart in the `fireworksapp-system` namespace:
+Apply the `CompositionDefinition` manifest that installs version 2.0.2 of the chart in the `ghscaffolding-system` namespace:
 
 ```bash
 cat <<EOF | kubectl apply -f -
 apiVersion: core.krateo.io/v1alpha1
 kind: CompositionDefinition
 metadata:
-  annotations:
-    krateo.io/connector-verbose: "true"
-  name: fireworksapp-cd
-  namespace: fireworksapp-system
+  name: github-scaffolding
+  namespace: ghscaffolding-system
 spec:
   chart:
-    repo: fireworks-app
-    url: https://charts.krateo.io
-    version: 2.0.2
+    repo: github-scaffolding
+    url: https://marketplace.krateo.io
+    version: 1.0.0
 EOF
 ```{{exec}}
 
@@ -53,12 +53,12 @@ EOF
 
 1. Wait for the CompositionDefinition to be ready:
 ```bash
-kubectl wait compositiondefinition fireworksapp-cd --for condition=Ready=True --timeout=600s --namespace fireworksapp-system
+kubectl wait compositiondefinition github-scaffolding --for condition=Ready=True --timeout=600s --namespace ghscaffolding-system
 ```{{exec}}
 
 2. Check the CompositionDefinition outputs:
 ```bash
-kubectl get compositiondefinition fireworksapp-cd --namespace fireworksapp-system -o yaml
+kubectl get compositiondefinition github-scaffolding --namespace ghscaffolding-system -o yaml
 ```{{exec}}
 
 ## What Was Created?
@@ -67,10 +67,10 @@ The `core-provider` has generated two main components:
 
 1. A Custom Resource Definition based on the values.json.schema file from the Helm chart:
 ```bash
-kubectl get crd fireworksapps.composition.krateo.io -o yaml
+kubectl get crd githubscaffoldings.composition.krateo.io -o yaml
 ```{{exec}}
 
 2. A specific Deployment that uses the `composition-dynamic-controller` image. This deployment watches for new Custom Resources related to the generated CRD and the specific version:
 ```bash
-kubectl get deployment fireworksapps-v2-0-2-controller --namespace fireworksapp-system
+kubectl get deployment githubscaffoldings-v1-0-0-controller --namespace ghscaffolding-system
 ```{{exec}}
