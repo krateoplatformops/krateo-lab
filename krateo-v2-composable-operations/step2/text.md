@@ -1,29 +1,8 @@
-# Deploying the Krateo V2 Template Fireworks App
+# Deploying the Krateo V2 Template Github Scaffolding Blueprint as a Composition
 
-This guide demonstrates how to generate and deploy a Custom Resource Definition (CRD) representing a `Composition` that contains the "Krateo V2 Template Fireworks app" Helm Chart using a `CompositionDefinition`. While there are three possible installation methods (tgz archive, OCI artifact, or Helm repo), this guide focuses on installing the chart from a Helm repository.
+This guide demonstrates how to generate and deploy a Custom Resource Definition (CRD) representing a `Composition` that contains the "Krateo V2 Template Github Scaffolding Blueprint" Helm Chart using a `CompositionDefinition`. While there are three possible installation methods (tgz archive, OCI artifact, or Helm repo), this guide focuses on installing the chart from a Helm repository.
 
-## Prerequisites
-
-As described in the [chart's README](https://github.com/krateoplatformops-blueprints/github-scaffolding/blob/main/README.md), you need to install the toolchain in the `krateo-system` namespace.
-
-## Step 1: Install Required Components
-
-First, add and update the necessary Helm repositories, then install the required providers:
-
-```bash
-# Add and update Krateo repository
-helm repo add marketplace https://marketplace.krateo.io
-helm repo update marketplace
-helm install github-provider-kog-repo marketplace/github-provider-kog-repo --namespace krateo-system --create-namespace --wait --version 1.0.0
-helm install git-provider krateo/git-provider --namespace krateo-system --create-namespace --wait --version 0.10.1
-helm repo add argo https://argoproj.github.io/argo-helm
-helm repo update argo
-helm install argocd argo/argo-cd --namespace krateo-system --create-namespace --wait --version 8.0.17
-```{{exec}}
-
-In this guide, we skip the argo-cd configuration steps, as it does not properly works in the Killercoda environment.
-
-## Step 2: Apply the CompositionDefinition Manifest
+## Step 1: Apply the CompositionDefinition Manifest
 
 Create the `ghscaffolding-system` namespace:
 
