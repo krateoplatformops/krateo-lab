@@ -10,7 +10,7 @@ First, let's examine the Service Account created for the controller:
 
 ```bash
 # View the Service Account details
-kubectl get serviceaccount fireworksapps-v2-0-2 -n fireworksapp-system -o yaml
+kubectl get serviceaccount githubscaffoldings-v1-0-0 -n ghscaffolding-system -o yaml
 ```{{exec}}
 
 This Service Account is used by the controller pod to interact with the Kubernetes API.
@@ -22,7 +22,7 @@ Roles define permissions within a specific namespace:
 
 ```bash
 # View detailed role configuration
-kubectl get role fireworksapps-v2-0-2 -n fireworksapp-system -o yaml
+kubectl get role githubscaffoldings-v1-0-0 -n ghscaffolding-system -o yaml
 ```{{exec}}
 
 ### 2. RoleBindings
@@ -30,7 +30,7 @@ RoleBindings link the Roles to the Service Account within the namespace:
 
 ```bash
 # View detailed role binding configuration
-kubectl get rolebinding fireworksapps-v2-0-2 -n fireworksapp-system -o yaml
+kubectl get rolebinding githubscaffoldings-v1-0-0 -n ghscaffolding-system -o yaml
 ```{{exec}}
 
 ### 3. ClusterRoles
@@ -38,7 +38,7 @@ ClusterRoles define permissions that apply across the entire cluster:
 
 ```bash
 # View detailed cluster role configuration
-kubectl get clusterrole fireworksapps-v2-0-2 -o yaml
+kubectl get clusterrole githubscaffoldings-v1-0-0 -o yaml
 ```{{exec}}
 
 ### 4. ClusterRoleBindings
@@ -46,7 +46,7 @@ ClusterRoleBindings link the ClusterRoles to the Service Account:
 
 ```bash
 # View detailed cluster role binding configuration
-kubectl get clusterrolebinding fireworksapps-v2-0-2 -o yaml
+kubectl get clusterrolebinding githubscaffoldings-v1-0-0 -o yaml
 ```{{exec}}
 
 These policies are created by the `core-provider` and contain a fixed set of permissions needed to manage `compositions`.
@@ -60,7 +60,7 @@ Roles define permissions within a specific namespace:
 
 ```bash
 # View detailed role configuration
-kubectl get role fireworksapp-composition-2 -n fireworksapp-system -o yaml
+kubectl get role gh-scaffolding-composition-2 -n ghscaffolding-system -o yaml
 ```{{exec}}
 
 ### 2. RoleBindings
@@ -68,7 +68,7 @@ RoleBindings link the Roles to the Service Account within the namespace:
 
 ```bash
 # View detailed role binding configuration
-kubectl get rolebinding fireworksapp-composition-2 -n fireworksapp-system -o yaml
+kubectl get rolebinding gh-scaffolding-composition-2 -n ghscaffolding-system -o yaml
 ```{{exec}}
 
 ### 3. ClusterRoles
@@ -76,7 +76,7 @@ ClusterRoles define permissions that apply across the entire cluster:
 
 ```bash
 # View detailed cluster role configuration
-kubectl get clusterrole fireworksapp-composition-2 -o yaml
+kubectl get clusterrole gh-scaffolding-composition-2 -o yaml
 ```{{exec}}
 
 ### 4. ClusterRoleBindings
@@ -84,5 +84,5 @@ ClusterRoleBindings link the ClusterRoles to the Service Account:
 
 ```bash
 # View detailed cluster role binding configuration
-kubectl get clusterrolebinding fireworksapp-composition-2 -o yaml
+kubectl get clusterrolebinding gh-scaffolding-composition-2 -o yaml
 ```{{exec}}

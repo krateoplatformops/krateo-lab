@@ -4,10 +4,10 @@ The Krateo Composition resource is the main entry point for managing deployments
 
 ## Inspecting a Composition Instance
 
-First, let's examine the `fireworksapp-composition-1` Composition:
+First, let's examine the `gh-scaffolding-composition-1` Composition:
 
 ```bash
-kubectl get fireworksapp fireworksapp-composition-1 --namespace fireworksapp-system -o yaml
+kubectl get githubscaffolding gh-scaffolding-composition-1 --namespace ghscaffolding-system -o yaml
 ```{{exec}}
 
 This will display the full YAML representation of the Composition resource.
@@ -20,10 +20,10 @@ This will display the full YAML representation of the Composition resource.
 
 ## Inspecting Another Composition Instance
 
-Let's also look at the `fireworksapp-composition-2` Composition:
+Let's also look at the `gh-scaffolding-composition-2` Composition:
 
 ```bash
-kubectl get fireworksapp fireworksapp-composition-2 --namespace fireworksapp-system -o yaml
+kubectl get githubscaffolding gh-scaffolding-composition-2 --namespace ghscaffolding-system -o yaml
 ```{{exec}}
 
 This will show the details of the second Composition instance.
@@ -37,5 +37,5 @@ This centralized view and management of the deployed application's resources is 
 At this point, we can also see that at any action performed with the lifecycle of the Compositions, an event is thrown:
 
 ```bash
-kubectl get events --sort-by='.lastTimestamp' -n fireworksapp-system
+kubectl get events --sort-by='.lastTimestamp' -n ghscaffolding-system
 ```{{exec}}

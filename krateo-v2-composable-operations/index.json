@@ -32,15 +32,18 @@
       {
         "title": "Composition Management",
         "text": "step6/text.md"
+      },
+      {
+        "title": "Graceful Pause of a Composition",
+        "text": "step7/text.md"
       }
     ],
     "assets": {
       "host01": [
         {"file": "github-repo-creds.yaml", "target": "/"},
-        {"file": "fireworksapp-composition-values.yaml", "target": "/"},
-        {"file": "fireworksapp-composition-values-2.yaml", "target": "/"},
-        {"file": "fireworksapp-composition-values-copy.yaml", "target": "/"},
-        {"file": "list-resources-by-annotation.sh", "target": "/"}
+        {"file": "githubscaffolding-composition-values.yaml", "target": "/"},
+        {"file": "githubscaffolding-composition-values-2.yaml", "target": "/"},
+        {"file": "githubscaffolding-composition-values-copy.yaml", "target": "/"}
       ]
     },
     "finish": {
