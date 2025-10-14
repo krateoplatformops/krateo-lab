@@ -31,28 +31,29 @@ This step might take upwards of 10 minutes, go grab a coffee in the meantime or 
 
 # Learn about Krateo Core Provider
 
-Krateo Core Provider is a system for managing Krateo PlatformOps Compositions.
+## Krateo Core Provider
 
-## Core Concepts
+The Krateo Core Provider is the foundational component of Krateo Composable Operations (KCO), enabling the management of Helm charts as Kubernetes-native resources. It provides:
 
-### What is a Composition?
+- Schema validation through JSON Schema
+- Automated CRD generation
+- Versioned composition management
+- Secure authentication mechanisms
 
-A Composition in Krateo is an Helm Chart archive (.tgz) with specific requirements:
-- Must include a JSON Schema for the `values.yaml` file
-- The schema file must be named `values.schema.json`
+## Glossary
 
-#### JSON Schema Tools
+- **CRD (Custom Resource Definition):** A Kubernetes resource that defines custom objects and their schemas, enabling users to extend Kubernetes functionality.
+- **CompositionDefinition:** A custom resource in the `core-provider` that defines how Helm charts are managed and deployed in Kubernetes.
+- **CDC (Composition Dynamic Controller):** A controller deployed by the `core-provider` to manage resources defined by a `CompositionDefinition`. This controller is responsible to create, update, and delete helm releases and their associated resources based on the values defined in the `composition`
+- **Helm Chart:** A package of pre-configured Kubernetes resources used to deploy applications.
+- **OCI Registry:** A container registry that supports the Open Container Initiative (OCI) image format, used for storing and distributing Helm charts.
+- **RBAC Policy:** A set of rules that define permissions for accessing Kubernetes resources. Typically composed of roles, role bindings, cluster roles, and cluster role bindings assigned to service accounts.
+- **values.schema.json:** A JSON Schema file included in Helm charts to define and validate the structure of `values.yaml`.
 
-You can use these online tools to generate JSON Schema from YAML:
-- [YAML to JSON Schema Converter](https://jsonformatter.org/yaml-to-jsonschema)
-- [Code Beautify YAML to JSON Schema Generator](https://codebeautify.org/yaml-to-json-schema-generator)
+## CompositionDefinition specifications and examples
 
-To validate your JSON Schema, you can use:
-- [JSON Schema Validator](https://www.jsonschemavalidator.net/)
-- [Hyperjump JSON Schema](https://json-schema.hyperjump.io/)
+The `core-provider` is a Kubernetes operator that downloads and manages Helm charts. It checks for the existence of `values.schema.json` and uses it to generate a Custom Resource Definition (CRD) in Kubernetes, accurately representing the possible values that can be expressed for the installation of the chart.
 
-### What is a CompositionDefinition?
+Kubernetes is designed to validate resource inputs before applying them to the cluster, and the `core-provider` provides input validation to ensure that incorrect inputs are not accepted.
 
-A CompositionDefinition is a Krateo Custom Resource that automates two key tasks:
-1. Generates a Custom Resource Definition based on the Helm chart's `values.schema.json` file
-2. Creates a Deployment that monitors for new Custom Resources representing the Helm Chart's `values.yaml`
+Learn more about the `core-provider` in the [official documentation](https://github.com/krateoplatformops/core-provider/blob/main/README.md)

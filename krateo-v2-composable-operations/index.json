@@ -12,12 +12,12 @@
         "verify": "step1/verify.sh"
       },
       {
-        "title": "Deploying the Krateo V2 Template Fireworks App",
+        "title": "Deploying the Krateo V2 Template Github Scaffolding Blueprint",
         "text": "step2/text.md",
         "verify": "step2/verify.sh"
       },
       {
-        "title": "Installing a Krateo Fireworks App Composition",
+        "title": "Installing a Krateo Github Scaffolding Blueprint Composition",
         "text": "step3/text.md",
         "verify": "step3/verify.sh"
       },

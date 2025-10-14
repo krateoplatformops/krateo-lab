@@ -1,8 +1,26 @@
-# Installing a Krateo Fireworks App Composition
+# Installing a Krateo Github Scaffolding Blueprint Composition
+
+As described in the [chart's README](https://github.com/krateoplatformops-blueprints/github-scaffolding/blob/main/README.md), you need to install the toolchain in the `krateo-system` namespace.
+
+## Step 1: Install Required Components
+
+First, add and update the necessary Helm repositories, then install the required providers:
+
+```bash
+# Add and update Krateo repository
+helm repo add marketplace https://marketplace.krateo.io
+helm repo update marketplace
+helm install github-provider-kog-repo marketplace/github-provider-kog-repo --namespace krateo-system --create-namespace --wait --version 1.0.0
+helm install git-provider krateo/git-provider --namespace krateo-system --create-namespace --wait --version 0.10.1
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update argo
+helm install argocd argo/argo-cd --namespace krateo-system --create-namespace --wait --version 8.0.17
+```{{exec}}
+
+In this guide, we skip the argo-cd configuration steps, as it does not properly works in the Killercoda environment.
 
 ## Prerequisites
 Before creating the Composition, we need to configure GitHub authentication. This requires setting up proper credentials in the cluster.
-
 
 ### Generate a token for GitHub user
 
@@ -101,4 +119,4 @@ kubectl apply -f /root/filesystem/githubscaffolding-composition-values-2.yaml
    kubectl get githubscaffolding gh-scaffolding-composition-2 --namespace ghscaffolding-system
    ```{{exec}}
 
-This will display the current status of your Fireworks App Composition. Verify that all components have been properly deployed and are in a ready state.
+This will display the current status of your Github Scaffolding Blueprint Composition. Verify that all components have been properly deployed and are in a ready state.
