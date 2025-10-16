@@ -4,6 +4,15 @@ To install Krateo, we will follow the [official Krateo Documentation](https://do
 ```bash
 helm repo add krateo https://charts.krateo.io
 helm repo update krateo
+
+helm upgrade installer-crd installer-crd \
+  --repo https://charts.krateo.io \
+  --namespace krateo-system \
+  --create-namespace \
+  --install \
+  --version 2.6.0 \
+  --wait
+
 # Disable Krateo FinOps and Portal due to low Killercoda compute resources
 helm upgrade installer installer \
   --set krateoplatformops.composablefinops.enabled=false \
@@ -14,7 +23,7 @@ helm upgrade installer installer \
   --namespace krateo-system \
   --create-namespace \
   --install \
-  --version 2.5.0 \
+  --version 2.6.0 \
   --wait
 ```{{exec}}
 
@@ -54,3 +63,5 @@ When a Custom Resource (CR) is created and its Custom Resource Definition (CRD) 
 2. If the resource doesn't exist, the controller performs the action described in the `verbsDescription` field of the `RestDefinition` CR.
 3. For deletion requests, a similar process is followed.
 4. During resource observation, the controller verifies if the remote resource is synchronized with the CR and performs updates if necessary.
+
+If you're interested in learning more about the `oasgen-provider` and `rest-dynamic-controller`, you can find additional information in the [official documentation](https://docs.krateo.io/key-concepts/kog/oasgen-provider).

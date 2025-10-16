@@ -4,14 +4,15 @@ To update the repository, you can patch the `Repo` custom resource. For example,
 
 ```bash
 cat <<EOF | kubectl apply -f -
-apiVersion: github.kog.krateo.io/v1alpha1
+apiVersion: github.ogen.krateo.io/v1alpha1
 kind: Repo
 metadata:
   name: gh-repo-1
   namespace: gh-system
 spec:
-  authenticationRefs:
-    bearerAuthRef: gh-bearer 
+  configurationRef:
+    name: my-repo-config
+    namespace: default 
   org: krateoplatformops-test
   name: krateo-test-repo
   description: A new description of the repository set by Krateo
