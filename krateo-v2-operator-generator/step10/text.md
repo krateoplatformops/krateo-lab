@@ -1,6 +1,6 @@
 # Create the TeamRepo CR
 ## Prerequisites
-Create a custom resource for the `bearerauth` object. This is used to authenticate requests to the GitHub API. The `bearerauth` object contains a reference to the token that is used to authenticate the requests. The token is stored in a Kubernetes secret.
+Create a custom resource for the `teamrepoconfigurations` object. This is used to authenticate requests to the GitHub API. The `teamrepoconfigurations` object contains a reference to the token that is used to authenticate the requests. The token is stored in a Kubernetes secret.
 
 So first, create a secret with your GitHub token (generate a personal access token with the necessary permissions from your GitHub account settings), then:
 
@@ -8,8 +8,8 @@ So first, create a secret with your GitHub token (generate a personal access tok
 ```
 /root/filesystem/github-repo-creds.yaml
 ```
-2. Modify the file to include your GitHub token.
-3. Apply the credentials manifest:
+1. Modify the file to include your GitHub token.
+2. Apply the credentials manifest:
 ```bash
 kubectl apply -f /root/filesystem/github-repo-creds.yaml
 ```{{exec}}
@@ -53,7 +53,7 @@ Create a custom resource for the `teamrepo` object. This is used to create, upda
 kubectl apply -f /root/filesystem/cr/teamrepo-1.yaml
 ```{{exec}}
 
-The controller should add the GitHub team "prova" to the repository "test-teamrepo" in the organization you have set with "admin" permission. (Notes that the team "prova" must already exist in your GitHub organization, same for the repository "test-teamrepo")
+The controller should add the GitHub team "test_team1" to the repository "test-teamrepo" in the organization you have set with "admin" permission. (Notes that the team "test_team1" must already exist in your GitHub organization, same for the repository "test-teamrepo")
 
 Check the teamrepo creation status by running:
 

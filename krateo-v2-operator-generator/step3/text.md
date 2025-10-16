@@ -4,7 +4,7 @@ At this point, you should notice that a CRD has been created based on the OpenAP
 1. **Check CRD creation:**
    ```bash
    kubectl get crds | grep github.ogen.krateo.io
-   ```
+   ```{{exec}}
 
    You should see:
    ```text

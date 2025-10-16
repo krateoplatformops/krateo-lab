@@ -1,6 +1,6 @@
 # Extended Example: External API that requires a plugin to handle external API calls
 
-This example demonstrates how to create a Krateo provider for managing GitHub repositories using an external web service to handle API calls. This approach is useful when the API isn't directly compatible with Kubernetes resource management or requires additional processing.
+This example demonstrates how to create a Krateo provider or managing team access to GitHub repositories (TeamRepo resource). This approach is useful when the API isn't directly compatible with Kubernetes resource management or requires additional processing.
 
 For an API to be compatible with Kubernetes resource management, it should create, update, and delete resources in a way that is similar to Kubernetes resources. This means the API should support the same operations as Kubernetes resources, such as create, update, delete, and get. If the API doesn't support these operations or requires additional processing, you can use an external web service to handle the API calls.
 
