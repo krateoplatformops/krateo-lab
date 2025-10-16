@@ -8,11 +8,11 @@ We wait until the `RestDefinition` is ready and the message is empty, indicating
 #!/bin/bash
 
 # Wait for the restdefinition to be ready with an empty message
-kubectl wait teamrepo.github.kog.krateo.io/test-teamrepo --for condition=Ready=True --namespace gh-system --timeout=600s
+kubectl wait teamrepo.github.ogen.krateo.io/test-teamrepo --for condition=Ready=True --namespace gh-system --timeout=600s
 
 # Additional check to ensure the message is empty
 while true; do
-  MESSAGE=$(kubectl get teamrepo.github.kog.krateo.io/test-teamrepo -n gh-system -o jsonpath='{.status.conditions[?(@.type=="Ready")].message}')
+  MESSAGE=$(kubectl get teamrepo.github.ogen.krateo.io/test-teamrepo -n gh-system -o jsonpath='{.status.conditions[?(@.type=="Ready")].message}')
   if [ -z "$MESSAGE" ]; then
     break
   else
@@ -28,7 +28,7 @@ We expect the controller to update the RestDefinition and start using the web se
 At this point, the `rest-dynamic-controller` should be able to handle the `get` operation for teamrepos using the web service. You can check the status of the TeamRepo resource by running:
 
 ```bash
-kubectl describe teamrepo.github.kog.krateo.io/test-teamrepo -n gh-system
+kubectl describe teamrepo.github.ogen.krateo.io/test-teamrepo -n gh-system
 ```{{exec}}
 
 You should see that the message field is now empty, which means the RestDefinition is ready and correctly observed by the controller.
@@ -59,7 +59,7 @@ EOF
 After a few seconds, you should see that the teamrepo's permission is updated in GitHub (notest that GitHub Web map 'pull' permission to 'read'). Check the teamrepo status by running:
 
 ```bash
-kubectl describe teamrepo.github.kog.krateo.io/test-teamrepo -n gh-system
+kubectl describe teamrepo.github.ogen.krateo.io/test-teamrepo -n gh-system
 ```{{exec}}
 
 You should see that the permission is updated to `pull`, the status is set to `Ready`: `True`, and events indicate that the external resource was updated successfully:
@@ -76,8 +76,8 @@ Events:
 To delete the teamrepo, you can delete the `TeamRepo` custom resource:
 
 ```bash
-kubectl delete teamrepo.github.kog.krateo.io test-teamrepo -n gh-system
-```
+kubectl delete teamrepo.github.ogen.krateo.io test-teamrepo -n gh-system
+```{{exec}}
 
 This will trigger the controller to delete the corresponding teamrepo in GitHub.
 

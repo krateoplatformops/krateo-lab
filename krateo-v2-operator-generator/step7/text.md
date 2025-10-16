@@ -3,7 +3,7 @@
 To delete the repository, you can delete the `Repo` custom resource:
 
 ```bash
-kubectl delete repo.github.kog.krateo.io gh-repo-1 -n gh-system
+kubectl delete repo.github.ogen.krateo.io gh-repo-1 -n gh-system
 ```{{exec}}
 
 This will trigger the controller to delete the corresponding repository in GitHub.

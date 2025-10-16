@@ -20,13 +20,6 @@ Before creating the `TeamRepo` custom resource, you need to create a `TeamRepoCo
 
 These are used to authenticate requests to the GitHub API. The `bearer` section of the spec of `TeamRepoConfiguration` contains a reference to the token that is used to authenticate the requests. The token is stored in a Kubernetes secret.
 
-So first, create a Kubernetes secret with your GitHub token: 
-(generate a personal access token with the necessary permissions from your GitHub account settings)
-
-```bash
-kubectl create secret generic gh-token --from-literal=token=<your-token> -n gh-system 
-```{{exec}}
-
 ```bash
 cat <<EOF | kubectl apply -f -
 apiVersion: github.ogen.krateo.io/v1alpha1
@@ -71,35 +64,34 @@ EOF
 
 The controller should add the GitHub team "prova" to the repository "test-teamrepo" in the organization "krateoplatformops-test" with "admin" permission. (Notes that the team "prova" must already exist in your GitHub organization, same for the repository "test-teamrepo")
 
-Wait for the controller to process the `teamrepo` resource. You can check the status of the controller by running:
-
-```bash
-kubectl wait --for=condition=Ready=True --timeout=60s teamrepo.github.kog.krateo.io/test-teamrepo -n gh-system
-```{{exec}}
-
 Check the teamrepo creation status by running:
 
 ```bash
-kubectl describe teamrepo.github.kog.krateo.io/test-teamrepo -n gh-system
+kubectl describe teamrepo.github.ogen.krateo.io/test-teamrepo -n gh-system
 ```{{exec}}
 
 You should see the teamrepo creation status and any errors that occurred during the process.
 
-In this case, you should see that the teamrepo was created successfully with status `Ready`: `True`, but you should also notice that the `Message` field states "Resource is assumed to be up-to-date. Returned body is nil."
+In this case, you should see that the teamrepo was not created successfully because of errors from the GitHub API. This is because the `rest-dynamic-controller` is not able to handle the response body from the GitHub API for this endpoint correctly.
 
 ```text
 ...
 Status:
   Conditions:
-    Last Transition Time:  2025-06-18T14:13:03Z
-    Message:               Resource is assumed to be up-to-date. Returned body is nil.
-    Reason:                Available
-    Status:                True
+    Last Transition Time:  2025-10-16T10:19:54Z
+    Message:               
+    Reason:                Creating
+    Status:                False
     Type:                  Ready
+    Last Transition Time:  2025-10-16T10:19:54Z
+    Message:               cannot determine creation result - remove the krateo.io/external-create-pending annotation if it is safe to proceed
+    Reason:                ReconcileError
+    Status:                False
+    Type:                  Synced
 Events:
-  Type    Reason                   Age   From  Message
-  ----    ------                   ----  ----  -------
-  Normal  CreatedExternalResource  86s         Successfully requested creation of external resource
+  Type     Reason                           Age   From                     Message
+  ----     ------                           ----  ----                     -------
+  Warning  CannotCreateExternalResource     46s   rest-dynamic-controller  unexpected status: 404: invalid status code: 404
 ```
 
 This message indicates that the controller was able to create the teamrepo in GitHub, but the response body from the GitHub API is nil. This is expected behavior as described [here](https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#check-team-permissions-for-a-repository). According to the GitHub API documentation, the response body for this endpoint is empty when the request is successful but the accept header isn't set to `application/vnd.github.v3+json`. This is a known limitation of the GitHub API, and it's not possible to change the accept header for requests made by the `rest-dynamic-controller` directly.

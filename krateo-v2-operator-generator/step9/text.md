@@ -3,18 +3,18 @@ At this point, you should notice that a CRD has been created based on the OpenAP
 
 1. **Check CRD creation:**
    ```bash
-   kubectl get crds | grep github.kog.krateo.io 
+   kubectl get crds | grep github.ogen.krateo.io 
    ```{{exec}}
 
    You should see:
    ```text
-   bearerauths.github.kog.krateo.io           2025-06-13T08:28:06Z
-   teamrepos.github.kog.krateo.io             2025-06-13T08:28:06Z
+   bearerauths.github.ogen.krateo.io           2025-06-13T08:28:06Z
+   teamrepos.github.ogen.krateo.io             2025-06-13T08:28:06Z
    ```
 
    If you see `bearerauths` and `teamrepos`, the CRDs are created successfully. The second CRD represents the `teamrepo` object, while the first one is the `bearerauth` object used to authenticate requests to the GitHub API.
 
-   **Note:** If you've previously created the `repo` RestDefinition, you'll also see the `repoes.github.kog.krateo.io` CRD. However, the `bearerauths.github.kog.krateo.io` CRD is shared between RestDefinitions because they use the same group and authentication scheme.
+   **Note:** If you've previously created the `repo` RestDefinition, you'll also see the `repoes.github.ogen.krateo.io` CRD. However, the `bearerauths.github.ogen.krateo.io` CRD is shared between RestDefinitions because they use the same group and authentication scheme.
 
 2. **Verify controller deployment:**
    ```bash

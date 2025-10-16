@@ -1,18 +1,20 @@
 ## Verifying CRD and Controller Deployment
 At this point, you should notice that a CRD has been created based on the OpenAPI Specification provided in the RestDefinition Manifest.
 
-1. **Verify the CRD creation**
-```bash
-kubectl get crds | grep github.kog.krateo.io 
-```{{exec}}
+1. **Check CRD creation:**
+   ```bash
+   kubectl get crds | grep github.ogen.krateo.io
+   ```
 
-You should see:
-```text
-bearerauths.github.kog.krateo.io           2025-06-13T08:28:06Z
-repoes.github.kog.krateo.io                2025-06-13T08:28:06Z
-```
+   You should see:
+   ```text
+    repoconfigurations.github.ogen.krateo.io    2025-06-13T08:28:06Z
+    repoes.github.ogen.krateo.io                2025-06-13T08:28:06Z
+   ```
 
-If you see `bearerauths` and `repoes`, the CRDs have been created successfully. The second CRD represents the `repo` object. The first one is the `bearerauth` object, which is used to authenticate requests to the GitHub API.
+
+If you see `repoconfigurations` and `repoes`, the CRDs have been created successfully. The second CRD represents the `repo` object. The first one is the `repoconfiguration` object, which is used to authenticate requests to the GitHub API.
+
 
 2. **Verify the Controller is Running**
 ```bash
