@@ -39,17 +39,18 @@ To check if the remote resource changes along with the custom resource, you can 
 
 ```bash
 cat <<EOF | kubectl apply -f -
-apiVersion: github.kog.krateo.io/v1alpha1
+apiVersion: github.ogen.krateo.io/v1alpha1
 kind: TeamRepo
 metadata:
   name: test-teamrepo
   namespace: gh-system
 spec:
-  authenticationRefs:
-    bearerAuthRef: gh-bearer
+  configurationRef:
+    name: my-teamrepo-config
+    namespace: gh-system
   org: krateoplatformops-test
   owner: krateoplatformops-test
-  team_slug: prova
+  team_slug: test_team1
   repo: test-teamrepo
   permission: pull
 EOF

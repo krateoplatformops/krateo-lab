@@ -1,9 +1,12 @@
 # Creating a Repository
 
 ## Prerequisites
-Create a custom resource for the `bearerauth` object. This is used to authenticate requests to the GitHub API. The `bearerauth` object contains a reference to the token that is used to authenticate the requests. The token is stored in a Kubernetes secret.
+Before creating the `Repo` custom resource, you need to create a `RepoConfiguration` custom resource and a Kubernetes secret to store your GitHub token.
 
-So first, create a secret with your GitHub token (generate a personal access token with the necessary permissions from your GitHub account settings), then:
+These are used to authenticate requests to the GitHub API. The `bearer` section of the spec of `RepoConfiguration` contains a reference to the token that is used to authenticate the requests. The token is stored in a Kubernetes secret.
+
+So first, create a Kubernetes secret with your GitHub token: 
+(generate a personal access token with the necessary permissions from your GitHub account settings)
 
 1. Open the Killercoda IDE and navigate to the following file:
 ```
@@ -15,37 +18,41 @@ So first, create a secret with your GitHub token (generate a personal access tok
 kubectl apply -f /root/filesystem/github-repo-creds.yaml
 ```{{exec}}
 
-## Step 1: Install the BearerAuth CR
+## Step 1: Install the Configuration for Repo
 Install the BearerAuth custom resource to enable GitHub authentication:
 ```bash
 cat <<EOF | kubectl apply -f -
-apiVersion: github.kog.krateo.io/v1alpha1
-kind: BearerAuth
+apiVersion: github.ogen.krateo.io/v1alpha1
+kind: RepoConfiguration
 metadata:
-  name: gh-bearer
+  name: my-repo-config
   namespace: gh-system
 spec:
-  tokenRef:
-    key: token
-    name: gh-token
-    namespace: gh-system
+  authentication:
+    bearer:
+      # Reference to a secret containing the bearer token
+      tokenRef:
+        name: gh-token        # Name of the secret
+        namespace: gh-system    # Namespace where the secret exists
+        key: token            # Key within the secret that contains the token
+
 EOF
 ```{{exec}}
 
 ## Step 2: Create the Repo CR
 
-Create a custom resource for the `Repo` object. This is used to create, update, and delete repositories in the GitHub API. The `Repo` object contains the reference to the `bearerauth` object that is used to authenticate the requests.
-
+Create a custom resource for the `repo` object. This is used to create, update, and delete teamrepos in the GitHub API. The `repo` object contains a reference to the `RepoConfiguration` object that is used to authenticate requests:
 ```bash
 cat <<EOF | kubectl apply -f -
-apiVersion: github.kog.krateo.io/v1alpha1
+apiVersion: github.ogen.krateo.io/v1alpha1
 kind: Repo
 metadata:
   name: gh-repo-1
   namespace: gh-system
 spec:
-  authenticationRefs:
-    bearerAuthRef: gh-bearer 
+  configurationRef:
+    name: my-repo-config
+    namespace: gh-system
   org: krateoplatformops-test
   name: krateo-test-repo
   description: A short description of the repository set by Krateo
@@ -57,7 +64,7 @@ EOF
 You will expect that the controller creates a repository in your GitHub account with the name `krateo-test-repo` under the organization `krateoplatformops-test`. You can check the status of the repository by running:
 
 ```bash
-kubectl describe repo.github.kog.krateo.io/gh-repo-1 -n gh-system
+kubectl describe repo.github.ogen.krateo.io/gh-repo-1 -n gh-system
 ```{{exec}}
 
 You should see a successful creation event, which indicates that the repository was created successfully.

@@ -61,17 +61,17 @@ In order to create a RestDefinition for GitHub teamrepos, you need to define the
 
 ```bash
 cat <<EOF | kubectl apply -f -
-apiVersion: swaggergen.krateo.io/v1alpha1
+apiVersion: ogen.krateo.io/v1alpha1
 kind: RestDefinition
 metadata:
   name: gh-teamrepo
   namespace: gh-system
 spec:
   oasPath: configmap://gh-system/teamrepo/teamrepo_no_ws.yaml
-  resourceGroup: github.kog.krateo.io
+  resourceGroup: github.ogen.krateo.io
   resource: 
     kind: TeamRepo
-    identifiers:
+    additionalStatusFields:
       - id 
       - name
       - full_name
