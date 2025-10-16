@@ -43,26 +43,17 @@ EOF
 
 Create a custom resource for the `teamrepo` object. This is used to create, update, and delete teamrepos in the GitHub API. The `teamrepo` object contains a reference to the `TeamRepoConfiguration` object that is used to authenticate requests:
 
+1. Open the Killercoda IDE and navigate to the following file:
+```
+/root/filesystem/cr/teamrepo-1.yaml
+```
+2. Modify the file to include your GitHub organization name and team slug.
+3. Apply the credentials manifest:
 ```bash
-cat <<EOF | kubectl apply -f -
-apiVersion: github.ogen.krateo.io/v1alpha1
-kind: TeamRepo
-metadata:
-  name: test-teamrepo
-  namespace: gh-system
-spec:
-  configurationRef:
-    name: my-teamrepo-config
-    namespace: gh-system
-  org: krateoplatformops-test
-  owner: krateoplatformops-test
-  team_slug: test_team1
-  repo: test-teamrepo
-  permission: admin
-EOF
+kubectl apply -f /root/filesystem/cr/teamrepo-1.yaml
 ```{{exec}}
 
-The controller should add the GitHub team "prova" to the repository "test-teamrepo" in the organization "krateoplatformops-test" with "admin" permission. (Notes that the team "prova" must already exist in your GitHub organization, same for the repository "test-teamrepo")
+The controller should add the GitHub team "prova" to the repository "test-teamrepo" in the organization you have set with "admin" permission. (Notes that the team "prova" must already exist in your GitHub organization, same for the repository "test-teamrepo")
 
 Check the teamrepo creation status by running:
 

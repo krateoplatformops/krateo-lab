@@ -1,0 +1,14 @@
+apiVersion: github.ogen.krateo.io/v1alpha1
+kind: Repo
+metadata:
+  name: gh-repo-1
+  namespace: gh-system
+spec:
+  configurationRef:
+    name: my-repo-config
+    namespace: gh-system
+  org: krateoplatformops-test # GitHub organization name - you will need to change this to an organization you have access to
+  name: krateo-test-repo # GitHub repository name
+  description: A short description of the repository set by Krateo
+  visibility: public
+  has_issues: true

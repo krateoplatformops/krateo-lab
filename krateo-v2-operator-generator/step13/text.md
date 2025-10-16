@@ -37,23 +37,14 @@ You should see that the message field is now empty, which means the RestDefiniti
 
 To check if the remote resource changes along with the custom resource, you can run the following command to change the teamrepo's permission:
 
+1. Open the Killercoda IDE and navigate to the following file:
+```
+/root/filesystem/cr/teamrepo-1.yaml
+```
+2. Modify the file to include your GitHub organization name and team slug. Also change the permission from `admin` to `pull`.
+3. Apply the credentials manifest:
 ```bash
-cat <<EOF | kubectl apply -f -
-apiVersion: github.ogen.krateo.io/v1alpha1
-kind: TeamRepo
-metadata:
-  name: test-teamrepo
-  namespace: gh-system
-spec:
-  configurationRef:
-    name: my-teamrepo-config
-    namespace: gh-system
-  org: krateoplatformops-test
-  owner: krateoplatformops-test
-  team_slug: test_team1
-  repo: test-teamrepo
-  permission: pull
-EOF
+kubectl apply -f /root/filesystem/cr/teamrepo-1.yaml
 ```{{exec}}
 
 After a few seconds, you should see that the teamrepo's permission is updated in GitHub (notest that GitHub Web map 'pull' permission to 'read'). Check the teamrepo status by running:

@@ -2,24 +2,16 @@
 
 To update the repository, you can patch the `Repo` custom resource. For example, to change the description of the repository:
 
+1. Open the Killercoda IDE and navigate to the following file:
+```
+/root/filesystem/cr/repo-1.yaml
+```
+1. Modify the file to include a new description and change the organization name to one you have access to.
+2. Apply the credentials manifest:
 ```bash
-cat <<EOF | kubectl apply -f -
-apiVersion: github.ogen.krateo.io/v1alpha1
-kind: Repo
-metadata:
-  name: gh-repo-1
-  namespace: gh-system
-spec:
-  configurationRef:
-    name: my-repo-config
-    namespace: gh-system
-  org: krateoplatformops-test
-  name: krateo-test-repo
-  description: A new description of the repository set by Krateo
-  visibility: public
-  has_issues: true
-EOF
+kubectl apply -f /root/filesystem/cr/repo-1.yaml
 ```{{exec}}
+
 This will trigger the controller to update the repository in GitHub with the new description.
 
 ```bash
