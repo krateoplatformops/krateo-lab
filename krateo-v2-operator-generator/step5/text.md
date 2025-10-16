@@ -11,7 +11,7 @@ kubectl logs deploy/gh-repo-controller -n gh-system
 Wait for the controller to recreate the repository in your GitHub organization. When the process completes, you should see a log message similar to this:
 
 ```
-2025-06-23T13:32:53Z    DEBUG   rest-dynamic-controller External resource up-to-date    {"op": "Observe", "apiVersion": "github.kog.krateo.io/v1alpha1", "kind": "Repo", "name": "gh-repo-1", "namespace": "gh-system", "kind": "Repo"}
+2025-06-23T13:32:53Z    DEBUG   rest-dynamic-controller External resource up-to-date    {"op": "Observe", "apiVersion": "github.ogen.krateo.io/v1alpha1", "kind": "Repo", "name": "gh-repo-1", "namespace": "gh-system", "kind": "Repo"}
 ```
 
 At this point, check your GitHub portal to confirm that the repository has been successfully recreated.
@@ -19,7 +19,7 @@ At this point, check your GitHub portal to confirm that the repository has been 
 You can also verify the status of the `Repo` resource in Kubernetes:
 
 ```bash
-kubectl describe repo.github.kog.krateo.io/gh-repo-1 -n gh-system
+kubectl describe repo.github.ogen.krateo.io/gh-repo-1 -n gh-system
 ```{{exec}}
 
 You should see a successful creation event with a 'x2' in the age, indicating that the controller has successfully reconciled the resource after the deletion.

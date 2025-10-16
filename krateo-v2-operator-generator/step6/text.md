@@ -12,7 +12,7 @@ metadata:
 spec:
   configurationRef:
     name: my-repo-config
-    namespace: default 
+    namespace: gh-system
   org: krateoplatformops-test
   name: krateo-test-repo
   description: A new description of the repository set by Krateo
@@ -23,7 +23,7 @@ EOF
 This will trigger the controller to update the repository in GitHub with the new description.
 
 ```bash
-kubectl describe repo.github.kog.krateo.io/gh-repo-1 -n gh-system
+kubectl describe repo.github.ogen.krateo.io/gh-repo-1 -n gh-system
 ```{{exec}}
 
 You should see an event for the Repo resource indicating that the external resource was updated successfully:
