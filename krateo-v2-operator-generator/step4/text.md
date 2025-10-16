@@ -42,26 +42,18 @@ EOF
 ## Step 2: Create the Repo CR
 
 Create a custom resource for the `repo` object. This is used to create, update, and delete teamrepos in the GitHub API. The `repo` object contains a reference to the `RepoConfiguration` object that is used to authenticate requests:
+
+1. Open the Killercoda IDE and navigate to the following file:
+```
+/root/filesystem/cr/repo-1.yaml
+```
+2. Modify the file to include your GitHub organization name.
+3. Apply the credentials manifest:
 ```bash
-cat <<EOF | kubectl apply -f -
-apiVersion: github.ogen.krateo.io/v1alpha1
-kind: Repo
-metadata:
-  name: gh-repo-1
-  namespace: gh-system
-spec:
-  configurationRef:
-    name: my-repo-config
-    namespace: gh-system
-  org: krateoplatformops-test
-  name: krateo-test-repo
-  description: A short description of the repository set by Krateo
-  visibility: public
-  has_issues: true
-EOF
+kubectl apply -f /root/filesystem/cr/repo-1.yaml
 ```{{exec}}
 
-You will expect that the controller creates a repository in your GitHub account with the name `krateo-test-repo` under the organization `krateoplatformops-test`. You can check the status of the repository by running:
+You will expect that the controller creates a repository in your GitHub account with the name `krateo-test-repo` under the organization you have specified. You can check the status of the repository by running:
 
 ```bash
 kubectl describe repo.github.ogen.krateo.io/gh-repo-1 -n gh-system

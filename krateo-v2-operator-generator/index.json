@@ -66,6 +66,46 @@
     "assets": {
       "host01": [
         {
+          "file": "cr/teamrepo-1.yaml",
+          "target": "/cr"
+        },
+        {
+          "file": "cr/repo-1.yaml",
+          "target": "/cr"
+        },
+        {
+          "file": "cr/teamrepo-3.yaml",
+          "target": "/"
+        },
+        {
+          "file": "cr/teamrepo-4.yaml",
+          "target": "/"
+        },
+        {
+          "file": "cr/teamrepo-5.yaml",
+          "target": "/"
+        },
+        {
+          "file": "cr/teamrepo-6.yaml",
+          "target": "/"
+        },
+        {
+          "file": "cr/teamrepo-7.yaml",
+          "target": "/"
+        },
+        {
+          "file": "cr/teamrepo-8.yaml",
+          "target": "/"
+        },
+        {
+          "file": "cr/teamrepo-9.yaml",
+          "target": "/"
+        },
+        {
+          "file": "cr/teamrepo-10.yaml",
+          "target": "/"
+        },
+        {
           "file": "github-repo-creds.yaml",
           "target": "/"
         },
