@@ -122,4 +122,10 @@ spec:
 EOF
 ```{{exec}}
 
+Let's wait for the CompositionDefinition `github-scaffolding-with-composition-page	` to be Ready
+
+```plain
+kubectl wait compositiondefinition github-scaffolding-with-composition-page	 --for condition=Ready=True --timeout=300s --namespace demo-system
+```{{exec}}
+
 Let's go back into the Portal in the Blueprints page.
