@@ -46,6 +46,10 @@
       {
         "title": "Customize the Portal (2/2)",
         "text": "step10/text.md"
+      },
+      {
+        "title": "RESTAction",
+        "text": "step11/text.md"
       }
     ],
     "finish": {
