@@ -52,7 +52,7 @@ In the example below, the label of the button will be the date when the widget i
 Let's try it:
 
 ```plain
-cat <<EOF | kubectl apply -f -
+kubectl apply -f - <<'YAML'
 kind: Button
 apiVersion: widgets.templates.krateo.io/v1beta1
 metadata:
@@ -60,13 +60,15 @@ metadata:
   namespace: demo-system
 spec:
   widgetData:
+    actions: {}
+    clickActionId: ""
     label: button 1
     icon: fa-rocket
     type: primary
   widgetDataTemplate:
     - forPath: label
       expression: ${ now | strftime("%Y-%m-%d") }
-EOF
+YAML
 ```{{exec}}
 
 ```plain
@@ -79,7 +81,7 @@ curl -v "http://localhost:30081/call?apiVersion=widgets.templates.krateo.io%2Fv1
 Let's try a complete example!
 
 ```plain
-cat <<EOF | kubectl apply -f -
+kubectl apply -f - <<'YAML'
 kind: Table
 apiVersion: widgets.templates.krateo.io/v1beta1
 metadata:
@@ -87,15 +89,19 @@ metadata:
   namespace: demo-system
 spec:
   widgetData:
+    allowedResources: []
     pageSize: 10
     data: []
     columns:
       - valueKey: name
         title: Cluster Namespaces
-
   widgetDataTemplate:
     - forPath: data
-      expression: ${ .namespaces }
+      expression: >
+        .namespaces
+        | map(
+            { valueKey:"name",         kind:"jsonSchemaType", type:"string", stringValue:(.name // "") }
+        )
   apiRef:
     name: cluster-namespaces
     namespace: demo-system
@@ -109,11 +115,14 @@ spec:
   api:
   - name: namespaces
     path: "/api/v1/namespaces"
-    filter: "[.items[] | {name: .metadata.name}]"
-EOF
+    filter: "[.namespaces.items[] | {name: .metadata.name}]"
+YAML
 ```{{exec}}
 
 ```plain
+curl -v "http://localhost:30081/call?apiVersion=templates.krateo.io%2Fv1&name=cluster-namespaces&namespace=demo-system&resource=restactions" \
+  -H "Authorization: Bearer $adminAccessToken"
+
 curl -v "http://localhost:30081/call?apiVersion=widgets.templates.krateo.io%2Fv1beta1&name=table-of-namespaces&namespace=demo-system&resource=tables" \
   -H "Authorization: Bearer $adminAccessToken"
 ```{{exec}}
