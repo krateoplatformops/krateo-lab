@@ -13,7 +13,7 @@ spec:
       destination:
         server: https://kubernetes.default.svc
         namespace: fireworks-app
-      syncEnabled: false
+      syncEnabled: true
       syncPolicy:
         automated:
           prune: true
