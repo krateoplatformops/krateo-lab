@@ -43,7 +43,7 @@ Give the following permissions: delete:packages, delete_repo, repo, workflow, wr
 ### Wait for Github Provider to be Ready
 
 ```bash
-kubectl wait restdefinitions.ogen.krateo.io github-provider-kog-repo --for condition=Ready=True --namespace krateo-system --timeout=300s
+kubectl wait restdefinitions.ogen.krateo.io github-provider-kog-repo-repo --for condition=Ready=True --namespace krateo-system --timeout=300s
 ```{{exec}}
 
 
