@@ -7,7 +7,7 @@ The Krateo Composition resource is the main entry point for managing deployments
 First, let's examine the `gh-scaffolding-composition-1` Composition:
 
 ```bash
-kubectl get githubscaffolding gh-scaffolding-composition-1 --namespace ghscaffolding-system -o yaml
+kubectl get githubscaffolding gh-scaffolding-composition-1 --namespace ghscaffolding-system -o yaml | yq
 ```{{exec}}
 
 This will display the full YAML representation of the Composition resource.
@@ -23,7 +23,7 @@ This will display the full YAML representation of the Composition resource.
 Let's also look at the `gh-scaffolding-composition-2` Composition:
 
 ```bash
-kubectl get githubscaffolding gh-scaffolding-composition-2 --namespace ghscaffolding-system -o yaml
+kubectl get githubscaffolding gh-scaffolding-composition-2 --namespace ghscaffolding-system -o yaml | yq
 ```{{exec}}
 
 This will show the details of the second Composition instance.

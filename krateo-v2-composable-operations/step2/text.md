@@ -37,7 +37,7 @@ kubectl wait compositiondefinition github-scaffolding --for condition=Ready=True
 
 2. Check the CompositionDefinition outputs:
 ```bash
-kubectl get compositiondefinition github-scaffolding --namespace ghscaffolding-system -o yaml
+kubectl get compositiondefinition github-scaffolding --namespace ghscaffolding-system -o yaml | yq
 ```{{exec}}
 
 ## What Was Created?
@@ -46,7 +46,7 @@ The `core-provider` has generated two main components:
 
 1. A Custom Resource Definition based on the values.json.schema file from the Helm chart:
 ```bash
-kubectl get crd githubscaffoldings.composition.krateo.io -o yaml
+kubectl get crd githubscaffoldings.composition.krateo.io -o yaml | yq
 ```{{exec}}
 
 2. A specific Deployment that uses the `composition-dynamic-controller` image. This deployment watches for new Custom Resources related to the generated CRD and the specific version:
