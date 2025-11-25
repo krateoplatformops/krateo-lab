@@ -12,7 +12,7 @@
         "verify": "step1/verify.sh"
       },
       {
-        "title": "Setup authentication strategies",
+        "title": "Check authentication strategies",
         "text": "step2/text.md"
       },
       {
@@ -20,15 +20,15 @@
         "text": "step3/text.md"
       },
       {
-        "title": "Add cyberjoker user to the platform",
+        "title": "Add demolabuser user to the platform",
         "text": "step4/text.md"
       },
       {
-        "title": "Set RBAC for cyberjoker user",
+        "title": "Set RBAC for demolabuser user",
         "text": "step5/text.md"
       },
       {
-        "title": "Check Card to retrieve the Form",
+        "title": "Check Panel to retrieve the Form",
         "text": "step6/text.md"
       },
       {
@@ -36,8 +36,16 @@
         "text": "step7/text.md"
       },
       {
-        "title": "Navigate the Portal to find the Template Card",
+        "title": "Navigate the Portal to find the Blueprint Panel",
         "text": "step8/text.md"
+      },
+      {
+        "title": "Customize the Portal (1/2)",
+        "text": "step9/text.md"
+      },
+      {
+        "title": "Customize the Portal (2/2)",
+        "text": "step10/text.md"
       }
     ],
     "finish": {
