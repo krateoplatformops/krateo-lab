@@ -3,6 +3,6 @@
 
 ### Look at you, using Krateo Composable FinOps!
 
-For further reading, check out the example [FinOps Composition](https://github.com/krateoplatformops/krateo-v2-template-finops-example-pricing-vm-azure)!
+For further reading, check out the example Standalone [FinOps Blueprint ACOT](https://github.com/krateoplatformops-blueprints/azure-compute-optimization-toolkit)!
 
 Now to the next chapter! 
