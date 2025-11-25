@@ -5,15 +5,21 @@ helm repo add marketplace https://marketplace.krateo.io
 helm repo update marketplace
 helm install github-provider-kog-repo marketplace/github-provider-kog-repo --namespace krateo-system --create-namespace --wait --version 1.0.0
 helm install git-provider krateo/git-provider --namespace krateo-system --create-namespace --wait --version 0.10.1
+```{{exec}}
 
+```plain
 curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
 sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
 rm argocd-linux-amd64
+```{{exec}}
 
+```plain
 helm repo add argo https://argoproj.github.io/argo-helm
 helm repo update argo
 helm install argocd argo/argo-cd --namespace krateo-system --create-namespace --set server.service.type=NodePort --set server.service.nodePortHttp=30086 --wait --version 8.0.17
+```{{exec}}
 
+```plain
 kubectl patch configmap argocd-cm -n krateo-system --patch '{"data": {"accounts.krateo-account": "apiKey, login"}}'
 kubectl patch configmap argocd-rbac-cm -n krateo-system --patch '{"data": {"policy.default": "role:readonly"}}'
 PASSWORD=$(kubectl -n krateo-system get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)

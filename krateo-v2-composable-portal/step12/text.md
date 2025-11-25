@@ -98,10 +98,12 @@ spec:
   widgetDataTemplate:
     - forPath: data
       expression: >
-        .namespaces
-        | map(
-            { valueKey:"name",         kind:"jsonSchemaType", type:"string", stringValue:(.name // "") }
-        )
+        ${
+          .namespaces
+          | map([
+              { valueKey: "name", kind:"jsonSchemaType", type:"string", stringValue:(.name // "") }
+          ])
+        }
   apiRef:
     name: cluster-namespaces
     namespace: demo-system
@@ -122,7 +124,9 @@ YAML
 ```plain
 curl -v "http://localhost:30081/call?apiVersion=templates.krateo.io%2Fv1&name=cluster-namespaces&namespace=demo-system&resource=restactions" \
   -H "Authorization: Bearer $adminAccessToken"
+```{{exec}}
 
+```plain
 curl -v "http://localhost:30081/call?apiVersion=widgets.templates.krateo.io%2Fv1beta1&name=table-of-namespaces&namespace=demo-system&resource=tables" \
   -H "Authorization: Bearer $adminAccessToken"
 ```{{exec}}
