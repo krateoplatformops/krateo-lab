@@ -52,6 +52,7 @@ spec:
       iterator: .[]
     path: ${ "/api/v1/namespaces/kube-system/pods/" + (.) }
     filter: ".metadata | {name: .name, namespace: .namespace, uid: .uid}"
+EOF
 ```{{exec}}
 
 What happens if I invoke the `/call` endpoint of snowplow on this RESTAction as `admin` user?

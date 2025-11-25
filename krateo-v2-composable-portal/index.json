@@ -50,6 +50,10 @@
       {
         "title": "RESTAction",
         "text": "step11/text.md"
+      },
+      {
+        "title": "Widgets and RESTAction",
+        "text": "step12/text.md"
       }
     ],
     "finish": {
