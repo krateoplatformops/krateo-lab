@@ -29,7 +29,7 @@ When a `RESTAction` is retrieved directly via Kubernetes (e.g. `kubectl get rest
 Let's apply a `RESTAction` that retrieves `name`, `namespace` and `uid` of each pod in the kube-system namespace:
 
 ```plain
-cat <<EOF | kubectl apply -f -
+kubectl apply -f - <<'YAML'
 apiVersion: templates.krateo.io/v1
 kind: RESTAction
 metadata:
@@ -52,7 +52,7 @@ spec:
       iterator: .[]
     path: ${ "/api/v1/namespaces/kube-system/pods/" + (.) }
     filter: ".metadata | {name: .name, namespace: .namespace, uid: .uid}"
-EOF
+YAML
 ```{{exec}}
 
 What happens if I invoke the `/call` endpoint of snowplow on this RESTAction as `admin` user?
