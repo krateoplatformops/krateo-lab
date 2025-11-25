@@ -6,12 +6,6 @@ helm repo add krateo https://charts.krateo.io
 helm repo update krateo
 ```{{exec}}
 
-We can update the repo
-
-```plain
-helm repo update
-```{{exec}}
-
 Let's extract the server url of our Kubernetes cluster:
 
 ```plain
