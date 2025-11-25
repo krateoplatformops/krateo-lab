@@ -8,7 +8,7 @@ apiVersion: v1
 kind: Secret
 type: kubernetes.io/basic-auth
 metadata:
-  name: cyberjoker-password
+  name: demolabuser-password
   namespace: krateo-system
 stringData:
   password: "123456"
@@ -16,16 +16,16 @@ stringData:
 apiVersion: basic.authn.krateo.io/v1alpha1
 kind: User
 metadata:
-  name: cyberjoker
+  name: demolabuser
   namespace: krateo-system
 spec:
-  displayName: Cyber Joker
-  avatarURL: https://i.pravatar.cc/256?img=70
+  displayName: Demo Lab User
+  avatarURL: https://i.pravatar.cc/256?img=62
   groups:
-    - devs
+    - labs
   passwordRef:
     namespace: krateo-system
-    name: cyberjoker-password
+    name: demolabuser-password
     key: password
 EOF
 ```{{exec}}
@@ -33,11 +33,11 @@ EOF
 Now that there's a new basic user, let's try to login and check the response!
 
 ```plain
-cd && curl http://localhost:30082/basic/login -H "Authorization: Basic Y3liZXJqb2tlcjoxMjM0NTY=" | jq -r .data > cyberjoker.kubeconfig
+cd && curl http://localhost:30082/basic/login -H "Authorization: Basic Y3liZXJqb2tlcjoxMjM0NTY=" | jq -r .data > demolabuser.kubeconfig
 ```{{exec}}
 
 The authn response contains the kubeconfig for the user logged in.
 
 ```plain
-cat cyberjoker.kubeconfig | jq
+cat demolabuser.kubeconfig | jq
 ```{{exec}}

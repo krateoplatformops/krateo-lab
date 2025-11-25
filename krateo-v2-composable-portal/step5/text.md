@@ -1,14 +1,14 @@
 ## Let's find out how to play with the Kubernetes RBAC.
 
-Let's add the proper Roles and ClusterRoles to the `devs` group:
+Let's add the proper Roles and ClusterRoles to the `labs` group:
 
 ```plain
 cat <<EOF | kubectl apply -f -
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: devs-get-list-any-widget-in-fireworksappsystem-namespace
-  namespace: fireworksapp-system
+  name: labs-get-list-any-widget-in-demosystem-namespace
+  namespace: demo-system
 rules:
 - apiGroups:
   - templates.krateo.io
@@ -21,22 +21,22 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: devs-get-list-any-widget-in-fireworksappsystem-namespace
-  namespace: fireworksapp-system
+  name: labs-get-list-any-widget-in-demosystem-namespace
+  namespace: demo-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: devs-get-list-any-widget-in-fireworksappsystem-namespace
+  name: labs-get-list-any-widget-in-demosystem-namespace
 subjects:
 - kind: Group
-  name: devs
+  name: labs
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: devs-create-compositions-in-fireworksappsystem-namespace
-  namespace: fireworksapp-system
+  name: labs-create-compositions-in-demosystem-namespace
+  namespace: demo-system
 rules:
 - apiGroups:
   - composition.krateo.io
@@ -49,22 +49,22 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: devs-create-compositions-in-fireworksappsystem-namespace
-  namespace: fireworksapp-system
+  name: labs-create-compositions-in-demosystem-namespace
+  namespace: demo-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: devs-create-compositions-in-fireworksappsystem-namespace
+  name: labs-create-compositions-in-demosystem-namespace
 subjects:
 - kind: Group
-  name: devs
+  name: labs
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: devs-get-list-any-compositiondefinitions-in-fireworksappsystem-namespace
-  namespace: fireworksapp-system
+  name: labs-get-list-any-compositiondefinitions-in-demosystem-namespace
+  namespace: demo-system
 rules:
 - apiGroups:
   - core.krateo.io
@@ -77,22 +77,22 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: devs-get-list-any-compositiondefinitions-in-fireworksappsystem-namespace
-  namespace: fireworksapp-system
+  name: labs-get-list-any-compositiondefinitions-in-demosystem-namespace
+  namespace: demo-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: devs-get-list-any-compositiondefinitions-in-fireworksappsystem-namespace
+  name: labs-get-list-any-compositiondefinitions-in-demosystem-namespace
 subjects:
 - kind: Group
-  name: devs
+  name: labs
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: devs-get-list-any-secrets-and-configmaps-in-fireworksappsystem-namespace
-  namespace: fireworksapp-system
+  name: labs-get-list-any-secrets-and-configmaps-in-demosystem-namespace
+  namespace: demo-system
 rules:
 - apiGroups:
   - ''
@@ -106,21 +106,21 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: devs-get-list-any-secrets-and-configmaps-in-fireworksappsystem-namespace
-  namespace: fireworksapp-system
+  name: labs-get-list-any-secrets-and-configmaps-in-demosystem-namespace
+  namespace: demo-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: devs-get-list-any-secrets-and-configmaps-in-fireworksappsystem-namespace
+  name: labs-get-list-any-secrets-and-configmaps-in-demosystem-namespace
 subjects:
 - kind: Group
-  name: devs
+  name: labs
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: devs-get-list-create-any-compositions-in-cluster
+  name: labs-get-list-create-any-compositions-in-cluster
 rules:
 - apiGroups:
   - composition.krateo.io
@@ -134,14 +134,14 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: devs-get-list-create-any-compositions-in-cluster
+  name: labs-get-list-create-any-compositions-in-cluster
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: devs-get-list-create-any-compositions-in-cluster
+  name: labs-get-list-create-any-compositions-in-cluster
 subjects:
 - kind: Group
-  name: devs
+  name: labs
   apiGroup: rbac.authorization.k8s.io
 EOF
 ```{{exec}}
@@ -149,7 +149,7 @@ EOF
 Let's try again to read the `Form` `template-fireworksapp-customform` as `cyberjoker` user.
 
 ```plain
-kubectl get form template-fireworksapp-customform --namespace fireworksapp-system -o yaml --kubeconfig cyberjoker.kubeconfig
+kubectl get form template-fireworksapp-customform --namespace demo-system -o yaml --kubeconfig cyberjoker.kubeconfig
 ```{{exec}}
 
 Now `cyberjoker` is able to get the `Form` `template-fireworksapp-customform`.

@@ -1,6 +1,6 @@
-## Let's navigate the Portal to find the Template Card
+## Let's navigate the Portal to find the Blueprint Card
 
-Now that everything is ready, let's navigate through the [Portal]({{TRAFFIC_HOST1_30082}}/strategies).
+Now that everything is ready, let's navigate through the [Portal]({{TRAFFIC_HOST1_30080}}).
 
 Let's retrieve the password:
 
@@ -8,9 +8,10 @@ Let's retrieve the password:
 kubectl get secret admin-password  -n krateo-system -o jsonpath="{.data.password}" | base64 -d
 ```{{exec}}
 
-Krateo Portal is preconfigured to open by default the `Compositions` page.
-This behavior is configured by configuring the related Route: https://github.com/krateoplatformops/composable-portal-basic/blob/0.5.2/chart/templates/widgets.compositions-route.yaml#L14
+Krateo Portal is preconfigured to open by default the `Dashboard` page.
 
 Now we want to deploy a Composition.
 
-If we navigate to the `Template` page, we can find that there is the `Card` we saw in the previous section.
+If we navigate to the `Blueprints` page, we can find that there is the `Panel` we saw in the previous section.
+
+Let's try to deploy it!

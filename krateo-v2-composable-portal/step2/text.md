@@ -6,8 +6,8 @@ curl http://localhost:30082/strategies
 
 [You can also access it externally]({{TRAFFIC_HOST1_30082}}/strategies)
 
-By default, the Krateo installer deploys an initial configuration of the portal based on [composable-portal-basic](https://github.com/krateoplatformops/composable-portal-basic/).
-In this chart, an `admin` user is configured.
+By default, the Krateo installer deploys an initial configuration of the portal based on [portal](https://github.com/krateoplatformops-blueprints/portal/) blueprint.
+In this chart, two users are configured: `admin` and `cyberjoker`.
 
 Let's retrieve the password:
 

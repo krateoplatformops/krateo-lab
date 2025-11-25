@@ -1,14 +1,19 @@
-## Let's prepare the toolchain managed by Krateo
+## Let's add a Blueprint to the Portal
 
 ```plain
-helm install github-provider krateo/github-provider --namespace krateo-system --create-namespace --wait
-helm install git-provider krateo/git-provider --namespace krateo-system --create-namespace --wait
+helm repo add marketplace https://marketplace.krateo.io
+helm repo update marketplace
+helm install github-provider-kog-repo marketplace/github-provider-kog-repo --namespace krateo-system --create-namespace --wait --version 1.0.0
+helm install git-provider krateo/git-provider --namespace krateo-system --create-namespace --wait --version 0.10.1
+
 curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
 sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
 rm argocd-linux-amd64
+
 helm repo add argo https://argoproj.github.io/argo-helm
 helm repo update argo
-helm install argocd argo/argo-cd --namespace krateo-system --create-namespace --set server.service.type=NodePort --set server.service.nodePortHttp=30086 --wait
+helm install argocd argo/argo-cd --namespace krateo-system --create-namespace --wait --version 8.0.17
+
 kubectl patch configmap argocd-cm -n krateo-system --patch '{"data": {"accounts.krateo-account": "apiKey, login"}}'
 kubectl patch configmap argocd-rbac-cm -n krateo-system --patch '{"data": {"policy.default": "role:readonly"}}'
 PASSWORD=$(kubectl -n krateo-system get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
@@ -49,41 +54,72 @@ type: Opaque
 EOF
 ```{{exec}}
 
-## Add a Form to the Portal
+## Add a `Blueprint` to the Portal
 
-A `CompositionDefinition` is a construct from Krateo’s [core-provider](https://github.com/krateoplatformops/core-provider/) that allows [Helm](https://helm.sh/) to become a native Kubernetes resource. What we propose as a platform is to implement infrastructure blueprints using Helm charts, which Krateo then takes and makes available within Kubernetes.
-A `Composition` is essentially a Helm release, but it goes through Kubernetes' native validation process.
-A Composition can be created either manually (using kubectl apply) or through a form in the Portal.
+A `Blueprint` is a reusable Helm Chart that includes a `values.schema.json` file. This schema allows Krateo to automatically generate user-friendly forms and validation rules in the Krateo Composable Portal, making complex configurations accessible and safe.
 
-Let's add a `Card` and a `CustomForm` in order to add a form to the portal. In this case we're leveraging [Fireworksapp](https://github.com/krateoplatformops/krateo-v2-template-fireworksapp), our showcase example.
+A `CompositionDefinition` is a construct from Krateo’s [core-provider](https://github.com/krateoplatformops/core-provider/) that allows a [Helm](https://helm.sh/) chart to become a native Kubernetes resource. What we propose as a platform is to implement infrastructure blueprints using Helm charts, which Krateo then takes and makes available within Kubernetes.
 
-```plain
-kubectl create ns fireworksapp-system
-kubectl apply -f https://raw.githubusercontent.com/krateoplatformops/krateo-v2-template-fireworksapp/refs/tags/1.1.15/compositiondefinition.yaml
-kubectl apply -f https://raw.githubusercontent.com/krateoplatformops/krateo-v2-template-fireworksapp/refs/tags/1.1.15/customform.yaml
-```{{exec}}
+A `Composition` is essentially a Helm release, but it goes through Kubernetes' native validation process. It can be created either manually (using kubectl apply) or through a form in the Portal.
 
-Let's wait for the CompositionDefinition `fireworksapp` to be Ready
+### Let's add the `Github Scaffolding With Composition Page` blueprint to the Portal
 
-```plain
-kubectl wait compositiondefinition fireworksapp --for condition=Ready=True --timeout=300s --namespace fireworksapp-system
-```{{exec}}
+This is a Blueprint used to scaffold a toolchain to host and deploy a fully functional frontend App (FireworksApp).
 
-Check the CompositionDefinition `fireworksapp` outputs, especially for the `RESOURCE` field.
+This Blueprint implements the following steps:
+1. Create an empty Github repository (on github.com) - [link](https://github.com/krateoplatformops-blueprints/github-scaffolding-with-composition-page/blob/main/chart/templates/git-repo.yaml)
+2. Push the code from the [skeleton](https://github.com/krateoplatformops/krateo-v2-template-fireworksapp/tree/main/skeleton) to the previously create repository - [link](https://github.com/krateoplatformops/krateo-v2-template-fireworksapp/blob/main/chart/templates/git-clone.yaml)
+3. A Continuous Integration pipeline (GitHub [workflow](https://github.com/krateoplatformops/krateo-v2-template-fireworksapp/blob/main/skeleton/.github/workflows/ci.yml)) will build the Dockerfile of the frontend app and the resulting image will be published as a Docker image on the GitHub Package registry
+4. An ArgoCD Application will be deployed to listen to the Helm Chart of the FireworksApp application and deploy the chart on the same Kubernetes cluster where ArgoCD is hosted
+5. The FireworksApp will be deployed with a Service type of NodePort kind exposed on the chosen port.
+6. A composition page is available on Krateo Composable Portal
 
-```plain
-kubectl get compositiondefinition fireworksapp --namespace fireworksapp-system
-```{{exec}}
+### Use the `portal-blueprint-page` blueprint
 
-The `core-provider` has just generated:
-* a Custom Resource Definition leveraging the values.json.schema file from the Helm chart:
+The `porta-blueprint-page` blueprint is an opinionanted blueprint to publish a blueprint into the Krateo Composable Portal. This blueprint is available [here](https://github.com/krateoplatformops-blueprints/portal-blueprint-page/tree/1.0.5).
 
 ```plain
-kubectl get crd fireworksapps.composition.krateo.io -o yaml
+cat <<EOF | kubectl apply -f -
+apiVersion: core.krateo.io/v1alpha1
+kind: CompositionDefinition
+metadata:
+  name: portal-blueprint-page
+  namespace: krateo-system
+spec:
+  chart:
+    repo: portal-blueprint-page
+    url: https://marketplace.krateo.io
+    version: 1.0.5
+EOF
 ```{{exec}}
 
-* started a specific Deployment (which leverages the `composition-dynamic-controller` image) which will watch for new Custom Resources related to the generated CRD and the specific version.
+Let's wait for the CompositionDefinition `portal-blueprint-page` to be Ready
 
 ```plain
-kubectl get deployment fireworksapps-v1-1-15-controller --namespace fireworksapp-system
+kubectl wait compositiondefinition portal-blueprint-page --for condition=Ready=True --timeout=300s --namespace krateo-system
 ```{{exec}}
+
+Add the `github-scaffolding-with-composition-page` blueprint:
+
+```plain
+cat <<EOF | kubectl apply -f -
+apiVersion: composition.krateo.io/v1-0-5
+kind: PortalBlueprintPage
+metadata:
+  name: github-scaffolding-with-composition-page
+  namespace: demo-system
+spec:
+  blueprint:
+    url: https://marketplace.krateo.io
+    version: 1.1.0 # this is the Blueprint version
+    hasPage: true
+  form:
+    alphabeticalOrder: false
+  panel:
+    title: GitHub Scaffolding with Composition Page
+    icon:
+      name: fa-cubes
+EOF
+```{{exec}}
+
+Let's go back into the Portal in the Blueprints page.
