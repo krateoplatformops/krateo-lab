@@ -33,7 +33,7 @@ EOF
 Now that there's a new basic user, let's try to login and check the response!
 
 ```plain
-cd && curl http://localhost:30082/basic/login -H "Authorization: Basic Y3liZXJqb2tlcjoxMjM0NTY=" | jq -r .data > demolabuser.kubeconfig
+cd && curl http://localhost:30082/basic/login -H "Authorization: Basic ZGVtb2xhYnVzZXI6MTIzNDU2" | jq -r .data > demolabuser.kubeconfig
 ```{{exec}}
 
 The authn response contains the kubeconfig for the user logged in.

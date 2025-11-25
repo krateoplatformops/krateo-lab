@@ -145,11 +145,3 @@ subjects:
   apiGroup: rbac.authorization.k8s.io
 EOF
 ```{{exec}}
-
-Let's try again to read the `Form` `template-fireworksapp-customform` as `cyberjoker` user.
-
-```plain
-kubectl get form template-fireworksapp-customform --namespace demo-system -o yaml --kubeconfig cyberjoker.kubeconfig
-```{{exec}}
-
-Now `cyberjoker` is able to get the `Form` `template-fireworksapp-customform`.
