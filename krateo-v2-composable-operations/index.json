@@ -42,8 +42,7 @@
       "host01": [
         {"file": "github-repo-creds.yaml", "target": "/"},
         {"file": "githubscaffolding-composition-values.yaml", "target": "/"},
-        {"file": "githubscaffolding-composition-values-2.yaml", "target": "/"},
-        {"file": "githubscaffolding-composition-values-copy.yaml", "target": "/"}
+        {"file": "githubscaffolding-composition-values-2.yaml", "target": "/"}      
       ]
     },
     "finish": {

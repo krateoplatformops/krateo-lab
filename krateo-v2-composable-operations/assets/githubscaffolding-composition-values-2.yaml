@@ -27,10 +27,10 @@ spec:
     insecure: true
     fromRepo:
       scmUrl: https://github.com
-      org: krateoplatformops-blueprints
-      name: github-scaffolding
+      org: krateoplatformops-blueprints # you could change here, but it is not necessary. This is the source repository organization
+      name: github-scaffolding # you could also change here, but it is not necessary. This is the source repository name
       branch: main
-      path: skeleton/
+      path: skeleton-frontend/ # you could change here, but it is not necessary. This is the path within the source repository
       credentials:
         authMethod: generic
         secretRef:
@@ -39,8 +39,8 @@ spec:
           key: token
     toRepo:
       scmUrl: https://github.com
-      org: your-organization # change here
-      name: githubscaffolding-test-v2-2 # you could also change here, but it is not necessary. This will be the name of the created repository
+      org: krateoplatformops-test # change here. This will be the organization of the created repository
+      name: githubscaffolding-test-v2-2 # change here. This will be the name of the created repository
       branch: main
       path: /
       credentials:
