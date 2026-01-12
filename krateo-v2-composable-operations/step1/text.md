@@ -15,9 +15,11 @@ helm upgrade installer-crd installer-crd \
 
 helm upgrade installer installer \
   --set krateoplatformops.composablefinops.enabled=false \
-  --set krateoplatformops.etcd.resources.requests.cpu=250m \
-  --set krateoplatformops.etcd.resources.requests.memory=512Mi \
-  --set krateoplatformops.etcd.resources.limits.memory=1Gi \
+  --set krateoplatformops.eventsse.etcd.resources.requests.cpu="250m" \
+  --set krateoplatformops.eventsse.etcd.resources.requests.memory="512Mi" \
+  --set krateoplatformops.eventsse.etcd.resources.limits.memory="1Gi" \
+  --set krateoplatformops.eventsse.etcd.persistence.size="6Gi" \
+  --set krateoplatformops.eventsse.etcd.quotaBackendBytes="3221225472"\
   --repo https://charts.krateo.io \
   --namespace krateo-system \
   --create-namespace \
