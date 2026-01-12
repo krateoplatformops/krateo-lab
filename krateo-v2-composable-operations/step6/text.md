@@ -35,4 +35,4 @@ To verify if the release is still installed in the cluster, run:
 helm list -n ghscaffolding-system
 ```{{exec}}
 
-As you can see, the `gh-scaffolding-composition-1` is no longer installed in the cluster!
+As you can see, the `gh-scaffolding-composition-1-<random>` is no longer installed in the cluster!
