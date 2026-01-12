@@ -10,28 +10,35 @@ helm upgrade installer-crd installer-crd \
   --namespace krateo-system \
   --create-namespace \
   --install \
-  --version 2.6.0 \
+  --version 2.7.0 \
   --wait
 
 # Disable Krateo FinOps and Portal due to low Killercoda compute resources
+# Adjust OASGEN_PROVIDER_POLL_INTERVAL and REST_CONTROLLER_RESYNC_INTERVAL for faster readiness
+# Adjust etcd resources and persistence for low resource environment
 helm upgrade installer installer \
   --set krateoplatformops.composablefinops.enabled=false \
   --set krateoplatformops.composableportal.enabled=false \
   --set krateoplatformops.oasgenprovider.env.OASGEN_PROVIDER_POLL_INTERVAL=30s \
   --set krateoplatformops.oasgenprovider.rdc.env.REST_CONTROLLER_RESYNC_INTERVAL=30s \
+  --set krateoplatformops.eventsse.etcd.resources.requests.cpu="250m" \
+  --set krateoplatformops.eventsse.etcd.resources.requests.memory="512Mi" \
+  --set krateoplatformops.eventsse.etcd.resources.limits.memory="1Gi" \
+  --set krateoplatformops.eventsse.etcd.persistence.size="6Gi" \
+  --set krateoplatformops.eventsse.etcd.quotaBackendBytes="3221225472" \
   --repo https://charts.krateo.io \
   --namespace krateo-system \
   --create-namespace \
   --install \
-  --version 2.6.0 \
+  --version 2.7.0 \
   --wait
 ```{{exec}}
 
 Wait for Krateo to be ready:
 ```bash
-kubectl wait krateoplatformops krateo --for condition=Ready=True --namespace krateo-system --timeout=660s
+kubectl wait krateoplatformops krateo --for condition=Ready=True --namespace krateo-system --timeout=800s
 ```{{exec}}
-This step might take upwards of 5 minutes, go grab a coffee in the meantime or learn more about Krateo Operator Generator!
+This step might take upwards of 10 minutes, go grab a coffee in the meantime or learn more about Krateo Operator Generator!
 
 # Learn about Krateo Operator Generator
 
