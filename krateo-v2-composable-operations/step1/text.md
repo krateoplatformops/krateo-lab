@@ -19,7 +19,7 @@ helm upgrade installer installer \
   --set krateoplatformops.eventsse.etcd.resources.requests.memory="512Mi" \
   --set krateoplatformops.eventsse.etcd.resources.limits.memory="1Gi" \
   --set krateoplatformops.eventsse.etcd.persistence.size="6Gi" \
-  --set krateoplatformops.eventsse.etcd.quotaBackendBytes="3221225472"
+  --set krateoplatformops.eventsse.etcd.quotaBackendBytes="3221225472" \
   --repo https://charts.krateo.io \
   --namespace krateo-system \
   --create-namespace \
