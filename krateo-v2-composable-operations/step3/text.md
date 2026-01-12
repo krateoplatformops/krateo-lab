@@ -119,4 +119,13 @@ kubectl apply -f /root/filesystem/githubscaffolding-composition-values-2.yaml
    kubectl get githubscaffolding gh-scaffolding-composition-2 --namespace ghscaffolding-system
    ```{{exec}}
 
+3. List Helm releases to verify both compositions are installed:
+   ```bash
+   helm list -n ghscaffolding-system
+   ```{{exec}}
+
+You should see two releases corresponding to the two compositions you created named `gh-scaffolding-composition-1-<random>` and `gh-scaffolding-composition-2-<random>`.
+
+Notes that <random> is a random suffix added by Krateo to avoid name collisions when multiple compositions with the same name but different Kind are created. You can learn more about this solution [here](https://docs.krateo.io/concepts/krateo-composable-operations/helm-release-naming).
+
 This will display the current status of your Github Scaffolding Blueprint Composition. Verify that all components have been properly deployed and are in a ready state.
