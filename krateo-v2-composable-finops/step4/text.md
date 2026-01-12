@@ -32,3 +32,5 @@ EOF
 ```{{exec}}
 
 You can proceed to the creation of the combined exporter/scraper configuration.
+
+For a blueprint version configured for an Azure VM, check out this [template](https://github.com/krateoplatformops-blueprints/azure-vm-finops/blob/main/blueprint/templates/exporterscraperconfig.yaml).

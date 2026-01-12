@@ -18,7 +18,10 @@ spec:
       endpointRef: # secret with the url in the format http(s)://host:port, it can contain variables, such as http://<varName>.com:<envExample>, which will be compiled with the additionalVariables fields
         name: 
         namespace:
-    # metricType: # optional, one of: cost, resource; default value: cost
+    # metricType: # optional, one of: cost, resource, generic; default value: cost
+    # generic: # option, required if metric type is generic
+    #  valueColumnIndex: # index of the metric value
+    #  metricName: # name to use for the metric in prometheus
     pollingInterval: # time duration, e.g., 12h30m
     additionalVariables:
       varName: sample
