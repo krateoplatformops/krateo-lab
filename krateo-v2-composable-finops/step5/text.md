@@ -49,6 +49,7 @@ spec:
       namespace: krateo-system
 EOF
 ```{{exec}}
+This deployment creates an exporter and a _scraper_ to export costs and scrape them for storage into the database.
 
 The upload may take some time. Check when it's terminated with:
 ```plain
@@ -82,7 +83,7 @@ if __name__ == "__main__":
     main()
 ```
 
-Let's upload the query notebook to the FinOps Database Handler using the uploader:
+Let's upload the query notebook to the FinOps Database Handler using the uploader operator:
 ```plain
 cat <<'EOF' | kubectl apply -f -
 apiVersion: finops.krateo.io/v1
