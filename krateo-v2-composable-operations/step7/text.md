@@ -51,6 +51,12 @@ Remember that you can find the list of resources created by a composition in the
 kubectl get githubscaffolding gh-scaffolding-composition-2 -n ghscaffolding-system -o jsonpath='{.status.managed}' | jq
 ```{{exec}}
 
+Wait for the next Helm upgrade to propagate the change. The repo resource should have the annotation "krateo.io/paused" set to true:
+
+```bash
+kubectl wait repoes $COMPOSITION_NAME_2-repo -n ghscaffolding-system --for=jsonpath='{.metadata.annotations.krateo\.io/paused}'=true --timeout=300s
+```{{exec}}
+
 Let's check the `Repo` resource created by the composition:
 
 ```bash
@@ -81,11 +87,25 @@ To resume the reconciliation, remove the annotation:
 kubectl annotate githubscaffolding gh-scaffolding-composition-2 -n ghscaffolding-system "krateo.io/gracefully-paused-"
 ```{{exec}}
 
+Wait for the next Helm upgrade to propagate the change. The repo resource should have the annotation "krateo.io/paused" set to false:
+
+```bash
+kubectl wait repoes $COMPOSITION_NAME_2-repo -n ghscaffolding-system --for=jsonpath='{.metadata.annotations.krateo\.io/paused}'=false --timeout=300s
+```{{exec}}
+
 You can verify that the composition and its resources are resumed by checking again the `RepoConfiguration` resource:
 
 ```bash
 kubectl get repoes $COMPOSITION_NAME_2-repo -n ghscaffolding-system -o jsonpath='{.metadata.annotations}' | jq
 ```{{exec}}
+
+Check also the ArgoCD `Application` resource:
+
+```bash
+kubectl get applications $COMPOSITION_NAME_2 -n krateo-system -o jsonpath='{.spec.syncPolicy}' | jq
+```{{exec}}
+
+Now the `spec.syncPolicy` field is set again to `automated`, resuming the reconciliation of the application.
 
 Remember that the edits can take some time to be propagated.
 
