@@ -54,7 +54,7 @@ kubectl get githubscaffolding gh-scaffolding-composition-2 -n ghscaffolding-syst
 Let's check the `Repo` resource created by the composition:
 
 ```bash
-kubectl get repoes gh-scaffolding-composition-2-repo -n ghscaffolding-system -o jsonpath='{.metadata.annotations}' | jq
+kubectl get repoes $COMPOSITION_NAME_2-repo -n ghscaffolding-system -o jsonpath='{.metadata.annotations}' | jq
 ```{{exec}}
 
 As you can see, the `krateo.io/paused` annotation is also applied to the `Repo` resource created by the composition.
@@ -62,7 +62,7 @@ As you can see, the `krateo.io/paused` annotation is also applied to the `Repo` 
 Let's now check a resource that does not support the `krateo.io/paused` annotation, for example the `Application` resource for ArgoCD:
 
 ```bash
-kubectl get applications gh-scaffolding-composition-2 -n krateo-system -o jsonpath='{.metadata.annotations}' | jq
+kubectl get applications $COMPOSITION_NAME_2 -n krateo-system -o jsonpath='{.metadata.annotations}' | jq
 ```{{exec}}
 
 As you can see the `krateo.io/paused` annotation is not applied to the `Application` resource created by the composition, however the `spec.syncPolicy` field is set to `null`, effectively pausing the reconciliation of the application.
@@ -70,7 +70,7 @@ As you can see the `krateo.io/paused` annotation is not applied to the `Applicat
 Check it out by running:
 
 ```bash
-kubectl get applications gh-scaffolding-composition-2 -n krateo-system -o jsonpath='{.spec.syncPolicy}' | jq
+kubectl get applications $COMPOSITION_NAME_2 -n krateo-system -o jsonpath='{.spec.syncPolicy}' | jq
 ```{{exec}}
 
 If you are interested in how we have implemented this behavior for the `Application` resource, check the [github-scaffolding chart template](https://github.com/krateoplatformops-blueprints/github-scaffolding/blob/693bfc1e057c11f73305f92f39ff4da01ddca8e6/blueprint/templates/argo-application.yaml#L18)
@@ -84,7 +84,7 @@ kubectl annotate githubscaffolding gh-scaffolding-composition-2 -n ghscaffolding
 You can verify that the composition and its resources are resumed by checking again the `RepoConfiguration` resource:
 
 ```bash
-kubectl get repoes gh-scaffolding-composition-2-repo -n ghscaffolding-system -o jsonpath='{.metadata.annotations}' | jq
+kubectl get repoes $COMPOSITION_NAME_2-repo -n ghscaffolding-system -o jsonpath='{.metadata.annotations}' | jq
 ```{{exec}}
 
 Remember that the edits can take some time to be propagated.
