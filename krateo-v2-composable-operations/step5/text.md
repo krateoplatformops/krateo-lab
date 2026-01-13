@@ -59,6 +59,7 @@ Let's retrieve the resource names associated with the last created composition:
 
 ```bash
 export COMPOSITION_NAME_2=$(kubectl get compositions -n ghscaffolding-system gh-scaffolding-composition-2 -o yaml | yq '.metadata.labels["krateo.io/release-name"]')
+```{{exec}}
 
 ### 1. Roles
 Roles define permissions within a specific namespace:
